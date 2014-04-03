@@ -10,6 +10,6 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "cysha/pxcms-installer-modules": "*",
+        "cysha/pxcms-installer-modules": "*"
     }
 }
