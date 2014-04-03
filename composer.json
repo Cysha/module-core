@@ -2,6 +2,7 @@
     "name": "cysha/pxcms-core",
     "type": "pxcms-module",
     "description": "Core Module for Phoenix CMS",
+    "license": "MIT",
     "authors": [
         {
             "name": "xLink",
