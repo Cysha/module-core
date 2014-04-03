@@ -1,0 +1,15 @@
+{
+    "name": "cysha/pxcms-core",
+    "type": "pxcms-module",
+    "description": "Core Module for Phoenix CMS",
+    "authors": [
+        {
+            "name": "xLink",
+            "email": "xLink@cybershade.org"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "cysha/pxcms-installer-modules": "*",
+    }
+}
