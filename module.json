@@ -1,0 +1,5 @@
+{
+    "enabled": true,
+    "provider": "Cysha\\Modules\\Core\\ServiceProvider",
+    "order": 0
+}
