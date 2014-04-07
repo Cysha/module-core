@@ -11,6 +11,6 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "cysha/installer"     : "dev-master"
+        "composer/installers" : "~1.0"
     }
 }
