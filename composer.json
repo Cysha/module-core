@@ -12,5 +12,8 @@
     "minimum-stability": "dev",
     "require": {
         "composer/installers" : "~1.0"
-    }
+    },
+    "repositories": [
+        { "type": "vcs", "url": "https://github.com/cysha/installers" }
+    ]
 }
