@@ -11,6 +11,6 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "cysha/pxcms-installer-modules"     : "dev-master"
+        "cysha/installer"     : "dev-master"
     }
 }
