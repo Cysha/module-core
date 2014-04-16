@@ -1,4 +1,4 @@
-<?php namespace Cysha\Modules;
+<?php namespace Cysha\Modules\Core;
 
 use Illuminate\Support\ServiceProvider;
 
