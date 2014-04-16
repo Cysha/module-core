@@ -1,11 +1,9 @@
 <?php namespace Cysha\Modules\Core\Commands;
 
 use Illuminate\Console\Command;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Input\InputArgument;
 
-class InstallCommand extends Command {
-
+class InstallCommand extends Command
+{
     /**
      * The console command name.
      *
@@ -49,10 +47,10 @@ class InstallCommand extends Command {
             $this->info('Clearing out the System Cache...');
             $this->call('cache:clear');
 
-            if( Schema::hasTable('migrations') ){
+            if (Schema::hasTable('migrations')) {
                 $this->info('Clearing out the database...');
                 $this->call('migrate:reset');
-            }else{
+            } else {
                 $this->info('Setting up the database...');
                 $this->call('migrate:install');
             }
@@ -76,7 +74,8 @@ class InstallCommand extends Command {
         $this->comment('');
     }
 
-    public function info($message){
+    public function info($message)
+    {
         $this->comment('');
         $this->comment('-------------------------------------');
         parent::info(' CMS:Install - '.$message);

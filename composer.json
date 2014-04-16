@@ -4,10 +4,7 @@
     "description": "Core Module for Phoenix CMS",
     "license": "MIT",
     "authors": [
-        {
-            "name": "xLink",
-            "email": "xLink@cybershade.org"
-        }
+        { "name": "xLink", "email": "xLink@cybershade.org" }
     ],
     "minimum-stability": "dev",
     "require": {
