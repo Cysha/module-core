@@ -1,6 +1,7 @@
 <?php namespace Cysha\Modules\Core\Commands;
 
 use Illuminate\Console\Command;
+use Schema;
 
 class InstallCommand extends Command
 {
