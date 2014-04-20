@@ -1,11 +1,10 @@
-<?php namespace Cysha\Modules\Core;
+<?php namespace Cysha\Modules\Core\Controllers;
 
 use Teepluss\Restable\Restable;
 
 class BaseApiController extends BaseController
 {
 
-    public $layout = 'basic';
     private $restable = null;
 
     public function __construct(Restable $restable)
@@ -30,7 +29,7 @@ class BaseApiController extends BaseController
             $reply['data'] = $data;
         }
 
-        return $this->restable->listing($reply)->to('json');
+        return $reply;
     }
 
     /**
