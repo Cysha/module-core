@@ -39,7 +39,6 @@ class ServiceProvider extends BaseServiceProvider
             'Controller'      => 'Dingo\Api\Routing\Controller',
             'API'             => 'Dingo\Api\Facades\API',
 
-            'Debugbar'        => 'Barryvdh\Debugbar\Facade',
             'Menu'            => 'Menu\Menu',
             // 'Former'          => 'Former\Facades\Former',
             'Theme'           => 'Teepluss\Theme\Facades\Theme',
