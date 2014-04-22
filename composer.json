@@ -15,7 +15,7 @@
         "stolz/assets"                      : "dev-master",
         "vespakoen/menu"                    : "~2.0",
 
-        "dingo/api"                         : "dev-master",
+        "dingo/api"                         : "dev-master"
     },
     "repositories": [
         { "type": "vcs", "url": "https://github.com/cysha/installers" }
