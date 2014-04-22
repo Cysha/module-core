@@ -15,6 +15,6 @@ class BaseModuleController extends BaseController
     {
         parent::__construct();
 
-        $this->objTheme->breadcrumb()->add('Home', Url::to('/'));
+        $this->objTheme->breadcrumb()->add('Home', Url::route('home'));
     }
 }

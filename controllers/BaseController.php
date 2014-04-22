@@ -7,6 +7,7 @@ use Theme;
 use Config;
 use File;
 use Str;
+use API;
 
 class BaseController extends Controller
 {
@@ -216,6 +217,17 @@ class BaseController extends Controller
         }
 
         return $this->objTheme->$type($this->view, $this->data)->render();
+    }
+
+    public function api($method, $route, $data = array())
+    {
+        $request = API::$method($route, $data);
+
+        if ($request['status'] !== 200) {
+            throw new \Symfony\Component\HttpKernel\Exception\NotAcceptableHttpException($request['message']);
+        }
+
+        return $request;
     }
 
     public function outputMethod()

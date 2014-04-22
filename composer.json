@@ -10,8 +10,12 @@
     "require": {
         "composer/installers" : "dev-master",
 
-        "teepluss/theme" : "dev-master",
-        "vespakoen/menu" : "~2.0"
+        "barryvdh/laravel-debugbar"         : "dev-master",
+        "teepluss/theme"                    : "dev-master",
+        "stolz/assets"                      : "dev-master",
+        "vespakoen/menu"                    : "~2.0",
+
+        "dingo/api"                         : "dev-master",
     },
     "repositories": [
         { "type": "vcs", "url": "https://github.com/cysha/installers" }
