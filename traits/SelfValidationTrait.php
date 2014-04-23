@@ -4,7 +4,7 @@ use Illuminate\Support\MessageBag;
 use Validator;
 use Input;
 
-trait SelfValidation
+trait SelfValidationTrait
 {
     /**
      * Validation error message bag
