@@ -42,7 +42,6 @@ class ServiceProvider extends BaseServiceProvider
             'Menu'            => 'Menu\Menu',
             // 'Former'          => 'Former\Facades\Former',
             'Theme'           => 'Teepluss\Theme\Facades\Theme',
-            'Markdown'        => 'MaxHoffmann\Parsedown\ParsedownFacade',
         ];
 
         foreach ($aliases as $alias => $class) {
