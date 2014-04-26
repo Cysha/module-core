@@ -18,6 +18,23 @@ if (!function_exists('is_number')) {
     }
 }
 
+if (!function_exists('date_array')) {
+    /**
+     * Compiles a list of dates to return
+     *
+     * @return array
+     */
+    function date_array($date, $name = null)
+    {
+        return [
+            'default' => $date,
+            'atom'    => date_carbon($date, DateTime::ATOM),
+            'ago'     => date_ago($date),
+            'fuzzy'   => date_fuzzy($date),
+        ];
+    }
+}
+
 if (!function_exists('date_carbon')) {
     function date_carbon($value, $format = null)
     {
