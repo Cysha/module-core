@@ -1,16 +1,7 @@
 <?php namespace Cysha\Modules\Core\Controllers;
 
-use Teepluss\Restable\Restable;
-
 class BaseApiController extends BaseController
 {
-
-    private $restable = null;
-
-    public function __construct(Restable $restable)
-    {
-        $this->restable = $restable;
-    }
 
     /**
      * Alias method for sending an error back
