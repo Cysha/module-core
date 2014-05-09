@@ -67,15 +67,11 @@ if (!function_exists('date_ago')) {
 
 if (!function_exists('date_fuzzy')) {
     /* http://daveyshafik.com/archives/28101-datetime-timestamp-parsing.html */
-    function date_fuzzy($date, $inputFormat = DateTime::ATOM, $outputDateFormat = 'l, F dS, Y', $outputTimeFormat = 'H:ia')
+    function date_fuzzy($date, $inputFormat = null, $outputDateFormat = null, $outputTimeFormat = null)
     {
-        if (!$inputFormat) {
-            $inputFormat = DateTime::ATOM;
-        }
-
-        if (!$outputDateFormat) {
-            $outputDateFormat = 'l, F dS, Y';
-        }
+        $inputFormat      = $inputFormat ?: DateTime::ATOM;
+        $outputDateFormat = $outputDateFormat ?: 'F dS Y';
+        $outputTimeFormat = $outputTimeFormat ?: 'H:ia';
 
         $dateTime = new DateTime($date);
 
