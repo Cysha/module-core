@@ -39,8 +39,6 @@ class ServiceProvider extends BaseServiceProvider
             'Dingo\Api\ApiServiceProvider',
             'Teepluss\Theme\ThemeServiceProvider',          # https://github.com/teepluss/laravel4-theme
             'Former\FormerServiceProvider',                 # https://github.com/Anahkiasen/former
-            'Toddish\Verify\VerifyServiceProvider',         # https://github.com/Toddish/Verify-L4
-
         ];
 
         foreach ($serviceProviders as $sp) {

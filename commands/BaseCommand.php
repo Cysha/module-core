@@ -23,23 +23,33 @@ class BaseCommand extends Command
         $this->app = $app;
     }
 
+    public function getModuleName()
+    {
+        return $this->readableName;
+    }
+
     public function info($message)
     {
-        $this->comment('');
-        $this->comment('-------------------------------------');
-        parent::info(' '.$this->name.' - '.$message);
-        $this->comment('');
+        parent::comment('');
+        parent::comment('-------------------------------------');
+        parent::info(' '.$this->getModuleName().' - '.$message);
+        parent::comment('');
+    }
+
+    public function comment($message)
+    {
+        parent::comment("\n".$message);
     }
 
     public function header()
     {
-        $this->comment('');
-        $this->comment('=====================================');
-        $this->comment('');
-        parent::info(' '.$this->name.' ');
-        $this->comment('');
-        $this->comment('-------------------------------------');
-        $this->comment('');
+        parent::comment('');
+        parent::comment('=====================================');
+        parent::comment('');
+        parent::info(' '.$this->getModuleName().' ');
+        parent::comment('');
+        parent::comment('-------------------------------------');
+        parent::comment('');
 
     }
 

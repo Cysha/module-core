@@ -1,6 +1,7 @@
 <?php namespace Cysha\Modules\Core\Commands;
 
 use Schema;
+use File;
 
 class InstallCommand extends BaseCommand
 {
@@ -10,6 +11,13 @@ class InstallCommand extends BaseCommand
      * @var string
      */
     protected $name = 'cms:install';
+
+    /**
+     * The Readable Module Name.
+     *
+     * @var string
+     */
+    protected $readableName = 'Core Install';
 
     /**
      * The console command description.
@@ -46,15 +54,20 @@ class InstallCommand extends BaseCommand
 
             foreach (File::directories(app_path().'/modules/') as $module) {
                 if (File::exists($module.'/commands/InstallCommand.php')) {
-                    $this->info('Installing the '.$module.' module...');
-                    $this->call('modules:install', [$module]);
+                    $module = explode('/', $module);
+                    $module = end($module);
 
-                    $this->info('Migrating module...');
-                    $this->call('modules:migrate', [$module]);
+                    if ($module != 'core') {
+                        $this->comment('Installing the '.$module.' module...');
+                        $this->call('modules:install', ['module' => $module]);
+                    }
+
+                    $this->comment('Migrating module...');
+                    $this->call('modules:migrate', ['module' => $module]);
 
                     if ($seed) {
-                        $this->info('Seeding module...');
-                        $this->call('modules:seed', [$module]);
+                        $this->comment('Seeding module...');
+                        $this->call('modules:seed', ['module' => $module]);
                     }
                 }
             }
