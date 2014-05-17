@@ -1,9 +1,8 @@
 <?php namespace Cysha\Modules\Core\Commands;
 
-use Illuminate\Console\Command;
 use Schema;
 
-class InstallCommand extends Command
+class InstallCommand extends BaseCommand
 {
     /**
      * The console command name.
@@ -20,29 +19,13 @@ class InstallCommand extends Command
     protected $description = 'Installs the CMS';
 
     /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
      * Execute the console command.
      *
      * @return mixed
      */
     public function fire()
     {
-        $this->comment('');
-        $this->comment('=====================================');
-        $this->comment('');
-        parent::info(' CMS:Install ');
-        $this->comment('');
-        $this->comment('-------------------------------------');
-        $this->comment('');
+        $this->header();
         if ($this->confirm(' This command will rebuild your database! Continue? [yes|no]', true)) {
 
             $this->info('Clearing out the System Cache...');
@@ -56,30 +39,29 @@ class InstallCommand extends Command
                 $this->call('migrate:install');
             }
 
-            $this->info('Installing the Packages...');
-            $this->call('migrate', array('--package' => 'toddish/verify'));
-
-            $this->info('Installing the CMS Package...');
-            $this->call('modules:migrate');
-
-            $this->comment('');
-            $this->comment('-------------------------------------');
-            $this->comment('');
+            $seed = false;
             if ($this->confirm(' Do you want to install test data into the database? [yes|no]', true)) {
-                $this->call('modules:seed');
+                $seed = true;
+            }
+
+            foreach (File::directories(app_path().'/modules/') as $module) {
+                if (File::exists($module.'/commands/InstallCommand.php')) {
+                    $this->info('Installing the '.$module.' module...');
+                    $this->call('modules:install', [$module]);
+
+                    $this->info('Migrating module...');
+                    $this->call('modules:migrate', [$module]);
+
+                    if ($seed) {
+                        $this->info('Seeding module...');
+                        $this->call('modules:seed', [$module]);
+                    }
+                }
             }
 
         }
         $this->info('Done');
         $this->comment('=====================================');
-        $this->comment('');
-    }
-
-    public function info($message)
-    {
-        $this->comment('');
-        $this->comment('-------------------------------------');
-        parent::info(' CMS:Install - '.$message);
         $this->comment('');
     }
 
