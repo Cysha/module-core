@@ -52,23 +52,27 @@ class InstallCommand extends BaseCommand
                 $seed = true;
             }
 
-            foreach (File::directories(app_path().'/modules/') as $module) {
-                if (File::exists($module.'/commands/InstallCommand.php')) {
-                    $module = explode('/', $module);
-                    $module = end($module);
+            foreach (app('modules')->modules() as $module) {
+                if (!$module->enabled()) {
+                    continue;
+                }
+                $moduleName = $module->name();
+                if ($moduleName == 'core') {
+                    continue;
+                }
 
-                    if ($module != 'core') {
-                        $this->comment('Installing the '.$module.' module...');
-                        $this->call('modules:install', ['module' => $module]);
-                    }
+                $this->info('Setting up the '.$moduleName.' module...');
+                if (File::exists($module->path().'/commands/InstallCommand.php')) {
+                    $this->comment('Installing the '.$moduleName.' module...');
+                    $this->call('modules:install', ['module' => $moduleName]);
+                }
 
-                    $this->comment('Migrating module...');
-                    $this->call('modules:migrate', ['module' => $module]);
+                $this->comment('Migrating module...');
+                $this->call('modules:migrate', ['module' => $moduleName]);
 
-                    if ($seed) {
-                        $this->comment('Seeding module...');
-                        $this->call('modules:seed', ['module' => $module]);
-                    }
+                if ($seed) {
+                    $this->comment('Seeding module...');
+                    $this->call('modules:seed', ['module' => $moduleName]);
                 }
             }
 
