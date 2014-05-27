@@ -73,7 +73,7 @@ if (!function_exists('date_fuzzy')) {
         $outputDateFormat = $outputDateFormat ?: 'F dS Y';
         $outputTimeFormat = $outputTimeFormat ?: 'H:ia';
 
-        $dateTime = new DateTime($date);
+        $dateTime = (is_int($date) ? with(new Carbon\Carbon)->createFromTimestamp($date) : new DateTime($date));
 
         // Failed to parse, probably invalid date
         if (!$dateTime) {
