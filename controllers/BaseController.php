@@ -59,6 +59,7 @@ class BaseController extends Controller
     {
         // set some theme options up
         $this->objTheme = Theme::uses(Config::get('app.theme', 'default'))->layout($this->layout);
+        $this->themeName = Config::get('app.theme', 'default');
 
         // figure out which module we are currently in
         $this->module = $this->getModule($this);
@@ -121,6 +122,7 @@ class BaseController extends Controller
         }
 
         $layoutFile = sprintf('%s/themes/%s/layouts/%s.blade.php', public_path(), $this->themeName, $layout);
+        echo \Debug::dump($this->themeName, '');
         if (File::exists($layoutFile)) {
             $this->layout = $layout;
             $this->objTheme->layout($layout);
