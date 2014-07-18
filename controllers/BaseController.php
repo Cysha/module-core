@@ -122,7 +122,6 @@ class BaseController extends Controller
         }
 
         $layoutFile = sprintf('%s/themes/%s/layouts/%s.blade.php', public_path(), $this->themeName, $layout);
-        echo \Debug::dump($this->themeName, '');
         if (File::exists($layoutFile)) {
             $this->layout = $layout;
             $this->objTheme->layout($layout);
