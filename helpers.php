@@ -1,4 +1,7 @@
 <?php
+Validator::extend('alpha_spaces', function ($attribute, $value) {
+    return preg_match('/^[\pL\s]+$/u', $value);
+});
 
 if (!function_exists('artisan_call')) {
     function artisan_call($command, array $parameters = array())
