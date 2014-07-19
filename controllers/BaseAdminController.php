@@ -1,8 +1,13 @@
-<?php namespace Cysha\Modules\Core;
+<?php namespace Cysha\Modules\Core\Controllers;
 
+use App;
+use Auth;
 use Config;
+use File;
+use Route;
 use URL;
 use Menu;
+use Theme;
 
 class BaseAdminController extends BaseController
 {
@@ -18,15 +23,8 @@ class BaseAdminController extends BaseController
      */
     protected $themeName = null;
 
-    protected $menu;
-    protected $app;
-
-    public function __construct(App $app, Menu $menu)
+    public function __construct()
     {
-
-        $this->menu = $menu;
-        $this->app = $app;
-
         // reset the themeName to whatever is in the config
         $this->themeName = Config::get('core::app.themes.backend', 'default-admin');
 
@@ -35,7 +33,7 @@ class BaseAdminController extends BaseController
 
         // then add the control panel stuff
         $this->addPageAssets();
-        $this->adminMenu();
+        //$this->adminMenu();
     }
 
     public function setTitle($title)
@@ -47,7 +45,7 @@ class BaseAdminController extends BaseController
     {
         $this->actions = $actions;
 
-        $this->theme->setActions($actions);
+        $this->objTheme->setActions($actions);
     }
 
     /**
@@ -61,7 +59,7 @@ class BaseAdminController extends BaseController
         $path = sprintf('%s/themes/%s/assets/css/%s.css', public_path(), $this->themeName, $routeName);
 
         if (File::exists($path)) {
-            $this->theme->asset()->add($routeName, str_replace(public_path().'/', '', $path), array('base'));
+            $this->objTheme->asset()->add($routeName, str_replace(public_path().'/', '', $path), array('base'));
         }
     }
 
@@ -70,17 +68,17 @@ class BaseAdminController extends BaseController
      */
     public function adminMenu()
     {
-        $this->theme->breadcrumb()->add('ACP Dashboard', $this->url->route('pxcms.admin.index'));
+        $this->objTheme->breadcrumb()->add('ACP Dashboard', URL::route('pxcms.admin.index'));
 
         // generate the admin menu handler
-        $acp = $this->menu->handler('acp');
-        $acp->add($this->url->route('pxcms.admin.index'), '<i class="fa fa-dashboard"></i> Dashboard');
+        $acp = Menu::handler('acp');
+        $acp->add(URL::route('pxcms.admin.index'), '<i class="fa fa-dashboard"></i> Dashboard');
 
         // loop through each of the menus, merge them and then process them
         $acp = array();
         $inline = array();
 
-        foreach ($this->app->make('modules')->modules()->items as $module) {
+        foreach (App::make('modules')->modules()->items as $module) {
             $name = $module->name();
 
             // process any acp_menus this module might have
@@ -117,17 +115,20 @@ class BaseAdminController extends BaseController
             return false;
         }
 
-        $acp = $this->menu->handler($handler);
+        $acp = Menu::handler($handler);
 
         foreach ($menus as $section => $link) {
-            // single item
+            if (empty($link)) {
+                continue;
+            }
+
             if (!is_array($link) || !count($link)) {
                 $this->addSection($acp, $link, $section);
                 continue;
             }
 
             $section = trim(e($section));
-            $s = $this->menu->items('section-'.$section);
+            $s = Menu::items('section-'.$section);
 
             $children = false;
             foreach ($link as $url => $anchor) {
@@ -150,7 +151,7 @@ class BaseAdminController extends BaseController
      * @param string $link
      * @param string $section
      */
-    public function addMenuSection(&$menu, $link, $section)
+    public function addSection(&$menu, $link, $section)
     {
         if (is_number($section)) {
             $menu->add('#', $link)->addClass('divider');
