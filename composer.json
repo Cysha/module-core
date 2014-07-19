@@ -12,7 +12,8 @@
 
         "teepluss/theme"                    : "dev-master",
         "stolz/assets"                      : "dev-master",
-        "vespakoen/menu"                    : "~2.0",
+        "anahkiasen/former"                 : "~3.4",
+        "vespakoen/menu"                    : "dev-master",
 
         "dingo/api"                         : "dev-master"
     },
