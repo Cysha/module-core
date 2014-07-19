@@ -19,6 +19,7 @@
         "dingo/api"                         : "dev-master"
     },
     "repositories": [
-        { "type": "vcs", "url": "https://github.com/cysha/installers" }
+        { "type": "vcs", "url": "https://github.com/cysha/installers" },
+        { "type": "vcs", "url": "https://github.com/xLink/menu" }
     ]
 }
