@@ -58,8 +58,11 @@ class BaseController extends Controller
     public function __construct()
     {
         // set some theme options up
-        $this->objTheme = Theme::uses(Config::get('app.theme', 'default'))->layout($this->layout);
-        $this->themeName = Config::get('app.theme', 'default');
+        if (!isset($this->themeName)) {
+            $this->themeName = Config::get('core::app.themes.frontend', 'default');
+        }
+
+        $this->objTheme = Theme::uses($this->themeName)->layout($this->layout);
 
         // figure out which module we are currently in
         $this->module = $this->getModule($this);
@@ -169,7 +172,7 @@ class BaseController extends Controller
      * @param array  $data Data to pass through to the view
      * @param string $type Where the view is [Module, Theme, App, Partial, Custom]
      */
-    public function setView($view, $data = array(), $type = 'module')
+    public function setView($view, $data = [], $type = 'module')
     {
         $type = strtolower($type);
         $supportedTypes = array('theme', 'app', 'module', 'partial', 'custom');
