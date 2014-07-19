@@ -12,8 +12,8 @@
 
         "teepluss/theme"                    : "dev-master",
         "stolz/assets"                      : "dev-master",
-        "vespakoen/menu"                    : "dev-develop",
-        "anahkiasen/former"                 : "dev-master",
+        "vespakoen/menu"                    : "~2.0",
+        "anahkiasen/former"                 : "dev-develop",
 
         "dingo/api"                         : "dev-master"
     },
