@@ -18,4 +18,5 @@
     },
     "repositories": [
         { "type": "vcs", "url": "https://github.com/cysha/installers" }
+    ]
 }
