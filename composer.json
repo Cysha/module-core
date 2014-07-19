@@ -13,12 +13,9 @@
         "teepluss/theme"                    : "dev-master",
         "stolz/assets"                      : "dev-master",
         "vespakoen/menu"                    : "~2.0",
-        "anahkiasen/former"                 : "dev-develop",
 
         "dingo/api"                         : "dev-master"
     },
     "repositories": [
-        { "type": "vcs", "url": "https://github.com/cysha/installers" },
-        { "type": "vcs", "url": "https://github.com/xLink/menu" }
-    ]
+        { "type": "vcs", "url": "https://github.com/cysha/installers" }
 }
