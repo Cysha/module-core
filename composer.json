@@ -10,7 +10,6 @@
     "require": {
         "composer/installers" : "dev-master",
 
-        "barryvdh/laravel-debugbar"         : "dev-master",
         "teepluss/theme"                    : "dev-master",
         "stolz/assets"                      : "dev-master",
         "vespakoen/menu"                    : "dev-develop",

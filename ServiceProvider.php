@@ -33,8 +33,6 @@ class ServiceProvider extends BaseServiceProvider
     private function registerOtherPackages()
     {
         $serviceProviders = [
-            'Barryvdh\Debugbar\ServiceProvider',            # https://github.com/barryvdh/laravel-debugbar
-
             'Stolz\Assets\ManagerServiceProvider',          # https://github.com/Stolz/Assets
             'Dingo\Api\ApiServiceProvider',
             'Teepluss\Theme\ThemeServiceProvider',          # https://github.com/teepluss/laravel4-theme
