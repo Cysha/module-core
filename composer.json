@@ -13,7 +13,7 @@
         "barryvdh/laravel-debugbar"         : "dev-master",
         "teepluss/theme"                    : "dev-master",
         "stolz/assets"                      : "dev-master",
-        "vespakoen/menu"                    : "~2.0",
+        "vespakoen/menu"                    : "dev-master",
         "anahkiasen/former"                 : "dev-develop",
 
         "dingo/api"                         : "dev-master"
