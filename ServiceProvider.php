@@ -36,7 +36,7 @@ class ServiceProvider extends BaseServiceProvider
             'Stolz\Assets\ManagerServiceProvider',          # https://github.com/Stolz/Assets
             'Dingo\Api\ApiServiceProvider',
             'Teepluss\Theme\ThemeServiceProvider',          # https://github.com/teepluss/laravel4-theme
-            'Former\FormerServiceProvider',                 # https://github.com/Anahkiasen/former
+            //'Former\FormerServiceProvider',                 # https://github.com/Anahkiasen/former
         ];
 
         foreach ($serviceProviders as $sp) {
@@ -48,7 +48,7 @@ class ServiceProvider extends BaseServiceProvider
             'API'             => 'Dingo\Api\Facades\API',
 
             'Menu'            => 'Menu\Menu',
-            'Former'          => 'Former\Facades\Former',
+            //'Former'          => 'Former\Facades\Former',
             'Theme'           => 'Teepluss\Theme\Facades\Theme',
         ];
 
