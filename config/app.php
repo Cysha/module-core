@@ -1,7 +1,7 @@
 <?php
 
 return array(
-    'site-name' => 'Cysha',
+    'site-name' => 'PhoenixCMS',
 
     'themes' => array(
         'frontend' => 'default',
