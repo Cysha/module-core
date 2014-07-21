@@ -6,11 +6,6 @@ class Theme
 {
     protected static $themes = array();
 
-    public function __construct()
-    {
-        self::gatherInfo();
-    }
-
     public static function gatherInfo()
     {
         if (count(self::$themes)) {
@@ -38,11 +33,13 @@ class Theme
 
     public static function all()
     {
+        self::gatherInfo();
         return self::$themes;
     }
 
     public static function getFrontend()
     {
+        self::gatherInfo();
         return array_filter(self::$themes, function ($theme) {
             return $theme->type == 'frontend';
         });
@@ -50,6 +47,7 @@ class Theme
 
     public static function getBackend()
     {
+        self::gatherInfo();
         return array_filter(self::$themes, function ($theme) {
             return $theme->type == 'backend';
         });
@@ -57,6 +55,7 @@ class Theme
 
     private static function themeInfo($name)
     {
+        self::gatherInfo();
         return isset(self::$themes[ $name ]) ? self::$themes[ $name ] : false;
     }
 }
