@@ -149,6 +149,19 @@
     });
 
     /**
+     * 404 Error Catching...writes to the log what url 404'd on
+     */
+    App::error(function (Exception $exception, $code) {
+        if ($exception instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException) {
+            Log::error('NotFoundHttpException Route: '.Request::url());
+        }
+
+        if (Config::get('app.debug', false) === true) {
+            Log::error($exception);
+        }
+    });
+
+    /**
      * Grab the database config vars, make them overload the Config
      *
      **/

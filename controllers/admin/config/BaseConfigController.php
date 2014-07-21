@@ -2,18 +2,17 @@
 
 use Cysha\Modules\Core as Core;
 use Cysha\Modules\Core\Controllers\Admin\BaseAdminController as BAC;
+use URL;
+use Redirect;
+use Input;
 
 class BaseConfigController extends BAC
 {
-    public function __construct(\URL $url, \Input $input, \Redirect $redirect)
+    public function __construct()
     {
         parent::__construct();
 
-        $this->url = $url;
-        $this->input = $input;
-        $this->redirect = $redirect;
-
-        $this->theme->breadcrumb()->add('Configuration Manager', $this->url->route('admin.config.index'));
+        $this->objTheme->breadcrumb()->add('Configuration Manager', URL::route('admin.config.index'));
     }
 
     public function postStoreConfig()
@@ -61,9 +60,9 @@ class BaseConfigController extends BAC
         }
 
         if (count($failed)) {
-            return $this->redirect->back()->withError('Config Save partially failed. The following keys could not be saved: <ul><li>'.implode('</li><li>', $setting).'</li></ul>');
+            return Redirect::back()->withError('Config Save partially failed. The following keys could not be saved: <ul><li>'.implode('</li><li>', $setting).'</li></ul>');
         }
 
-        return $this->redirect->back()->withInfo('Config Saved');
+        return Redirect::back()->withInfo('Config Saved');
     }
 }
