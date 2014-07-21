@@ -3,7 +3,7 @@
 use Schema;
 use File;
 
-class InstallCommand extends BaseCommand
+class CmsInstallCommand extends BaseCommand
 {
     /**
      * The console command name.
@@ -57,9 +57,6 @@ class InstallCommand extends BaseCommand
                     continue;
                 }
                 $moduleName = $module->name();
-                if ($moduleName == 'core') {
-                    continue;
-                }
 
                 $this->info('Setting up the '.$moduleName.' module...');
                 if (File::exists($module->path().'/commands/InstallCommand.php')) {

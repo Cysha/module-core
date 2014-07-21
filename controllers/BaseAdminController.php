@@ -33,7 +33,7 @@ class BaseAdminController extends BaseController
 
         // then add the control panel stuff
         $this->addPageAssets();
-        //$this->adminMenu();
+        $this->adminMenu();
     }
 
     public function setTitle($title)

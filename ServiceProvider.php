@@ -1,6 +1,6 @@
 <?php namespace Cysha\Modules\Core;
 
-use Cysha\Modules\Core\Commands\InstallCommand;
+use Cysha\Modules\Core\Commands\CmsInstallCommand;
 use Cysha\Modules\Core\Commands\ModulesInstallCommand;
 use Illuminate\Foundation\AliasLoader;
 
@@ -17,7 +17,7 @@ class ServiceProvider extends BaseServiceProvider
     private function registerInstallCommand()
     {
         $this->app['cms:install'] = $this->app->share(function () {
-            return new InstallCommand($this->app);
+            return new CmsInstallCommand($this->app);
         });
         $this->commands('cms:install');
     }
