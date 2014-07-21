@@ -39,6 +39,15 @@ class CmsInstallCommand extends BaseCommand
             $this->info('Clearing out the System Cache...');
             $this->call('cache:clear');
 
+            $path = app_path().'/storage/migrations/';
+            if (File::exists($path)) {
+                $this->info('Clearing out the Module Migrations Folder...');
+                File::cleanDirectory($path);
+            } else {
+                $this->info('Creating the Module Migrations Folder...');
+                File::makeDirectory($path);
+            }
+
             if (Schema::hasTable('migrations')) {
                 $this->info('Clearing out the database...');
                 $this->call('migrate:reset');
@@ -52,28 +61,33 @@ class CmsInstallCommand extends BaseCommand
                 $seed = true;
             }
 
-            foreach (app('modules')->modules() as $module) {
-                if (!$module->enabled()) {
-                    continue;
-                }
-                $moduleName = $module->name();
+            $modules = app('modules')->modules();
+            if (count($modules)) {
+                foreach ($modules as $module) {
+                    if (!$module->enabled()) {
+                        continue;
+                    }
+                    $moduleName = $module->name();
 
-                $this->info('Setting up the '.$moduleName.' module...');
-                if (File::exists($module->path().'/commands/InstallCommand.php')) {
-                    $this->comment('Installing the '.$moduleName.' module...');
-                    $this->call('modules:install', ['module' => $moduleName]);
-                }
+                    $this->info('Setting up the '.$moduleName.' module...');
+                    $this->comment($module->path().'/commands/InstallCommand.php');
+                    if (File::exists($module->path().'/commands/InstallCommand.php')) {
+                        $this->comment('Running the dependency installer for the '.$moduleName.' module...');
+                        $this->call('modules:install', ['module' => $moduleName]);
+                    }
 
-                $this->comment('Migrating module...');
-                $this->call('modules:migrate', ['module' => $moduleName]);
+                    $this->comment('Migrating module... '.$moduleName);
+                    $this->call('modules:migrate', ['module' => $moduleName]);
 
-                if ($seed) {
-                    $this->comment('Seeding module...');
-                    $this->call('modules:seed', ['module' => $moduleName]);
+                    if ($seed) {
+                        $this->comment('Seeding module... '.$moduleName);
+                        $this->call('modules:seed', ['module' => $moduleName]);
+                    }
                 }
             }
 
         }
+        $this->call('dump-autoload');
         $this->info('Done');
         $this->comment('=====================================');
         $this->comment('');
