@@ -13,10 +13,10 @@
             $themes = Cysha\Modules\Core\Models\Theme::{'get'.$set}();
 
             if ($set == 'frontend') {
-                $setting = 'app.theme';
+                $setting = 'core::app.themes.frontend';
                 $settingValue = Config::get($setting, 'default');
             } else {
-                $setting = 'app.theme-admin';
+                $setting = 'core::app.themes.backend';
                 $settingValue = Config::get($setting, 'default-admin');
             }
         ?>
