@@ -42,7 +42,12 @@
                         <td>
                             @if($settingValue == $theme->dir)
                                 <a href="#" class="btn btn-default btn-sm" disabled> Active </a>
-                            @else { { { {{ Form::open(array('method' => 'post', 'url' => URL::Route('admin.config.store'))) }}{ Form::hidden($setting, $theme->dir) }}{ Form::submit('Activate?', array('class'=> 'btn btn-success btn-sm')) }}{ Form::close() }}
+                            @else
+
+                            {{ Form::open(array('method' => 'post', 'url' => URL::Route('admin.config.store'))) }}
+                                {{ Form::hidden($setting, $theme->dir) }}
+                                {{ Form::submit('Activate?', array('class'=> 'btn btn-success btn-sm')) }}
+                            {{ Form::close() }}
 
                             @endif
                         </td>
