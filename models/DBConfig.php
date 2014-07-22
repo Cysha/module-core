@@ -18,7 +18,7 @@ class DBConfig extends \Eloquent
 
         static::saved(function ($model) {
             Cache::forget('core.config_table');
-            //Event::fire('core.config.save', ['key' => ])
+            Event::fire('core.config.save', ['key' => $model->key, 'value' => $model->value]);
         });
     }
 

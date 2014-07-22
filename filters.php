@@ -186,7 +186,6 @@
                 }
 
                 // and then override it
-                echo \Debug::dump($item->value, 'overloading: '.$item->key);
                 Config::set($item->key, $item->value);
             }
         }
