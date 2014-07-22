@@ -3,6 +3,7 @@
 use App;
 use Cache;
 use DB;
+use Event;
 
 class DBConfig extends \Eloquent
 {
@@ -18,7 +19,7 @@ class DBConfig extends \Eloquent
 
         static::saved(function ($model) {
             Cache::forget('core.config_table');
-            Event::fire('core.config.save', ['key' => $model->key, 'value' => $model->value]);
+            Event::fire('core.config.saved', [$model->key, $model->value]);
         });
     }
 
