@@ -84,14 +84,24 @@ class BaseAdminController extends BaseController
             // process any acp_menus this module might have
             if (Config::has($name.'::admin.acp_menu')) {
                 foreach (Config::get($name.'::admin.acp_menu') as $section => $menu) {
-                    $acp[$section] = isset($acp[$section]) ? array_merge($acp[$section], $menu) : $menu;
+                    if (is_array($menu)) {
+                        $acp[$section] = array_merge($acp[$section], $menu);
+                        continue;
+                    }
+
+                    $acp[$section] = $menu;
                 }
             }
 
             // process any config menus this module might have
             if (Config::has($name.'::admin.config_menu')) {
                 foreach (Config::get($name.'::admin.config_menu') as $section => $menu) {
-                    $inline[$section] = isset($inline[$section]) ? array_merge($inline[$section], $menu) : $menu;
+                    if (is_array($menu)) {
+                        $inline[$section] = array_merge($inline[$section], $menu);
+                        continue;
+                    }
+
+                    $inline[$section] = $menu;
                 }
             }
 
