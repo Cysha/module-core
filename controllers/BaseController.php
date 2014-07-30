@@ -22,7 +22,7 @@ class BaseController extends Controller
      * The theme object
      * @var object
      */
-    protected $objTheme;
+    public $objTheme;
 
     /**
      * The theme to load

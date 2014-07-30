@@ -18,6 +18,12 @@ class BaseAdminController extends BaseController
     public $layout = 'default';
 
     /**
+     * The theme object
+     * @var object
+     */
+    public $objTheme;
+
+    /**
      * The theme to load
      * @var string
      */
