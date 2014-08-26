@@ -4,7 +4,7 @@
 
 /*
 |--------------------------------------------------------------------------
-| View Events
+| Events
 |--------------------------------------------------------------------------
 */
     View::composer('theme.*::layouts.*', function ($view) {
@@ -185,18 +185,8 @@
                     continue;
                 }
 
-                // see if we can gather the settings info
-                $key = implode('.', [$item->group, $item->item]);
-                if ($item->namespace !== null) {
-                    $key = $item->namespace.'::'.$key;
-                }
-
-
-                //fix an issue with no group on the setting
-                $key = str_replace('::.', '::', $key);
-
                 // and then override it
-                Config::set($key, $item->value);
+                Config::set($item->key, $item->value);
             }
         }
     });

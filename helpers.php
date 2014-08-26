@@ -17,6 +17,19 @@ if (!function_exists('is_number')) {
     }
 }
 
+if (!function_exists('partial')) {
+    function partial($view)
+    {
+        $theme = \Config::get('core::app.themes.frontend');
+        $viewStr = 'theme.'.$theme.'::views.modules.'.str_replace('::', '.', $view);
+        if (\View::exists($viewStr)) {
+            $view = $viewStr;
+        }
+
+        return $view;
+    }
+}
+
 if (!function_exists('date_array')) {
     /**
      * Compiles a list of dates to return
@@ -39,13 +52,23 @@ if (!function_exists('date_carbon')) {
     {
         if (!Config::has('core::module.date-format')) {
             return $value;
+        } else {
+            if ($format === null) {
+                $format = Config::get('core::module.date-format');
+            }
         }
 
-        if ($format === null) {
-            $format = Config::get('core::module.date-format');
+        if (is_number($value)) {
+            $carbon = \Carbon\Carbon::createFromTimeStamp($value);
+        } else {
+            $carbon = \Carbon\Carbon::parse($value);
         }
 
-        return \Carbon\Carbon::parse($value)->format($format);
+        if ($format !== null) {
+            $carbon = $carbon->format($format);
+        }
+
+        return $carbon;
     }
 }
 
@@ -61,6 +84,13 @@ if (!function_exists('date_ago')) {
     function date_ago($string)
     {
         return \Carbon\Carbon::createFromTimeStamp(strtotime($string))->diffForHumans();
+    }
+}
+
+if (!function_exists('date_difference')) {
+    function date_difference($string)
+    {
+        return \Carbon\Carbon::now()->subSeconds($string)->diffForHumans();
     }
 }
 
