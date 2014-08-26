@@ -18,6 +18,12 @@ class BaseAdminController extends BaseController
     public $layout = 'default';
 
     /**
+     * The theme object
+     * @var object
+     */
+    public $objTheme;
+
+    /**
      * The theme to load
      * @var string
      */
@@ -84,14 +90,14 @@ class BaseAdminController extends BaseController
             // process any acp_menus this module might have
             if (Config::has($name.'::admin.acp_menu')) {
                 foreach (Config::get($name.'::admin.acp_menu') as $section => $menu) {
-                    $acp[$section] = isset($acp[$section]) ? array_merge($acp[$section], $menu) : $menu;
+                    $acp[$section] = !empty($acp[$section]) ? array_merge($acp[$section], $menu) : $menu;
                 }
             }
 
             // process any config menus this module might have
             if (Config::has($name.'::admin.config_menu')) {
                 foreach (Config::get($name.'::admin.config_menu') as $section => $menu) {
-                    $inline[$section] = isset($inline[$section]) ? array_merge($inline[$section], $menu) : $menu;
+                    $inline[$section] = !empty($inline[$section]) ? array_merge($inline[$section], $menu) : $menu;
                 }
             }
 

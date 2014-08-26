@@ -22,7 +22,7 @@ class BaseController extends Controller
      * The theme object
      * @var object
      */
-    protected $objTheme;
+    public $objTheme;
 
     /**
      * The theme to load
@@ -112,6 +112,18 @@ class BaseController extends Controller
 
         return false;
     }
+
+    /**
+     *
+     *
+     * @param  string $title
+     * @param  string $seperator
+     */
+    public function setTitle($title, $seperator = ' | ')
+    {
+        $this->objTheme->prependTitle($title.$seperator);
+    }
+
     /**
      * Verifies the layout exists before being set
      *
@@ -142,7 +154,7 @@ class BaseController extends Controller
      * @param  string $module Overloads the module to use this name instead
      * @return string
      */
-    public function moduleNamespace($var = null, $module = null)
+    public function getModuleNamespace($var = null, $module = null)
     {
         $module = strtolower($module === null ? $this->module : $module);
 
@@ -162,7 +174,7 @@ class BaseController extends Controller
      */
     public function getConfig($key, $default = null)
     {
-        return Config::get($this->moduleNamespace($key), $default);
+        return Config::get($this->getModuleNamespace($key), $default);
     }
 
     /**
@@ -170,12 +182,12 @@ class BaseController extends Controller
      *
      * @param string $view Path to the view file
      * @param array  $data Data to pass through to the view
-     * @param string $type Where the view is [Module, Theme, App, Partial, Custom]
+     * @param string $type Where the view is [Module, Theme, App, Custom]
      */
     public function setView($view, $data = [], $type = 'module')
     {
         $type = strtolower($type);
-        $supportedTypes = array('theme', 'app', 'module', 'partial', 'custom');
+        $supportedTypes = array('theme', 'app', 'module', 'custom');
 
         if (!in_array($type, $supportedTypes) && substr($type, 0, 6) !== 'module') {
             $type = 'watch';
@@ -189,17 +201,13 @@ class BaseController extends Controller
                     $type = 'of';
                     break;
 
-                case 'partial':
-                    $type = 'partial';
-                    break;
-
                 case 'custom':
                     $type = 'load';
                     break;
 
                 default:
                 case ($type === 'module' || substr($type, 0, 6) === 'module'):
-                    $module = null;
+                    $module = Str::lower($this->module);
                     if (Str::contains($type, ':')) {
                         $type = explode(':', $type);
                         $module = $type[1];
@@ -207,7 +215,7 @@ class BaseController extends Controller
                     }
 
                     $type = 'of';
-                    $view = $this->moduleNamespace($view, $module);
+                    $view = $this->getModuleNamespace($view, $module);
                     break;
             }
         }
@@ -215,10 +223,6 @@ class BaseController extends Controller
         $this->view = $view;
         $this->data = $data;
         $this->type = $type;
-
-        if ($type === 'partial') {
-            return $this->objTheme->$type($this->view, $this->data);
-        }
 
         return $this->objTheme->$type($this->view, $this->data)->render();
     }
