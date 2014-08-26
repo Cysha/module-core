@@ -56,6 +56,6 @@ class Theme
     private static function themeInfo($name)
     {
         self::gatherInfo();
-        return isset(self::$themes[ $name ]) ? self::$themes[ $name ] : false;
+        return isset(self::$themes[$name]) ? self::$themes[$name] : false;
     }
 }

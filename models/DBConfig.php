@@ -3,8 +3,9 @@
 use App;
 use Cache;
 use DB;
+use Event;
 
-class DBConfig extends \Eloquent
+class DBConfig extends BaseModel
 {
     public $table = 'config';
     public $timestamps = false;
@@ -18,6 +19,7 @@ class DBConfig extends \Eloquent
 
         static::saved(function ($model) {
             Cache::forget('core.config_table');
+            Event::fire('core.config.saved', [$model->key, $model->value]);
         });
     }
 
@@ -59,6 +61,18 @@ class DBConfig extends \Eloquent
     /**
      *
      **/
+    public function getKeyAttribute()
+    {
+        // see if we can gather the settings info
+        $key = implode('.', [$this->group, $this->item]);
+        if ($this->namespace !== null) {
+            $key = $this->namespace.'::'.$key;
+        }
+
+        //fix an issue with no group on the setting
+        return str_replace('::.', '::', $key);
+    }
+
     public function getValueAttribute($value)
     {
         return json_decode($value);
