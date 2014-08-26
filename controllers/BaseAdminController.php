@@ -42,11 +42,6 @@ class BaseAdminController extends BaseController
         $this->adminMenu();
     }
 
-    public function setTitle($title)
-    {
-        $this->title = $title;
-    }
-
     public function setActions(array $actions)
     {
         $this->actions = $actions;
