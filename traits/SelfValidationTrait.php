@@ -3,6 +3,7 @@
 use Illuminate\Support\MessageBag;
 use Validator;
 use Input;
+use Log;
 
 trait SelfValidationTrait
 {
@@ -32,6 +33,10 @@ trait SelfValidationTrait
     public static function boot()
     {
         parent::boot();
+
+        if (!isset(self::$rules)) {
+            return false;
+        }
 
         if (isset(static::$rules['creating']) && isset(static::$rules['updating'])) {
             static::creating(function ($model) {
@@ -165,10 +170,9 @@ trait SelfValidationTrait
     public function hydrateFromInput(array $input = array())
     {
         if (empty($input)) {
-
             $input = Input::only($this->fillable);
         } else {
-            $input = array_only(Input::all(), $this->fillable);
+            $input = array_only($input, $this->fillable);
         }
 
         $this->input = array_filter($input, 'strlen');
