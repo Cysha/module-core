@@ -39,6 +39,9 @@ class CmsInstallCommand extends BaseCommand
             $this->info('Clearing out the System Cache...');
             $this->call('cache:clear');
 
+            $this->info('Generating Secure Key...');
+            $this->call('key:generate');
+
             $path = app_path().'/storage/migrations/';
             if (File::exists($path)) {
                 $this->info('Clearing out the Module Migrations Folder...');
