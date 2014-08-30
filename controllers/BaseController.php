@@ -121,6 +121,9 @@ class BaseController extends Controller
      */
     public function setTitle($title, $seperator = ' | ')
     {
+        if (!is_object($this->objTheme)) {
+            return false;
+        }
         $this->objTheme->prependTitle($title.$seperator);
     }
 
