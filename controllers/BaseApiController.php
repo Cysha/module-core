@@ -22,10 +22,7 @@ class BaseApiController extends BaseController
             $reply['data'] = $data;
         }
 
-        $response = Response::make($reply, $status);
-
-        $response->header('Content-Type', 'text/json');
-        return $response;
+        return Response::json($reply, $status);
     }
 
     /**
