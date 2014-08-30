@@ -1,5 +1,7 @@
 <?php namespace Cysha\Modules\Core\Controllers;
 
+use Illuminate\Support\Facades\Response;
+
 class BaseApiController extends BaseController
 {
 
@@ -20,7 +22,10 @@ class BaseApiController extends BaseController
             $reply['data'] = $data;
         }
 
-        return $reply;
+        $response = Response::make($reply, $status);
+
+        $response->header('Content-Type', 'text/json');
+        return $response;
     }
 
     /**

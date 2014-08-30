@@ -202,6 +202,7 @@
 
         if ($response instanceof Illuminate\Http\Response) {
             $output = $response->getOriginalContent();
+
             // Clean comments
             $output = preg_replace('/<!--([^\[|(<!)].*)/', '', $output);
             $output = preg_replace('/(?<!\S)\/\/\s*[^\r\n]*/', '', $output);
