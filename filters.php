@@ -159,6 +159,17 @@
         if (Config::get('app.debug', false) === true) {
             Log::error($exception);
         }
+
+        if (Request::is(\Config::get('core::routes.paths.api', 'api').'/*')) {
+            return Response::json(array(
+                'status'  => 404,
+                'message' => 'Invalid URL',
+            ), 404);
+        }
+
+        $objTheme = Theme::uses('darchoods-theme')->layout('col-1');
+
+        return $objTheme->scope('partials.theme.errors.404')->render(404);
     });
 
     /**
