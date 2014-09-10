@@ -42,21 +42,19 @@ class CmsInstallCommand extends BaseCommand
             $this->info('Generating Secure Key...');
             $this->call('key:generate');
 
-            $path = app_path().'/storage/migrations/';
-            if (File::exists($path)) {
-                $this->info('Clearing out the Module Migrations Folder...');
-                File::cleanDirectory($path);
-            } else {
-                $this->info('Creating the Module Migrations Folder...');
-                File::makeDirectory($path);
-            }
-
             if (Schema::hasTable('migrations')) {
                 $this->info('Clearing out the database...');
                 $this->call('migrate:reset');
             } else {
                 $this->info('Setting up the database...');
                 $this->call('migrate:install');
+            }
+
+            $path = app_path().'/storage/migrations/';
+            if (File::exists($path)) {
+                $this->info('Clearing out the Module Migrations Folder...');
+                File::cleanDirectory($path);
+                File::deleteDirectory($path);
             }
 
             $seed = false;

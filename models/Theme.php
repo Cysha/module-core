@@ -1,6 +1,7 @@
 <?php namespace Cysha\Modules\Core\Models;
 
 use File;
+use Config;
 
 class Theme
 {
@@ -53,9 +54,29 @@ class Theme
         });
     }
 
+    public static function getLayouts()
+    {
+        $theme = self::themeInfo(Config::get('core::app.themes.frontend', 'default'));
+        $dir = key($theme);
+
+        if (!File::isDirectory($dir)) {
+            return [];
+        }
+
+        $files = File::glob($dir.'/layouts/*.blade.php');
+        $files = array_map(function ($filename) {
+            $fn = explode('/', $filename);
+            return str_replace('.blade.php', '', end($fn));
+        }, $files);
+
+        return array_combine($files, $files) ?: [];
+    }
+
     private static function themeInfo($name)
     {
         self::gatherInfo();
-        return isset(self::$themes[$name]) ? self::$themes[$name] : false;
+        return array_filter(self::$themes, function ($theme) use ($name) {
+            return $theme->dir == $name;
+        });
     }
 }

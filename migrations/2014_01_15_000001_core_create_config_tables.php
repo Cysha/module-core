@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 
-class CreateConfigTables extends Migration
+class CoreCreateConfigTables extends Migration
 {
     /**
      * Run the migrations.
