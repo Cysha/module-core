@@ -167,7 +167,7 @@
             ), 404);
         }
 
-        $objTheme = Theme::uses('darchoods-theme')->layout('col-1');
+        $objTheme = Theme::uses(Config::get('core::app.themes.frontend'))->layout('col-1');
 
         return $objTheme->scope('partials.theme.errors.404')->render(404);
     });

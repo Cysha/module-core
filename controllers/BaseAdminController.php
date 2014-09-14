@@ -15,7 +15,7 @@ class BaseAdminController extends BaseController
      * Controls the layout for a controller
      * @var string
      */
-    public $layout = 'default';
+    public $layout = 'col-1';
 
     /**
      * The theme object
