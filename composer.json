@@ -15,7 +15,7 @@
         "anahkiasen/former"                 : "~3.4",
         "vespakoen/menu"                    : "dev-master",
 
-        "dingo/api"                         : "dev-master"
+        "dingo/api"                         : "0.*"
     },
     "repositories": [
         { "type": "vcs", "url": "https://github.com/cysha/installers" }
