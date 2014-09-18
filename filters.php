@@ -151,25 +151,46 @@
     /**
      * 404 Error Catching...writes to the log what url 404'd on
      */
-    App::error(function (Exception $exception, $code) {
-        if ($exception instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException) {
-            Log::error('NotFoundHttpException Route: '.Request::url());
+    App::error(function (Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException $exception, $code) {
+        if (Request::is(\Config::get('core::routes.paths.api', 'api').'/*')) {
+            return Response::json(array(
+                'status'  => $code,
+                'message' => $exception->getMessage(),
+            ), $code);
         }
 
+        $objTheme = Theme::uses(Config::get('core::app.themes.frontend', 'default'))->layout('col-1');
+        return $objTheme->scope('partials.theme.errors.403', compact('code'))->render($code);
+    });
+
+    App::error(function (\Symfony\Component\HttpKernel\Exception\NotFoundHttpException $exception, $code) {
+        if (Request::is(\Config::get('core::routes.paths.api', 'api').'/*')) {
+            return Response::json(array(
+                'status'  => $code,
+                'message' => $exception->getMessage(),
+            ), $code);
+        }
+
+        $objTheme = Theme::uses(Config::get('core::app.themes.frontend', 'default'))->layout('col-1');
+        return $objTheme->scope('partials.theme.errors.404', compact('code'))->render($code);
+    });
+
+    App::error(function (Exception $exception, $code) {
         if (Config::get('app.debug', false) === true) {
             Log::error($exception);
+            return;
         }
 
         if (Request::is(\Config::get('core::routes.paths.api', 'api').'/*')) {
             return Response::json(array(
-                'status'  => 404,
-                'message' => 'Invalid URL',
-            ), 404);
+                'status'  => $code,
+                'message' => $exception->getMessage(),
+            ), $code);
         }
 
-        $objTheme = Theme::uses(Config::get('core::app.themes.frontend'))->layout('col-1');
+        $objTheme = Theme::uses(Config::get('core::app.themes.frontend', 'default'))->layout('col-1');
 
-        return $objTheme->scope('partials.theme.errors.404')->render(404);
+        return $objTheme->scope('partials.theme.errors.whoops', compact('code'))->render($code);
     });
 
     /**
