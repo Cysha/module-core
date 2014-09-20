@@ -1,8 +1,9 @@
 <?php namespace Cysha\Modules\Core\Controllers;
 
 use Illuminate\Support\Facades\Response;
+use Dingo\Api\Routing\Controller;
 
-class BaseApiController extends BaseController
+class BaseApiController extends Controller
 {
 
 
@@ -23,8 +24,8 @@ class BaseApiController extends BaseController
             $reply['data'] = $data;
         }
 
-        return $this->response->array($reply)->setStatusCode($status);
-        // return Response::json($reply, $status);
+        // return $this->response->array($reply)->setStatusCode($status);
+        return Response::json($reply, $status);
     }
 
     /**

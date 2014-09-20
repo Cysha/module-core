@@ -1,7 +1,7 @@
 <?php namespace Cysha\Modules\Core\Controllers;
 
-// use Illuminate\Routing\Controller;
-use Dingo\Api\Routing\Controller;
+use Illuminate\Routing\Controller;
+// use Dingo\Api\Routing\Controller;
 use Debugbar;
 use Theme;
 use Config;
