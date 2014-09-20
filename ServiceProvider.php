@@ -34,7 +34,7 @@ class ServiceProvider extends BaseServiceProvider
     {
         $serviceProviders = [
             'Stolz\Assets\ManagerServiceProvider',          # https://github.com/Stolz/Assets
-            'Dingo\Api\ApiServiceProvider',
+            'Dingo\Api\Providers\ApiServiceProvider',       # https://github.com/dingo/api
             'Teepluss\Theme\ThemeServiceProvider',          # https://github.com/teepluss/laravel4-theme
             'Menu\MenuServiceProvider',                     # https://github.com/vespakoen/menu
             'Former\FormerServiceProvider',                 # https://github.com/Anahkiasen/former

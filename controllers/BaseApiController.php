@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Response;
 class BaseApiController extends BaseController
 {
 
+
     /**
      * Alias method for sending an error back
      *
@@ -22,7 +23,8 @@ class BaseApiController extends BaseController
             $reply['data'] = $data;
         }
 
-        return Response::json($reply, $status);
+        return $this->response->array($reply)->setStatusCode($status);
+        // return Response::json($reply, $status);
     }
 
     /**
