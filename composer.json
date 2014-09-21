@@ -13,7 +13,7 @@
         "teepluss/theme"                    : "dev-master",
         "stolz/assets"                      : "dev-master",
         "anahkiasen/former"                 : "~3.4",
-        "vespakoen/menu"                    : "dev-master",
+        "vespakoen/menu"                    : "dev-master"
     },
     "repositories": [
         { "type": "vcs", "url": "https://github.com/cysha/installers" }

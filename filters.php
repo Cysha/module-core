@@ -1,7 +1,5 @@
 <?php
 
-// Route::when(Config::get('core::routes.paths.api').'/*', 'auth.basic');
-
 /*
 |--------------------------------------------------------------------------
 | Events
@@ -148,22 +146,34 @@
 
     });
 
-    /**
-     * 404 Error Catching...writes to the log what url 404'd on
-     */
-    App::error(function (Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException $exception, $code) {
+    App::error(function (Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException $exception, $code) {
+        // dd(get_class($exception));
         if (Request::is(\Config::get('core::routes.paths.api', 'api').'/*')) {
             return Response::json(array(
                 'status'  => $code,
-                'message' => $exception->getMessage(),
+                'message' => 'Authentication is required to access this resource.',
             ), $code);
         }
 
         $objTheme = Theme::uses(Config::get('core::app.themes.frontend', 'default'))->layout('col-1');
-        return $objTheme->scope('partials.theme.errors.403', compact('code'))->render($code);
+        return $objTheme->scope('partials.theme.errors.401', compact('code'))->render($code);
+    });
+
+    App::error(function (Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException $exception, $code) {
+        // dd(($exception));
+        if (Request::is(\Config::get('core::routes.paths.api', 'api').'/*')) {
+            return Response::json(array(
+                'status'  => $code,
+                'message' => 'A request was made to a resource using an unsupported request method.',
+            ), $code);
+        }
+
+        $objTheme = Theme::uses(Config::get('core::app.themes.frontend', 'default'))->layout('col-1');
+        return $objTheme->scope('partials.theme.errors.405', compact('code'))->render($code);
     });
 
     App::error(function (\Symfony\Component\HttpKernel\Exception\NotFoundHttpException $exception, $code) {
+        // dd(get_class($exception));
         if (Request::is(\Config::get('core::routes.paths.api', 'api').'/*')) {
             return Response::json(array(
                 'status'  => $code,
@@ -176,6 +186,7 @@
     });
 
     App::error(function (Exception $exception, $code) {
+        // dd(get_class($exception));
         if (Config::get('app.debug', false) === true) {
             Log::error($exception);
             return;

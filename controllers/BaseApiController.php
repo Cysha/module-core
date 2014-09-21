@@ -1,11 +1,15 @@
 <?php namespace Cysha\Modules\Core\Controllers;
 
 use Illuminate\Support\Facades\Response;
-use Dingo\Api\Routing\Controller;
+//use Dingo\Api\Routing\Controller;
 
-class BaseApiController extends Controller
+class BaseApiController extends BaseController
 {
 
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
     /**
      * Alias method for sending an error back

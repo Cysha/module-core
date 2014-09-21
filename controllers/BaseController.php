@@ -1,7 +1,7 @@
 <?php namespace Cysha\Modules\Core\Controllers;
 
-use Illuminate\Routing\Controller;
-// use Dingo\Api\Routing\Controller;
+// use Illuminate\Routing\Controller;
+use Dingo\Api\Routing\Controller;
 use Debugbar;
 use Theme;
 use Config;
@@ -57,6 +57,8 @@ class BaseController extends Controller
 
     public function __construct()
     {
+        // parent::__construct();
+
         // set some theme options up
         if (!isset($this->themeName)) {
             $this->themeName = Config::get('core::app.themes.frontend', 'default');
