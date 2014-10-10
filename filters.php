@@ -212,7 +212,7 @@
         App::error(function (\PDOException $e, $code) {
             Log::error('FATAL DATABASE ERROR: ' . $code . ' = ' . $e->getMessage());
 
-            if (App::environment('local')) {
+            if (Config::get('app.debug', false) === true) {
                 $message = explode(' ', $e->getMessage());
                 $dbCode = rtrim($message[1], ']');
                 $dbCode = trim($dbCode, '[');
