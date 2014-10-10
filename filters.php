@@ -147,7 +147,6 @@
     });
 
     App::error(function (Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException $exception, $code) {
-        // dd(get_class($exception));
         if (Request::is(\Config::get('core::routes.paths.api', 'api').'/*')) {
             return Response::json(array(
                 'status'  => $code,
@@ -160,7 +159,6 @@
     });
 
     App::error(function (Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException $exception, $code) {
-        // dd(($exception));
         if (Request::is(\Config::get('core::routes.paths.api', 'api').'/*')) {
             return Response::json(array(
                 'status'  => $code,
@@ -173,7 +171,6 @@
     });
 
     App::error(function (\Symfony\Component\HttpKernel\Exception\NotFoundHttpException $exception, $code) {
-        // dd(get_class($exception));
         if (Request::is(\Config::get('core::routes.paths.api', 'api').'/*')) {
             return Response::json(array(
                 'status'  => $code,
@@ -203,6 +200,55 @@
 
         return $objTheme->scope('partials.theme.errors.whoops', compact('code'))->render($code);
     });
+
+    /** http://www.laravel-tricks.com/tricks/using-appbefore-to-trapcatch-pdoexception-errors */
+    App::before(function ($request, $response) {
+        /**
+         * Laravel $code is always 500
+         * message format:
+         * SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it.
+         * SQLSTATE[HY000] [1049] Unknown database 'blah'
+         */
+        App::error(function (\PDOException $e, $code) {
+            Log::error('FATAL DATABASE ERROR: ' . $code . ' = ' . $e->getMessage());
+
+            if (App::environment('local')) {
+                $message = explode(' ', $e->getMessage());
+                $dbCode = rtrim($message[1], ']');
+                $dbCode = trim($dbCode, '[');
+
+                // codes specific to MySQL
+                switch ($dbCode) {
+                    case 1049:
+                        $userMessage = 'Unknown database - probably config error:';
+                        break;
+                    case 2002:
+                        $userMessage = 'DATABASE IS DOWN:';
+                        break;
+                    case 1045:
+                        $userMessage = 'Incorrect DB Credentials:';
+                        break;
+                    default:
+                        $userMessage = 'Untrapped Error:';
+                        break;
+                }
+
+                $userMessage = $userMessage . '<br>' . $e->getMessage();
+
+            } else {
+                // be apologetic but never specific ;)
+                $userMessage = 'We are currently experiencing a site wide issue. We are sorry for the inconvenience!';
+            }
+
+            $objTheme = Theme::uses(Config::get('core::app.themes.frontend', 'default'))->layout('col-1');
+
+            return $objTheme->scope('partials.theme.errors.whoops', [
+                'code' => $code,
+                'message' => $userMessage,
+            ])->render($code);
+        });
+    });
+
 
     /**
      * Grab the database config vars, make them overload the Config
