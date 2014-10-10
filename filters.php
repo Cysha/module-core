@@ -182,6 +182,19 @@
         return $objTheme->scope('partials.theme.errors.404', compact('code'))->render($code);
     });
 
+
+    App::error(function (\Cysha\Modules\Core\Helpers\Forms\FormValidationException $e, $code) {
+        if (Request::is(\Config::get('core::routes.paths.api', 'api').'/*')) {
+            return Response::json(array(
+                'status'  => $code,
+                'message' => $exception->getMessage(),
+            ), $code);
+        }
+
+        return Redirect::back()->withInput()->withErrors($e->getErrors())->withError(Lang::get('core::validation.failed'));
+    });
+
+
     App::error(function (Exception $exception, $code) {
         // dd(get_class($exception));
         if (Config::get('app.debug', false) === true) {
@@ -203,12 +216,6 @@
 
     /** http://www.laravel-tricks.com/tricks/using-appbefore-to-trapcatch-pdoexception-errors */
     App::before(function ($request, $response) {
-        /**
-         * Laravel $code is always 500
-         * message format:
-         * SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it.
-         * SQLSTATE[HY000] [1049] Unknown database 'blah'
-         */
         App::error(function (\PDOException $e, $code) {
             Log::error('FATAL DATABASE ERROR: ' . $code . ' = ' . $e->getMessage());
 
