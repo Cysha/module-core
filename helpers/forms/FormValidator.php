@@ -2,6 +2,7 @@
 
 use Illuminate\Validation\Factory as Validator;
 use Illuminate\Validation\Validator as ValidatorInstance;
+use Lang;
 
 abstract class FormValidator
 {
@@ -22,10 +23,6 @@ abstract class FormValidator
     public function __construct(Validator $validator)
     {
         $this->validator = $validator;
-
-        if (method_exists($this, 'register')) {
-            $this->register();
-        }
     }
 
     /**
@@ -37,10 +34,31 @@ abstract class FormValidator
      */
     public function validate(array $formData)
     {
+        $this->authorizeUser();
+
         $this->validation = $this->validator->make($formData, $this->getValidationRules(), $this->getValidationMessages());
 
         if ($this->validation->fails()) {
-            throw new FormValidationException('Validation failed', $this->getValidationErrors());
+            throw new FormValidationException(Lang::get('core::forms.validation.title'), $this->getValidationErrors());
+        }
+
+        return true;
+    }
+
+    /**
+     * Check if the user is allowed to submit this form.
+     *
+     * @return mixed
+     * @throws FormUnauthorizedException
+     */
+    public function authorizeUser()
+    {
+        if (!method_exists($this, 'authorize')) {
+            return true;
+        }
+
+        if ($this->authorize() !== true) {
+            throw new FormUnauthorizedException(Lang::get('core::forms.unauthorized.title'), $this->getValidationErrors());
         }
 
         return true;
@@ -53,7 +71,7 @@ abstract class FormValidator
      */
     protected function getValidationRules()
     {
-        return $this->processRules($this->rules);
+        return $this->processRules($this->_rules());
     }
 
     /**
@@ -63,7 +81,9 @@ abstract class FormValidator
      */
     protected function getValidationMessages()
     {
-        return isset($this->messages) ? $this->messages : [];
+        $messages = $this->_messages();
+
+        return isset($messages) ? $messages : [];
     }
 
     /**
@@ -73,7 +93,11 @@ abstract class FormValidator
      */
     protected function getValidationErrors()
     {
-        return $this->validation->errors();
+        if (method_exists($this->validation, 'errors')) {
+            return $this->validation->errors();
+        }
+
+        return with(new \Illuminate\Support\MessageBag);
     }
 
     /**

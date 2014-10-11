@@ -191,7 +191,18 @@
             ), $code);
         }
 
-        return Redirect::back()->withInput()->withErrors($e->getErrors())->withError(Lang::get('core::validation.failed'));
+        return Redirect::back()->withInput()->withErrors($e->getErrors())->withError(Lang::get('core::forms.validation.message'));
+    });
+
+    App::error(function (\Cysha\Modules\Core\Helpers\Forms\FormUnauthorizedException $e, $code) {
+        if (Request::is(\Config::get('core::routes.paths.api', 'api').'/*')) {
+            return Response::json(array(
+                'status'  => $code,
+                'message' => $exception->getMessage(),
+            ), $code);
+        }
+
+        return Redirect::back()->withInput()->withError(Lang::get('core::forms.authorization.message'));
     });
 
 
