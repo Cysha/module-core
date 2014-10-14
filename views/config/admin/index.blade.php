@@ -6,6 +6,7 @@
 
         {{ Form::Config('core::app.google-analytics')->label('Google Analytics Code') }}
 
+        {{ Form::Config('core::app.force-secure', 'radio')->radios(['Yes' => ['value' => 'true'], 'No' => ['value' => 'false']])->label('Force HTTPS?') }}
         {{ Form::Config('core::app.debug', 'radio')->radios(['Yes' => ['value' => 'true'], 'No' => ['value' => 'false']])->label('Enable Debug?') }}
 
         <button class="btn-labeled btn btn-success pull-right" type="submit">

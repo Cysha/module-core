@@ -229,7 +229,7 @@ class BaseController extends Controller
         $this->data = $data;
         $this->type = $type;
 
-        return $this->objTheme->$type(partial($this->view), $this->data)->render();
+        return $this->objTheme->$type($this->view, $this->data)->render();
     }
 
     public function api($method, $route, $data = array())

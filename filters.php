@@ -147,6 +147,7 @@
     });
 
     App::error(function (Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException $exception, $code) {
+        // dd(get_class($exception));
         if (Request::is(\Config::get('core::routes.paths.api', 'api').'/*')) {
             return Response::json(array(
                 'status'  => $code,
@@ -159,6 +160,7 @@
     });
 
     App::error(function (Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException $exception, $code) {
+        // dd(($exception));
         if (Request::is(\Config::get('core::routes.paths.api', 'api').'/*')) {
             return Response::json(array(
                 'status'  => $code,
@@ -171,6 +173,7 @@
     });
 
     App::error(function (\Symfony\Component\HttpKernel\Exception\NotFoundHttpException $exception, $code) {
+        // dd(get_class($exception));
         if (Request::is(\Config::get('core::routes.paths.api', 'api').'/*')) {
             return Response::json(array(
                 'status'  => $code,
@@ -181,30 +184,6 @@
         $objTheme = Theme::uses(Config::get('core::app.themes.frontend', 'default'))->layout('col-1');
         return $objTheme->scope('partials.theme.errors.404', compact('code'))->render($code);
     });
-
-
-    App::error(function (\Cysha\Modules\Core\Helpers\Forms\FormValidationException $e, $code) {
-        if (Request::is(\Config::get('core::routes.paths.api', 'api').'/*')) {
-            return Response::json(array(
-                'status'  => $code,
-                'message' => $exception->getMessage(),
-            ), $code);
-        }
-
-        return Redirect::back()->withInput()->withErrors($e->getErrors())->withError(Lang::get('core::forms.validation.message'));
-    });
-
-    App::error(function (\Cysha\Modules\Core\Helpers\Forms\FormUnauthorizedException $e, $code) {
-        if (Request::is(\Config::get('core::routes.paths.api', 'api').'/*')) {
-            return Response::json(array(
-                'status'  => $code,
-                'message' => $exception->getMessage(),
-            ), $code);
-        }
-
-        return Redirect::back()->withInput()->withError(Lang::get('core::forms.authorization.message'));
-    });
-
 
     App::error(function (Exception $exception, $code) {
         // dd(get_class($exception));
@@ -225,48 +204,15 @@
         return $objTheme->scope('partials.theme.errors.whoops', compact('code'))->render($code);
     });
 
-    /** http://www.laravel-tricks.com/tricks/using-appbefore-to-trapcatch-pdoexception-errors */
-    App::before(function ($request, $response) {
-        App::error(function (\PDOException $e, $code) {
-            Log::error('FATAL DATABASE ERROR: ' . $code . ' = ' . $e->getMessage());
-
-            if (Config::get('app.debug', false) === true) {
-                $message = explode(' ', $e->getMessage());
-                $dbCode = rtrim($message[1], ']');
-                $dbCode = trim($dbCode, '[');
-
-                // codes specific to MySQL
-                switch ($dbCode) {
-                    case 1049:
-                        $userMessage = 'Unknown database - probably config error:';
-                        break;
-                    case 2002:
-                        $userMessage = 'DATABASE IS DOWN:';
-                        break;
-                    case 1045:
-                        $userMessage = 'Incorrect DB Credentials:';
-                        break;
-                    default:
-                        $userMessage = 'Untrapped Error:';
-                        break;
-                }
-
-                $userMessage = $userMessage . '<br>' . $e->getMessage();
-
-            } else {
-                // be apologetic but never specific ;)
-                $userMessage = 'We are currently experiencing a site wide issue. We are sorry for the inconvenience!';
-            }
-
-            $objTheme = Theme::uses(Config::get('core::app.themes.frontend', 'default'))->layout('col-1');
-
-            return $objTheme->scope('partials.theme.errors.whoops', [
-                'code' => $code,
-                'message' => $userMessage,
-            ])->render($code);
-        });
+    /**
+     * Grab the database config vars, make them overload the Config
+     *
+     **/
+    App::before(function ($request) {
+        if (!Request::secure() && (bool)\Config::get('core::app.force-secure', false) === true) {
+            return Redirect::secure(Request::path());
+        }
     });
-
 
     /**
      * Grab the database config vars, make them overload the Config
