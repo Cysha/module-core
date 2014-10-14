@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Response;
 
 class BaseApiController extends BaseController
 {
+    use \Dingo\Api\Routing\ControllerTrait;
 
     public function __construct()
     {
