@@ -1,6 +1,7 @@
 <?php namespace Cysha\Modules\Core\Controllers;
 
 use Illuminate\Support\Facades\Response;
+use Dingo\Api\Http\ResponseFactory;
 
 class BaseApiController extends BaseController
 {
@@ -9,6 +10,8 @@ class BaseApiController extends BaseController
     public function __construct()
     {
         parent::__construct();
+
+        $this->setResponseFactory(\App::make('Dingo\Api\Http\ResponseFactory'));
     }
 
     /**
@@ -20,16 +23,16 @@ class BaseApiController extends BaseController
     public function sendResponse($message = 'ok', $status = 200, $data = array())
     {
         $reply = array(
-            'status'  => $status,
-            'message' => $message,
+            'message'     => $message,
+            'status_code' => $status,
         );
 
         if (!empty($data)) {
             $reply['data'] = $data;
         }
 
-        // return $this->response->array($reply)->setStatusCode($status);
-        return Response::json($reply, $status);
+        return $this->response->array($reply)->setStatusCode($status);
+        // return Response::json($reply, $status);
     }
 
     /**
