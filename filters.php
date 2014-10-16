@@ -316,6 +316,9 @@
 
         if ($response instanceof Illuminate\Http\Response) {
             $output = $response->getOriginalContent();
+            if (!is_string($output)) {
+                return;
+            }
 
             // Clean comments
             $output = preg_replace('/<!--([^\[|(<!)].*)/', '', $output);
