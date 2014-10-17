@@ -7,6 +7,7 @@ use Config;
 use File;
 use Str;
 use API;
+use APP;
 
 class BaseController extends Controller
 {
@@ -63,18 +64,22 @@ class BaseController extends Controller
             $this->themeName = Config::get('core::app.themes.frontend', 'default');
         }
 
-        $this->objTheme = Theme::uses($this->themeName)->layout($this->layout);
+        try {
+            $this->objTheme = Theme::uses($this->themeName)->layout($this->layout);
+        } catch(\Teepluss\Theme\UnknownThemeException $e) {
+            $this->objTheme = Theme::uses('default')->layout($this->layout);
+        }
 
         // figure out which module we are currently in
         $this->module = $this->getModule($this);
 
         // start a debug timer going
-        Debugbar::startMeasure('module_timer', 'Module Run');
+        class_exists('Debugbar') && App::environment() !== 'testing' ? Debugbar::startMeasure('module_timer', 'Module Run') : null;
     }
 
     public function __destruct()
     {
-        Debugbar::stopMeasure('module_timer');
+        class_exists('Debugbar') && App::environment() !== 'testing' ? Debugbar::stopMeasure('module_timer') : null;
     }
 
     /**
