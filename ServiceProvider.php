@@ -2,6 +2,7 @@
 
 use Cysha\Modules\Core\Commands\CmsInstallCommand;
 use Cysha\Modules\Core\Commands\ModulesInstallCommand;
+use Cysha\Modules\Core\Commands\ModulesTestCommand;
 use Illuminate\Foundation\AliasLoader;
 
 class ServiceProvider extends BaseServiceProvider
@@ -10,6 +11,7 @@ class ServiceProvider extends BaseServiceProvider
     {
         $this->registerInstallCommand();
         $this->registerModuleInstallCommand();
+        $this->registerModuleTestCommand();
 
         $this->registerOtherPackages();
     }
@@ -28,6 +30,14 @@ class ServiceProvider extends BaseServiceProvider
             return new ModulesInstallCommand($this->app);
         });
         $this->commands('modules:install');
+    }
+
+    private function registerModuleTestCommand()
+    {
+        $this->app['modules:test'] = $this->app->share(function () {
+            return new ModulesTestCommand($this->app);
+        });
+        $this->commands('modules:test');
     }
 
     private function registerOtherPackages()
