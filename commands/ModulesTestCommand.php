@@ -41,7 +41,7 @@ class ModulesTestCommand extends BaseCommand
         // grab a list of modules in the system
         $modules = ['None, Exit'];
         foreach ($this->app['files']->directories('app/modules/') as $dir) {
-            $modules[] = str_replace('app/modules/', '', $dir);
+            $modules[] = str_replace(['/', '\\', 'appmodules'], '', $dir);
         }
 
         // if we didnt specify any modules, ask the user which one we want
