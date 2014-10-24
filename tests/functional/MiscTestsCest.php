@@ -19,7 +19,7 @@ class MiscTestsCest
 
     public function test_the_api_404_filter(FunctionalTester $I)
     {
-        $I->wantTo('hit a page that shouldnt be there and make sure it fires the exception');
+        $I->wantTo('hit an api page that shouldnt be there and make sure it fires the exception');
 
         \PHPUnit_Framework_Assert::assertTrue(
             $I->seeExceptionThrown('Symfony\Component\HttpKernel\Exception\NotFoundHttpException', function () use ($I) {
