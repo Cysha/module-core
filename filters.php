@@ -171,6 +171,9 @@
     });
 
     App::error(function (\Symfony\Component\HttpKernel\Exception\NotFoundHttpException $exception, $code) {
+        if (Config::get('app.debug', false) === true) {
+            Log::error('URL Not Found: '.Request::url());
+        }
         if (Request::is(\Config::get('core::routes.paths.api', 'api').'/*')) {
             return Response::json(array(
                 'status'  => $code,
