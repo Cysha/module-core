@@ -1,43 +1,30 @@
 <?php namespace Cysha\Modules\Core;
 
-use Cysha\Modules\Core\Commands\CmsInstallCommand;
-use Cysha\Modules\Core\Commands\ModulesInstallCommand;
-use Cysha\Modules\Core\Commands\ModulesTestCommand;
 use Illuminate\Foundation\AliasLoader;
 
 class ServiceProvider extends BaseServiceProvider
 {
     public function register()
     {
-        $this->registerInstallCommand();
-        $this->registerModuleInstallCommand();
-        $this->registerModuleTestCommand();
-
+        $this->registerModuleCommands();
         $this->registerOtherPackages();
     }
 
-    private function registerInstallCommand()
+    private function registerModuleCommands()
     {
-        $this->app['cms:install'] = $this->app->share(function () {
-            return new CmsInstallCommand($this->app);
-        });
-        $this->commands('cms:install');
-    }
+        $commands = [
+            'cms:install'     => __NAMESPACE__.'\Commands\CmsInstallCommand',
+            'modules:install' => __NAMESPACE__.'\Commands\ModulesInstallCommand',
+            'modules:test'    => __NAMESPACE__.'\Commands\ModulesTestCommand',
+            'themes:gulp'     => __NAMESPACE__.'\Commands\ThemesGulpCommand',
+        ];
 
-    private function registerModuleInstallCommand()
-    {
-        $this->app['modules:install'] = $this->app->share(function () {
-            return new ModulesInstallCommand($this->app);
-        });
-        $this->commands('modules:install');
-    }
-
-    private function registerModuleTestCommand()
-    {
-        $this->app['modules:test'] = $this->app->share(function () {
-            return new ModulesTestCommand($this->app);
-        });
-        $this->commands('modules:test');
+        foreach ($commands as $command => $class) {
+            $this->app[$command] = $this->app->share(function () use($class) {
+                return new $class($this->app);
+            });
+            $this->commands($command);
+        }
     }
 
     private function registerOtherPackages()

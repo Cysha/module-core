@@ -91,6 +91,7 @@ class ModulesTestCommand extends BaseCommand
 
         // Run baby, run
         $command = sprintf('vendor/bin/codecept run %1$s ../../app/modules/%2$s/tests/%1$s/%3$s', $suite, $module->name(), $file);
+        echo ' $ '.$command . PHP_EOL;
         system($command);
     }
 
