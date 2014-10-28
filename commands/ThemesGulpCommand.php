@@ -34,6 +34,7 @@ class ThemesGulpCommand extends BaseCommand
     {
         // grab some arguments
         $themeName = $this->argument('theme');
+        $task = $this->argument('task');
 
         // grab a list of themes in the system
         $themes = ['None, Exit'];
@@ -56,8 +57,12 @@ class ThemesGulpCommand extends BaseCommand
             return;
         }
 
+        if (empty($task)) {
+            $task = 'theme';
+        }
+
         // Run baby, run
-        $command = sprintf('cd public/themes/%1$s/ && gulp theme', $themeName);
+        $command = sprintf('cd public/themes/%1$s/ && gulp %2$s', $themeName, $task);
         echo ' $ '.$command . PHP_EOL;
         system($command);
     }
@@ -70,6 +75,7 @@ class ThemesGulpCommand extends BaseCommand
     {
         return array(
             array('theme', InputArgument::OPTIONAL, 'The name of theme.', '0'),
+            array('task', InputArgument::OPTIONAL, 'The task to run from the gulp file.', 'theme'),
         );
     }
 

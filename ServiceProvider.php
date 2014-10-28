@@ -34,6 +34,7 @@ class ServiceProvider extends BaseServiceProvider
             'Teepluss\Theme\ThemeServiceProvider',          # https://github.com/teepluss/laravel4-theme
             'Menu\MenuServiceProvider',                     # https://github.com/vespakoen/menu
             'Former\FormerServiceProvider',                 # https://github.com/Anahkiasen/former
+            'Liebig\Cron\CronServiceProvider',
         ];
 
         foreach ($serviceProviders as $sp) {
