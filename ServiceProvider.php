@@ -13,10 +13,11 @@ class ServiceProvider extends BaseServiceProvider
     private function registerModuleCommands()
     {
         $commands = [
-            'cms:install'     => __NAMESPACE__.'\Commands\CmsInstallCommand',
-            'modules:install' => __NAMESPACE__.'\Commands\ModulesInstallCommand',
-            'modules:test'    => __NAMESPACE__.'\Commands\ModulesTestCommand',
-            'themes:gulp'     => __NAMESPACE__.'\Commands\ThemesGulpCommand',
+            'cms.modules.core:install' => __NAMESPACE__.'\Commands\InstallCommand',
+            'cms:install'              => __NAMESPACE__.'\Commands\CmsInstallCommand',
+            'modules:install'          => __NAMESPACE__.'\Commands\ModulesInstallCommand',
+            'modules:test'             => __NAMESPACE__.'\Commands\ModulesTestCommand',
+            'themes:gulp'              => __NAMESPACE__.'\Commands\ThemesGulpCommand',
         ];
 
         foreach ($commands as $command => $class) {
