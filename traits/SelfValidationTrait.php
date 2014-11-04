@@ -162,21 +162,4 @@ trait SelfValidationTrait
         return !empty($this->errors->messages);
     }
 
-    /**
-     * Fill attributes in $this from \Input
-     *
-     * @see \Illuminate
-     */
-    public function hydrateFromInput(array $input = array())
-    {
-        if (empty($input)) {
-            $input = Input::only($this->fillable);
-        } else {
-            $input = array_only($input, $this->fillable);
-        }
-
-        $this->input = array_filter($input, 'strlen');
-
-        return $this->fill($this->input);
-    }
 }
