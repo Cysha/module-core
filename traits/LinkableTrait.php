@@ -14,6 +14,11 @@ trait LinkableTrait
         return \Str::slug($this->{$this->identifiableName}, '-');
     }
 
+    public function getSlugAttribute()
+    {
+        return $this->makeSlug();
+    }
+
     public function makeLink($urlOnly = false)
     {
         $link = (object) $this->link;
@@ -48,8 +53,4 @@ trait LinkableTrait
         return \HTML::link($url, $this->{$this->identifiableName});
     }
 
-    public function getSlugAttribute()
-    {
-        return $this->makeSlug();
-    }
 }

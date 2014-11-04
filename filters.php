@@ -185,6 +185,21 @@
         return $objTheme->scope('partials.theme.errors.404', compact('code'))->render($code);
     });
 
+    App::error(function (Illuminate\Database\Eloquent\ModelNotFoundException $exception, $code) {
+        if (Config::get('app.debug', false) === true) {
+            Log::error('URL Not Found: '.Request::url());
+        }
+        if (Request::is(\Config::get('core::routes.paths.api', 'api').'/*')) {
+            return Response::json(array(
+                'status'  => $code,
+                'message' => $exception->getMessage(),
+            ), $code);
+        }
+
+        $objTheme = Theme::uses(Config::get('core::app.themes.frontend', 'default'))->layout('col-1');
+        return $objTheme->scope('partials.theme.errors.404', compact('code'))->render($code);
+    });
+
     App::error(function (\Cysha\Modules\Core\Helpers\Forms\FormValidationException $e, $code) {
         if (Request::is(\Config::get('core::routes.paths.api', 'api').'/*')) {
             return Response::json(array(
