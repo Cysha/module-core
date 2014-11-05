@@ -13,3 +13,20 @@ Event::listen('core.config.saved', function ($key, $value) {
     }
 });
 
+
+Event::listen('core.errors.api', function($exception, $code, $message=null) {
+    if (Request::is(Config::get('core::routes.paths.api', 'api').'/*')) {
+        $return = [
+            'message'       => !empty($message) ? $message : $exception->getMessage(),
+            'status_code'   => $code,
+        ];
+
+        if (Config::get('app.debug') === true) {
+            $return['exception'] = $exception->getMessage();
+        }
+
+        return Response::json($return, $code);
+    }
+
+    return false;
+});

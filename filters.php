@@ -146,12 +146,20 @@
 
     });
 
+    App::error(function (Symfony\Component\HttpKernel\Exception\HttpException $exception, $code) {
+        $apiCheck = \Event::fire('core.errors.api', [$exception, $code]);
+        if ($apiCheck !== false) {
+            return $apiCheck;
+        }
+
+        $objTheme = Theme::uses(Config::get('core::app.themes.frontend', 'default'))->layout('col-1');
+        return $objTheme->scope('partials.theme.errors.'.$code, compact('code'))->render($code);
+    });
+
     App::error(function (Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException $exception, $code) {
-        if (Request::is(\Config::get('core::routes.paths.api', 'api').'/*')) {
-            return Response::json(array(
-                'status'  => $code,
-                'message' => 'Authentication is required to access this resource.',
-            ), $code);
+        $apiCheck = \Event::fire('core.errors.api', [$exception, $code, 'Authentication is required to access this resource.']);
+        if ($apiCheck !== false) {
+            return $apiCheck;
         }
 
         $objTheme = Theme::uses(Config::get('core::app.themes.frontend', 'default'))->layout('col-1');
@@ -159,11 +167,9 @@
     });
 
     App::error(function (Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException $exception, $code) {
-        if (Request::is(\Config::get('core::routes.paths.api', 'api').'/*')) {
-            return Response::json(array(
-                'status'  => $code,
-                'message' => 'A request was made to a resource using an unsupported request method.',
-            ), $code);
+        $apiCheck = \Event::fire('core.errors.api', [$exception, $code, 'A request was made to a resource using an unsupported request method.']);
+        if ($apiCheck !== false) {
+            return $apiCheck;
         }
 
         $objTheme = Theme::uses(Config::get('core::app.themes.frontend', 'default'))->layout('col-1');
@@ -174,11 +180,9 @@
         if (Config::get('app.debug', false) === true) {
             Log::error('URL Not Found: '.Request::url());
         }
-        if (Request::is(\Config::get('core::routes.paths.api', 'api').'/*')) {
-            return Response::json(array(
-                'status'  => $code,
-                'message' => $exception->getMessage(),
-            ), $code);
+        $apiCheck = \Event::fire('core.errors.api', [$exception, $code, $exception->getMessage()]);
+        if ($apiCheck !== false) {
+            return $apiCheck;
         }
 
         $objTheme = Theme::uses(Config::get('core::app.themes.frontend', 'default'))->layout('col-1');
@@ -189,11 +193,9 @@
         if (Config::get('app.debug', false) === true) {
             Log::error('URL Not Found: '.Request::url());
         }
-        if (Request::is(\Config::get('core::routes.paths.api', 'api').'/*')) {
-            return Response::json(array(
-                'status'  => $code,
-                'message' => $exception->getMessage(),
-            ), $code);
+        $apiCheck = \Event::fire('core.errors.api', [$exception, $code, $exception->getMessage()]);
+        if ($apiCheck !== false) {
+            return $apiCheck;
         }
 
         $objTheme = Theme::uses(Config::get('core::app.themes.frontend', 'default'))->layout('col-1');
@@ -201,22 +203,18 @@
     });
 
     App::error(function (\Cysha\Modules\Core\Helpers\Forms\FormValidationException $e, $code) {
-        if (Request::is(\Config::get('core::routes.paths.api', 'api').'/*')) {
-            return Response::json(array(
-                'status'  => $code,
-                'message' => $exception->getMessage(),
-            ), $code);
+        $apiCheck = \Event::fire('core.errors.api', [$exception, $code, $exception->getMessage()]);
+        if ($apiCheck !== false) {
+            return $apiCheck;
         }
 
         return Redirect::back()->withInput()->withErrors($e->getErrors())->withError(Lang::get('core::forms.validation.message'));
     });
 
     App::error(function (\Cysha\Modules\Core\Helpers\Forms\FormUnauthorizedException $e, $code) {
-        if (Request::is(\Config::get('core::routes.paths.api', 'api').'/*')) {
-            return Response::json(array(
-                'status'  => $code,
-                'message' => $exception->getMessage(),
-            ), $code);
+        $apiCheck = \Event::fire('core.errors.api', [$exception, $code, $exception->getMessage()]);
+        if ($apiCheck !== false) {
+            return $apiCheck;
         }
 
         return Redirect::back()->withInput()->withError(Lang::get('core::forms.authorization.message'));
@@ -228,11 +226,9 @@
             return;
         }
 
-        if (Request::is(\Config::get('core::routes.paths.api', 'api').'/*')) {
-            return Response::json(array(
-                'status'  => $code,
-                'message' => $exception->getMessage(),
-            ), $code);
+        $apiCheck = \Event::fire('core.errors.api', [$exception, $code, $exception->getMessage()]);
+        if ($apiCheck !== false) {
+            return $apiCheck;
         }
 
         $objTheme = Theme::uses(Config::get('core::app.themes.frontend', 'default'))->layout('col-1');
