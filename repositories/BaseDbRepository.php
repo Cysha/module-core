@@ -97,6 +97,10 @@ abstract class BaseDbRepository
     public function transformModel($data)
     {
         $transformed = [];
+        if (count($data) == 0) {
+            return $transformed;
+        }
+
         if (count($data) > 1) {
             $data->each(function ($row) use (&$transformed) {
                 $transformed[] = $row->transform();
