@@ -42,7 +42,7 @@ abstract class BaseDbRepository
      */
     public function getAll(array $with = array())
     {
-        return $this->make($with)->all();
+        return $this->make($with)->get();
     }
 
     /**

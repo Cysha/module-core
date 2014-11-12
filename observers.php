@@ -25,7 +25,7 @@ Event::listen('core.errors.api', function($exception, $code, $message=null) {
             $return['exception'] = $exception->getMessage();
         }
 
-        return Response::json($return, $code);
+        return $return;
     }
 
     return false;

@@ -148,8 +148,8 @@
 
     App::error(function (Symfony\Component\HttpKernel\Exception\HttpException $exception, $code) {
         $apiCheck = \Event::fire('core.errors.api', [$exception, $code]);
-        if ($apiCheck !== false) {
-            return $apiCheck;
+        if (is_array($apiCheck)) {
+            return Response::json(head($apiCheck), $code);
         }
 
         $objTheme = Theme::uses(Config::get('core::app.themes.frontend', 'default'))->layout('col-1');
@@ -158,8 +158,8 @@
 
     App::error(function (Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException $exception, $code) {
         $apiCheck = \Event::fire('core.errors.api', [$exception, $code, 'Authentication is required to access this resource.']);
-        if ($apiCheck !== false) {
-            return $apiCheck;
+        if (is_array($apiCheck)) {
+            return Response::json(head($apiCheck), $code);
         }
 
         $objTheme = Theme::uses(Config::get('core::app.themes.frontend', 'default'))->layout('col-1');
@@ -168,8 +168,8 @@
 
     App::error(function (Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException $exception, $code) {
         $apiCheck = \Event::fire('core.errors.api', [$exception, $code, 'A request was made to a resource using an unsupported request method.']);
-        if ($apiCheck !== false) {
-            return $apiCheck;
+        if (is_array($apiCheck)) {
+            return Response::json(head($apiCheck), $code);
         }
 
         $objTheme = Theme::uses(Config::get('core::app.themes.frontend', 'default'))->layout('col-1');
@@ -181,8 +181,8 @@
             Log::error('URL Not Found: '.Request::url());
         }
         $apiCheck = \Event::fire('core.errors.api', [$exception, $code, $exception->getMessage()]);
-        if ($apiCheck !== false) {
-            return $apiCheck;
+        if (is_array($apiCheck)) {
+            return Response::json(head($apiCheck), $code);
         }
 
         $objTheme = Theme::uses(Config::get('core::app.themes.frontend', 'default'))->layout('col-1');
@@ -194,8 +194,8 @@
             Log::error('URL Not Found: '.Request::url());
         }
         $apiCheck = \Event::fire('core.errors.api', [$exception, $code, $exception->getMessage()]);
-        if ($apiCheck !== false) {
-            return $apiCheck;
+        if (is_array($apiCheck)) {
+            return Response::json(head($apiCheck), $code);
         }
 
         $objTheme = Theme::uses(Config::get('core::app.themes.frontend', 'default'))->layout('col-1');
@@ -204,8 +204,8 @@
 
     App::error(function (\Cysha\Modules\Core\Helpers\Forms\FormValidationException $e, $code) {
         $apiCheck = \Event::fire('core.errors.api', [$exception, $code, $exception->getMessage()]);
-        if ($apiCheck !== false) {
-            return $apiCheck;
+        if (is_array($apiCheck)) {
+            return Response::json(head($apiCheck), $code);
         }
 
         return Redirect::back()->withInput()->withErrors($e->getErrors())->withError(Lang::get('core::forms.validation.message'));
@@ -213,8 +213,8 @@
 
     App::error(function (\Cysha\Modules\Core\Helpers\Forms\FormUnauthorizedException $e, $code) {
         $apiCheck = \Event::fire('core.errors.api', [$exception, $code, $exception->getMessage()]);
-        if ($apiCheck !== false) {
-            return $apiCheck;
+        if (is_array($apiCheck)) {
+            return Response::json(head($apiCheck), $code);
         }
 
         return Redirect::back()->withInput()->withError(Lang::get('core::forms.authorization.message'));
@@ -227,8 +227,8 @@
         }
 
         $apiCheck = \Event::fire('core.errors.api', [$exception, $code, $exception->getMessage()]);
-        if ($apiCheck !== false) {
-            return $apiCheck;
+        if (is_array($apiCheck)) {
+            return Response::json(head($apiCheck), $code);
         }
 
         $objTheme = Theme::uses(Config::get('core::app.themes.frontend', 'default'))->layout('col-1');
