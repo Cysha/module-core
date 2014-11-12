@@ -15,8 +15,8 @@ class CoreCreateConfigTables extends Migration
 
             $table->increments('id')->unsigned();
             $table->string('environment');
-            $table->string('group');
             $table->string('namespace')->nullable();
+            $table->string('group');
             $table->string('item');
             $table->text('value')->nullable();
 
