@@ -97,11 +97,12 @@ abstract class BaseDbRepository
     public function transformModel($data)
     {
         $transformed = [];
+        // return empty array if we get an empty object
         if (count($data) == 0) {
             return $transformed;
         }
 
-        if (count($data) > 1) {
+        if ($data instanceof \Illuminate\Support\Collection) {
             $data->each(function ($row) use (&$transformed) {
                 $transformed[] = $row->transform();
             });
