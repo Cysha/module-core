@@ -148,7 +148,7 @@
 
     App::error(function (Symfony\Component\HttpKernel\Exception\HttpException $exception, $code) {
         $apiCheck = \Event::fire('core.errors.api', [$exception, $code]);
-        if (is_array($apiCheck)) {
+        if (is_array($apiCheck) && !empty($apiCheck)) {
             return Response::json(head($apiCheck), $code);
         }
 
@@ -158,7 +158,7 @@
 
     App::error(function (Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException $exception, $code) {
         $apiCheck = \Event::fire('core.errors.api', [$exception, $code, 'Authentication is required to access this resource.']);
-        if (is_array($apiCheck)) {
+        if (is_array($apiCheck) && !empty($apiCheck)) {
             return Response::json(head($apiCheck), $code);
         }
 
@@ -168,7 +168,7 @@
 
     App::error(function (Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException $exception, $code) {
         $apiCheck = \Event::fire('core.errors.api', [$exception, $code, 'A request was made to a resource using an unsupported request method.']);
-        if (is_array($apiCheck)) {
+        if (is_array($apiCheck) && !empty($apiCheck)) {
             return Response::json(head($apiCheck), $code);
         }
 
@@ -181,7 +181,7 @@
             Log::error('URL Not Found: '.Request::url());
         }
         $apiCheck = \Event::fire('core.errors.api', [$exception, $code, $exception->getMessage()]);
-        if (is_array($apiCheck)) {
+        if (is_array($apiCheck) && !empty($apiCheck)) {
             return Response::json(head($apiCheck), $code);
         }
 
@@ -194,7 +194,7 @@
             Log::error('URL Not Found: '.Request::url());
         }
         $apiCheck = \Event::fire('core.errors.api', [$exception, $code, $exception->getMessage()]);
-        if (is_array($apiCheck)) {
+        if (is_array($apiCheck) && !empty($apiCheck)) {
             return Response::json(head($apiCheck), $code);
         }
 
@@ -202,18 +202,18 @@
         return $objTheme->scope('partials.theme.errors.404', compact('code'))->render($code);
     });
 
-    App::error(function (\Cysha\Modules\Core\Helpers\Forms\FormValidationException $e, $code) {
+    App::error(function (\Cysha\Modules\Core\Helpers\Forms\FormValidationException $exception, $code) {
         $apiCheck = \Event::fire('core.errors.api', [$exception, $code, $exception->getMessage()]);
-        if (is_array($apiCheck)) {
+        if (is_array($apiCheck) && !empty($apiCheck)) {
             return Response::json(head($apiCheck), $code);
         }
 
-        return Redirect::back()->withInput()->withErrors($e->getErrors())->withError(Lang::get('core::forms.validation.message'));
+        return Redirect::back()->withInput()->withErrors($exception->getErrors())->withError(Lang::get('core::forms.validation.message'));
     });
 
-    App::error(function (\Cysha\Modules\Core\Helpers\Forms\FormUnauthorizedException $e, $code) {
+    App::error(function (\Cysha\Modules\Core\Helpers\Forms\FormUnauthorizedException $exception, $code) {
         $apiCheck = \Event::fire('core.errors.api', [$exception, $code, $exception->getMessage()]);
-        if (is_array($apiCheck)) {
+        if (is_array($apiCheck) && !empty($apiCheck)) {
             return Response::json(head($apiCheck), $code);
         }
 
@@ -227,7 +227,7 @@
         }
 
         $apiCheck = \Event::fire('core.errors.api', [$exception, $code, $exception->getMessage()]);
-        if (is_array($apiCheck)) {
+        if (is_array($apiCheck) && !empty($apiCheck)) {
             return Response::json(head($apiCheck), $code);
         }
 
