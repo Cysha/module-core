@@ -87,7 +87,7 @@ class CmsInstallCommand extends BaseCommand
                 }
 
                 $this->comment('Publishing Module Assets...'.$moduleName);
-                $this->call('modules:publish')
+                $this->call('modules:publish');
             }
 
         }
