@@ -6,8 +6,14 @@ class ServiceProvider extends BaseServiceProvider
 {
     public function register()
     {
+        $this->registerViewComposers();
         $this->registerModuleCommands();
         $this->registerOtherPackages();
+    }
+
+    public function registerViewComposers()
+    {
+        $this->app->make('view')->composer('theme.*::layouts.*', '\Cysha\Modules\Core\Composers\CurrentRoute');
     }
 
     private function registerModuleCommands()
@@ -21,7 +27,7 @@ class ServiceProvider extends BaseServiceProvider
         ];
 
         foreach ($commands as $command => $class) {
-            $this->app[$command] = $this->app->share(function () use($class) {
+            $this->app[$command] = $this->app->share(function () use ($class) {
                 return new $class($this->app);
             });
             $this->commands($command);
