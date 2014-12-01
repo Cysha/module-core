@@ -51,4 +51,10 @@ class BaseModel extends \Eloquent
 
         return $this->fill($input);
     }
+
+    public function transform()
+    {
+        return $this->toArray();
+    }
+
 }
