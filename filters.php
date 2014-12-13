@@ -258,16 +258,6 @@
     });
 
     /**
-     * Check for the force-secure setting to see if we want HTTPS enforced
-     *
-     **/
-    App::before(function ($request) {
-        if (!Request::secure() && (bool)\Config::get('core::app.force-secure', false) === true) {
-            return Redirect::secure(Request::path());
-        }
-    });
-
-    /**
      * Grab the database config vars, make them overload the Config
      *
      **/
@@ -294,6 +284,16 @@
                 // and then override it
                 Config::set($item->key, $item->value);
             }
+        }
+    });
+
+    /**
+     * Check for the force-secure setting to see if we want HTTPS enforced
+     *
+     **/
+    App::before(function ($request) {
+        if (Request::secure() === false && (bool)\Config::get('core::app.force-secure', false) === true) {
+            return Redirect::secure(Request::path());
         }
     });
 
