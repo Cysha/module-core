@@ -292,7 +292,7 @@
      *
      **/
     App::before(function ($request) {
-        if (Request::secure() === false && (bool)\Config::get('core::app.force-secure', false) === true) {
+        if (Request::secure() === false && \Config::get('core::app.force-secure', false) === true) {
             return Redirect::secure(Request::path());
         }
     });
