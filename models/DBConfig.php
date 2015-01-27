@@ -11,6 +11,7 @@ class DBConfig extends BaseModel
     public $timestamps = false;
 
     protected $fillable = array('environment', 'group', 'namespace', 'item', 'value');
+    public $appends = ['key'];
 
     /** ModelEvents **/
     public static function boot()
@@ -55,6 +56,15 @@ class DBConfig extends BaseModel
         $environment = App::Environment();
 
         return array_filter(compact('environment', 'group', 'namespace', 'item', 'value'));
+    }
+
+
+    /**
+     *
+     **/
+    public function getNamespaceAttribute($value)
+    {
+        return str_replace('.', '_', $value);
     }
 
 
