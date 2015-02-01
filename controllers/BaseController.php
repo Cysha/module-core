@@ -93,6 +93,10 @@ class BaseController extends Controller
         $namespace = get_class($class);
         $module = explode('\\', $namespace);
 
+        $module[2] = strtolower($module[2]);
+
+        \View::share('_module', $module[2]);
+
         return $module[2];
     }
 
