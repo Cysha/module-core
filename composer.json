@@ -11,7 +11,7 @@
         "composer/installers" : "dev-master",
 
         "teepluss/theme"                    : "~1.2",
-        "stolz/assets"                      : "0.1.0",
+        "stolz/assets"                      : "0.0.9",
         "anahkiasen/former"                 : "~3.5",
         "vespakoen/menu"                    : "~2.0",
         "liebig/cron"                       : "~1.0"
