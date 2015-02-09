@@ -37,7 +37,7 @@ class ServiceProvider extends BaseServiceProvider
     private function registerOtherPackages()
     {
         $serviceProviders = [
-            'Stolz\Assets\Laravel\ManagerServiceProvider',  # https://github.com/Stolz/Assets
+            'Stolz\Assets\Laravel\ServiceProvider',         # https://github.com/Stolz/Assets
             'Teepluss\Theme\ThemeServiceProvider',          # https://github.com/teepluss/laravel4-theme
             'Menu\MenuServiceProvider',                     # https://github.com/vespakoen/menu
             'Former\FormerServiceProvider',                 # https://github.com/Anahkiasen/former
