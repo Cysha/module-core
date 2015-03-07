@@ -17,7 +17,7 @@
                 $settingValue = Config::get($setting, 'default');
             } else {
                 $setting = 'core::app.themes.backend';
-                $settingValue = Config::get($setting, 'default-admin');
+                $settingValue = Config::get($setting, 'default_admin');
             }
         ?>
             <div class="tab-pane{{ ( $i++ == 0 ? ' active' : '') }}" id="{{ Str::lower($set) }}">

@@ -177,3 +177,12 @@ if (!function_exists('date_fuzzy')) {
         return trim(sprintf($format, $prefix, $fuzzyDate, $fuzzyTime));
     }
 }
+
+function getCurrentTheme()
+{
+    if (Request::is('admin/*')) {
+        return Config::get('core::app.themes.backend', 'default_admin');
+    }
+
+    return Config::get('core::app.themes.frontend', 'default');
+}

@@ -32,7 +32,7 @@ class BaseAdminController extends BaseController
     public function __construct()
     {
         // reset the themeName to whatever is in the config
-        $this->themeName = Config::get('core::app.themes.backend', 'default-admin');
+        $this->themeName = Config::get('core::app.themes.backend', 'default_admin');
 
         // THEN do the parents constructor which will set the theme and layout
         parent::__construct();

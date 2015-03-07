@@ -6,6 +6,6 @@ return array(
 
     'themes'    => array(
         'frontend' => 'default',
-        'backend'  => 'default-admin',
+        'backend'  => 'default_admin',
     )
 );

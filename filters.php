@@ -130,7 +130,7 @@
             return Response::json(head($apiCheck), $code);
         }
 
-        $objTheme = Theme::uses(Config::get('core::app.themes.frontend', 'default'))->layout('col-1');
+        $objTheme = Theme::uses(getCurrentTheme())->layout('col-1');
         return $objTheme->scope('partials.theme.errors.'.$code, compact('code'))->render($code);
     });
 
@@ -140,7 +140,7 @@
             return Response::json(head($apiCheck), $code);
         }
 
-        $objTheme = Theme::uses(Config::get('core::app.themes.frontend', 'default'))->layout('col-1');
+        $objTheme = Theme::uses(getCurrentTheme())->layout('col-1');
         return $objTheme->scope('partials.theme.errors.401', compact('code'))->render($code);
     });
 
@@ -150,12 +150,12 @@
             return Response::json(head($apiCheck), $code);
         }
 
-        $objTheme = Theme::uses(Config::get('core::app.themes.frontend', 'default'))->layout('col-1');
+        $objTheme = Theme::uses(getCurrentTheme())->layout('col-1');
         return $objTheme->scope('partials.theme.errors.405', compact('code'))->render($code);
     });
 
     App::error(function (\Symfony\Component\HttpKernel\Exception\NotFoundHttpException $exception, $code) {
-        if (Config::get('app.debug', false) === true) {
+        if (\Config::get('app.debug', false) === true) {
             Log::error('URL Not Found: '.Request::url());
         }
         $apiCheck = \Event::fire('core.errors.api', [$exception, $code, $exception->getMessage()]);
@@ -163,12 +163,12 @@
             return Response::json(head($apiCheck), $code);
         }
 
-        $objTheme = Theme::uses(Config::get('core::app.themes.frontend', 'default'))->layout('col-1');
+        $objTheme = Theme::uses(getCurrentTheme())->layout('col-1');
         return $objTheme->scope('partials.theme.errors.404', compact('code'))->render($code);
     });
 
     App::error(function (Illuminate\Database\Eloquent\ModelNotFoundException $exception, $code) {
-        if (Config::get('app.debug', false) === true) {
+        if (\Config::get('app.debug', false) === true) {
             Log::error('URL Not Found: '.Request::url());
         }
         $apiCheck = \Event::fire('core.errors.api', [$exception, $code, $exception->getMessage()]);
@@ -176,7 +176,7 @@
             return Response::json(head($apiCheck), $code);
         }
 
-        $objTheme = Theme::uses(Config::get('core::app.themes.frontend', 'default'))->layout('col-1');
+        $objTheme = Theme::uses(getCurrentTheme())->layout('col-1');
         return $objTheme->scope('partials.theme.errors.404', compact('code'))->render($code);
     });
 
@@ -199,7 +199,7 @@
     });
 
     App::error(function (Exception $exception, $code) {
-        if (Config::get('app.debug', false) === true) {
+        if (\Config::get('app.debug', false) === false) {
             Log::error($exception);
             return;
         }
@@ -209,9 +209,11 @@
             return Response::json(head($apiCheck), $code);
         }
 
-        $objTheme = Theme::uses(Config::get('core::app.themes.frontend', 'default'))->layout('col-1');
-
-        return $objTheme->scope('partials.theme.errors.whoops', compact('code'))->render($code);
+        $objTheme = Theme::uses(getCurrentTheme())->layout('col-1');
+        return $objTheme->scope('partials.theme.errors.whoops', [
+            'code' => $code,
+            'message' => $exception->getMessage(),
+        ])->render($code);
     });
 
     /** http://www.laravel-tricks.com/tricks/using-appbefore-to-trapcatch-pdoexception-errors */
@@ -221,7 +223,7 @@
 
             Log::error('FATAL DATABASE ERROR: ' . $code . ' = ' . $e->getMessage());
 
-            if ((bool)\Config::get('app.debug', false) === true) {
+            if (\Config::get('app.debug', false) === true) {
 
                 $message = explode(' ', $e->getMessage());
                 $dbCode = rtrim($message[1], ']');
@@ -248,7 +250,7 @@
                 $userMessage = 'We are currently experiencing a site wide issue. We are sorry for the inconvenience!';
             }
 
-            $objTheme = Theme::uses(Config::get('core::app.themes.frontend', 'default'))->layout('col-1');
+            $objTheme = Theme::uses(getCurrentTheme())->layout('col-1');
             return $objTheme->scope('partials.theme.errors.whoops', [
                 'code' => $code,
                 'message' => $userMessage,
