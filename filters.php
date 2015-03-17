@@ -63,9 +63,9 @@
     HTML::macro('nav_link', function ($route, $text, array $args = []) {
         $class = '';
         $action = \Route::current();
-        $action = $action->getAction();
+        $action = is_object($action) ? $action->getAction() : false;
 
-        if (isset($action['as'])) {
+        if (is_array($action) && isset($action['as'])) {
             $class = $action['as'] === $route ? ' class="active"' : '';
         }
 
@@ -211,7 +211,7 @@
     });
 
     App::error(function (Exception $exception, $code) {
-        if (\Config::get('app.debug', false) === false) {
+        if (\Config::get('app.debug', false) !== false) {
             Log::error($exception);
             return;
         }
