@@ -60,6 +60,18 @@
                 . Form::close();
     });
 
+    HTML::macro('nav_link', function ($route, $text, array $args = []) {
+        $class = '';
+        $action = \Route::current();
+        $action = $action->getAction();
+
+        if (isset($action['as'])) {
+            $class = $action['as'] === $route ? ' class="active"' : '';
+        }
+
+        return '<li' . $class . '>' . \HTML::linkRoute($route, $text, $args) . '</li>';
+    });
+
 /*
 |--------------------------------------------------------------------------
 | Validation Filters
