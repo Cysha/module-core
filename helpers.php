@@ -186,3 +186,16 @@ function getCurrentTheme()
 
     return Config::get('core::app.themes.frontend', 'default');
 }
+
+function escape($value)
+{
+    return Purifier::clean($value);
+}
+
+function parseMarkdown($value)
+{
+    $value = Markdown::parse($value);
+    $value = Purifier::clean($value);
+
+    return $value;
+}

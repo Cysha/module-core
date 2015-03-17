@@ -42,6 +42,7 @@ class ServiceProvider extends BaseServiceProvider
             'Menu\MenuServiceProvider',                     # https://github.com/vespakoen/menu
             'Former\FormerServiceProvider',                 # https://github.com/Anahkiasen/former
             'Liebig\Cron\CronServiceProvider',
+            'Mews\Purifier\PurifierServiceProvider',        # https://github.com/mewebstudio/Purifier
         ];
 
         foreach ($serviceProviders as $sp) {
@@ -52,6 +53,7 @@ class ServiceProvider extends BaseServiceProvider
             'Menu'            => 'Menu\Menu',
             'Former'          => 'Former\Facades\Former',
             'Theme'           => 'Teepluss\Theme\Facades\Theme',
+            'Purifier'        => 'Mews\Purifier\Facades\Purifier',
         ];
 
         foreach ($aliases as $alias => $class) {

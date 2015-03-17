@@ -14,7 +14,8 @@
         "stolz/assets"                      : "0.0.9",
         "anahkiasen/former"                 : "~3.5",
         "vespakoen/menu"                    : "~2.0",
-        "liebig/cron"                       : "~1.0"
+        "liebig/cron"                       : "~1.0",
+        "mews/purifier"                     : "1.0.2"
     },
     "repositories": [
         { "type": "vcs", "url": "https://github.com/cysha/installers" }
