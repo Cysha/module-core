@@ -191,11 +191,3 @@ function escape($value)
 {
     return Purifier::clean($value);
 }
-
-function parseMarkdown($value)
-{
-    $value = Markdown::parse($value);
-    $value = Purifier::clean($value);
-
-    return $value;
-}
