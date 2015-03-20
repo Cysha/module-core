@@ -62,11 +62,25 @@
 
     HTML::macro('nav_link', function ($route, $text, array $args = []) {
         $class = '';
-        $action = \Route::current();
-        $action = is_object($action) ? $action->getAction() : false;
+        $is_active = false;
 
-        if (is_array($action) && isset($action['as'])) {
-            $class = $action['as'] === $route ? ' class="active"' : '';
+        // check if supplied route is a named route or text url
+        if (Route::getRoutes()->hasNamedRoute($route)) {
+            // create the href value
+            $href = route($route, $args);
+
+            // set whether the supplied route is the current url
+            $is_active = ($href == Request::url());
+        } else {
+            // create the href value
+            $href = url($route);
+
+            // check whether the supplied url is the current on or a child of
+            $is_active = Request::is($route . '*');
+        }
+
+        if ($is_active) {
+            $class = ' class="active"';
         }
 
         return '<li' . $class . '>' . \HTML::linkRoute($route, $text, $args) . '</li>';
