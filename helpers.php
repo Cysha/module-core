@@ -17,6 +17,18 @@ if (!function_exists('is_number')) {
     }
 }
 
+if (!function_exists('truncate')) {
+    /* http://stackoverflow.com/a/9219884 */
+    function truncate($text, $chars = 25)
+    {
+        $text = $text.' ';
+        $text = substr($text, 0, $chars);
+        $text = substr($text, 0, strrpos($text, ' '));
+        $text = $text.'...';
+        return $text;
+    }
+}
+
 if (!function_exists('partial')) {
     function partial($view)
     {
@@ -36,7 +48,7 @@ if (!function_exists('date_array')) {
      *
      * @return array
      */
-    function date_array($date, $name = null)
+    function date_array($date)
     {
         return [
             'default' => $date,
