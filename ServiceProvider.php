@@ -2,6 +2,11 @@
 
 use Illuminate\Foundation\AliasLoader;
 
+use Schema;
+use Cache;
+use App;
+use Config;
+
 class ServiceProvider extends BaseServiceProvider
 {
     public function register()
@@ -9,6 +14,7 @@ class ServiceProvider extends BaseServiceProvider
         $this->registerViewComposers();
         $this->registerModuleCommands();
         $this->registerOtherPackages();
+        $this->registerConfig();
     }
 
     public function registerViewComposers()
@@ -58,6 +64,33 @@ class ServiceProvider extends BaseServiceProvider
 
         foreach ($aliases as $alias => $class) {
             AliasLoader::getInstance()->alias($alias, $class);
+        }
+    }
+
+    public function registerConfig()
+    {
+        if (!Schema::hasTable('config')) {
+            return;
+        }
+
+        $table = Cache::rememberForever('core.config_table', function () {
+            return \Cysha\Modules\Core\Models\DBConfig::orderBy('environment', 'asc')->get();
+        });
+
+        if ($table->count() == 0) {
+            return;
+        }
+
+        foreach (['*', App::Environment()] as $env) {
+            foreach ($table as $item) {
+                // check if we have the right environment
+                if ($item->environment != $env) {
+                    continue;
+                }
+
+                // and then override it
+                Config::set($item->key, $item->value);
+            }
         }
     }
 

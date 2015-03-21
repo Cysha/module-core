@@ -289,7 +289,8 @@
      * Grab the database config vars, make them overload the Config
      *
      **/
-    App::before(function ($request) {
+    App::booting(function ($request) {
+        return;
         if (!Schema::hasTable('config')) {
             return;
         }
