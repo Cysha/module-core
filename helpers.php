@@ -50,12 +50,21 @@ if (!function_exists('date_array')) {
      */
     function date_array($date)
     {
-        return [
+        $return = [
             'default' => $date,
             'atom'    => date_carbon($date, DateTime::ATOM),
             'ago'     => date_ago($date),
             'fuzzy'   => date_fuzzy($date),
         ];
+
+        $return['element'] = sprintf(
+            '<time datetime="%s" title="%s">%s</time>',
+            array_get($return, 'atom'),
+            array_get($return, 'fuzzy'),
+            array_get($return, 'ago')
+        );
+
+        return $return;
     }
 }
 
