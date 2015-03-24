@@ -19,12 +19,17 @@ trait DynamicRelationsTrait
 
         // cycle through all the modules
         foreach (\File::directories(app_path().'/modules/') as $dir) {
-            $module = last(explode('/', $dir));
+            $module = last(explode(DIRECTORY_SEPARATOR, $dir));
 
             $config = sprintf('%1$s::models', $module);
             if (\Config::has($config)) {
                 $relations = array_merge($relations, \Config::get($config));
             }
+        }
+
+        // if we dont have anything here, just return
+        if (empty($relations)) {
+            return parent::__call($method, $parameters);
         }
 
         // grab the module & model
