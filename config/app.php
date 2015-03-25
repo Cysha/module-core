@@ -7,5 +7,10 @@ return array(
     'themes'    => array(
         'frontend' => 'default',
         'backend'  => 'default_admin',
-    )
+    ),
+
+    'default-editor' => 'core::editors.pagedown-bootstrap',
+    'editors' => [
+        'core::editors.pagedown-bootstrap',
+    ],
 );

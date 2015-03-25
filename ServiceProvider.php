@@ -20,6 +20,7 @@ class ServiceProvider extends BaseServiceProvider
     public function registerViewComposers()
     {
         $this->app->make('view')->composer('theme.*::layouts.*', '\Cysha\Modules\Core\Composers\CurrentRoute');
+        $this->app->make('view')->composer('core::editors.pagedown-bootstrap', '\Cysha\Modules\Core\Composers\Editors_Pagedown');
     }
 
     private function registerModuleCommands()
