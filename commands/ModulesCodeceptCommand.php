@@ -5,26 +5,26 @@ use Symfony\Component\Console\Input\InputArgument;
 /**
  * Modules console commands
  */
-class ModulesTestCommand extends BaseCommand
+class ModulesCodeceptCommand extends BaseCommand
 {
     /**
      * Name of the command
      * @var string
      */
-    protected $name = 'modules:test';
+    protected $name = 'modules:codecept';
 
     /**
      * The Readable Module Name.
      *
      * @var string
      */
-    protected $readableName = 'Module Tester';
+    protected $readableName = 'Module Tester CMD for Codeception';
 
     /**
      * Command description
      * @var string
      */
-    protected $description = 'Run tests for a module.';
+    protected $description = 'Run codeception tests for a module.';
 
     /**
      * Execute the console command.
@@ -85,14 +85,26 @@ class ModulesTestCommand extends BaseCommand
         }
 
         // append the test function if needed
-        if ($test !== null) {
+        if ($test != '0') {
             $file .= ':'.$test;
         }
 
         // Run baby, run
         $command = sprintf('vendor/bin/codecept run %1$s ../../app/modules/%2$s/tests/%1$s/%3$s', $suite, $module->name(), $file);
-        echo ' $ '.$command . PHP_EOL;
-        system($command);
+        $this->line(' $ '.$command);
+
+        // try the cmd the first time
+        $output = null;
+        passthru($command, $output);
+var_dump($output);
+        // if it fails, try and install codeception & try it again
+        // if ($output == 1) {
+        //     $this->comment('Codeception not installed, installing...');
+        //     passthru('vendor/bin/codecept build');
+        //     $this->comment('continuing.. ');
+        //     $this->line('$ '.$command);
+        //     passthru($command);
+        // }
     }
 
     /**

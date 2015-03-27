@@ -29,7 +29,7 @@ class ServiceProvider extends BaseServiceProvider
             'cms.modules.core:install' => __NAMESPACE__.'\Commands\InstallCommand',
             'cms:install'              => __NAMESPACE__.'\Commands\CmsInstallCommand',
             'modules:install'          => __NAMESPACE__.'\Commands\ModulesInstallCommand',
-            'modules:test'             => __NAMESPACE__.'\Commands\ModulesTestCommand',
+            'modules:codecept'         => __NAMESPACE__.'\Commands\ModulesCodeceptCommand',
             'themes:gulp'              => __NAMESPACE__.'\Commands\ThemesGulpCommand',
         ];
 
