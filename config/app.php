@@ -9,6 +9,7 @@ return array(
         'backend'  => 'default_admin',
     ),
 
+    'pxcms-index' => 'Cysha\Modules\Core\Controllers\Module\ExtrasController@getHomepage',
     'default-editor' => 'core::editors.pagedown-bootstrap',
     'editors' => [
         'core::editors.pagedown-bootstrap',
