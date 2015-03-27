@@ -41,18 +41,16 @@ class SiteController extends BaseConfigController
                         $configVar = [$configVar];
                     }
 
-                    // assign info to vars
-                    $route = key($configVar);
-                    $name = head($configVar);
+                    foreach ($configVar as $route => $name) {
+                        // if route is numeric, means we dont have a human readable name
+                        if (is_numeric($route)) {
+                            $route = $name;
+                            $name = 'Homepage Route';
+                        }
 
-                    // if route is numeric, means we dont have a human readable name
-                    if (is_numeric($route)) {
-                        $route = $name;
-                        $name = 'Homepage Route';
+                        // add this route to the array to pass back
+                        $indexRoutes = array_merge($indexRoutes, [$route => '['.$module->name().'] '.$name]);
                     }
-
-                    // add this route to the array to pass back
-                    $indexRoutes = array_merge($indexRoutes, [$route => '['.$module->name().'] '.$name]);
                 }
             }
         }
