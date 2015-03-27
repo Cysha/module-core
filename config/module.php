@@ -5,5 +5,7 @@ return array(
     'author'      => 'xLink (Dan Aldridge)',
 
     'date-format' => 'd-m-Y h:i:s',
-    'pxcms-index' => 'Cysha\Modules\Core\Controllers\Module\ExtrasController@getHomepage',
+    'pxcms-index' => [
+        'Cysha\Modules\Core\Controllers\Module\ExtrasController@getHomepage' => 'Default Homepage'
+    ],
 );

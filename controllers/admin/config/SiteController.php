@@ -20,7 +20,12 @@ class SiteController extends BaseConfigController
 
                 $configStr = $module->name().'::module.pxcms-index';
                 if (Config::has($configStr)) {
-                    $indexRoutes[Config::get($configStr)] = Config::get($configStr);
+                    $value = Config::get($configStr);
+                    if (!is_array($value)) {
+                        $value = [$value => $value];
+                    }
+
+                    $indexRoutes = array_merge($indexRoutes, $value);
                 }
             }
         }
