@@ -286,37 +286,6 @@
     });
 
     /**
-     * Grab the database config vars, make them overload the Config
-     *
-     **/
-    App::booting(function ($request) {
-        return;
-        if (!Schema::hasTable('config')) {
-            return;
-        }
-
-        $table = Cache::rememberForever('core.config_table', function () {
-            return Cysha\Modules\Core\Models\DBConfig::orderBy('environment', 'asc')->get();
-        });
-
-        if ($table->count() == 0) {
-            return;
-        }
-
-        foreach (['*', App::Environment()] as $env) {
-            foreach ($table as $item) {
-                // check if we have the right environment
-                if ($item->environment != $env) {
-                    continue;
-                }
-
-                // and then override it
-                Config::set($item->key, $item->value);
-            }
-        }
-    });
-
-    /**
      * Check for the force-secure setting to see if we want HTTPS enforced
      *
      **/
