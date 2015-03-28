@@ -1,21 +1,18 @@
 <?php
 
 // URI: /admin
-Route::group(array('prefix' => 'admin'), function () {
-    $namespace = 'Cysha\Modules\Core\Controllers\Admin';
-
+Route::group(['prefix' => 'admin', 'namespace' => 'Cysha\Modules\Core\Controllers\Admin'], function () {
     // URI: /admin/config
-    Route::group(array('prefix' => 'config'), function () use ($namespace) {
-        $namespace .= '\Config';
+    Route::group(['prefix' => 'config', 'namespace' => 'Config'], function () {
 
         // URI: /admin/config/theme/
-        Route::group(array('prefix' => 'theme'), function () use ($namespace) {
-            Route::get('switch/{theme}', array('as' => 'admin.theme.switch', 'uses' => $namespace.'\ThemeController@getSwitch', 'before' => 'permissions'));
-            Route::get('/', array('as' => 'admin.theme.index',  'uses' => $namespace.'\ThemeController@getIndex', 'before' => 'permissions'));
+        Route::group(['prefix' => 'theme'], function () {
+            Route::get('switch/{theme}', ['as' => 'admin.theme.switch', 'uses' => 'ThemeController@getSwitch', 'before' => 'permissions']);
+            Route::get('/', ['as' => 'admin.theme.index', 'uses' => 'ThemeController@getIndex', 'before' => 'permissions']);
         });
 
-        Route::post('save', array('as' => 'admin.config.store', 'uses' => $namespace.'\SiteController@postStoreConfig', 'before' => 'permissions:admin.config.site'));
-        Route::get('/', array('as' => 'admin.config.index', 'uses' => $namespace.'\SiteController@getIndex', 'before' => 'permissions:admin.config.site'));
+        Route::post('save', ['as' => 'admin.config.store', 'uses' => 'SiteController@postStoreConfig', 'before' => 'permissions:admin.config.site']);
+        Route::get('/', ['as' => 'admin.config.index', 'uses' => 'SiteController@getIndex', 'before' => 'permissions:admin.config.site']);
     });
 
 });
