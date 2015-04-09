@@ -1,6 +1,6 @@
-<div class="row">
-    <div class="col-md-2"> @include('core::config.admin.nav') </div>
-    <div class="col-md-7">
+@extends(partial('core::config.admin._layout'))
+
+@section('admin-config')
     {{ Former::horizontal_open( URL::route('admin.config.store') ) }}
         {{ Form::Config('core::app.site-name')->label('Site Name') }}
 
@@ -18,5 +18,4 @@
         </button>
 
     {{ Former::close() }}
-    </div>
-</div>
+@stop
