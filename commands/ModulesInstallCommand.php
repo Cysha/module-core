@@ -42,7 +42,7 @@ class ModulesInstallCommand extends BaseCommand
                 $this->line('Module <info>\'' . $module->name() . '\'</info> has no install command.');
             }
         } else {
-            $this->error('Module \'' . $module->name() . '\' does not exist.');
+            $this->error('Module \'' . $moduleName . '\' does not exist.');
         }
     }
 
