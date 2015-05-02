@@ -1,6 +1,24 @@
 {
-    "enabled": true,
-    "provider": "Cysha\\Modules\\Core\\ServiceProvider",
-    "seeder": "Cysha\\Modules\\Core\\Seeds\\DatabaseSeeder",
-    "order": 0
+    "name": "Core",
+    "alias": "core",
+    "description": "Core Module for Phoenix CMS v1",
+    "keywords": [],
+    "require": {},
+    "version": "v1.0.0",
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Cms\\Modules\\Core\\Providers\\AsgardServiceProvider",
+        "Cms\\Modules\\Core\\Providers\\CoreServiceProvider",
+        "Cms\\Modules\\Core\\Providers\\AssetServiceProvider",
+        "Collective\\Html\\HtmlServiceProvider",
+    ],
+    "aliases": {
+        "Form": "Collective\\Html\\FormFacade",
+    },
+    "files": [
+        "start.php",
+        "helpers.php",
+        "macros.php"
+    ]
 }
