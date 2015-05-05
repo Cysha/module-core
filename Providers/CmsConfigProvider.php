@@ -17,7 +17,9 @@ class CmsConfigProvider extends ServiceProvider
     public function register()
     {
         // test for db connectivity
-        if (!DB::connection()) {
+        try {
+            DB::connection()->getDatabaseName();
+        } catch (\PDOException $e) {
             return;
         }
 
