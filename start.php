@@ -1,6 +1,6 @@
 <?php
 
-$module = last(explode('/', __DIR__));
+$module = last(explode(DIRECTORY_SEPARATOR, __DIR__));
 $namespace = sprintf('\Cms\Modules\%s\Http\Controllers', $module);
 
 require __DIR__ . '/Http/routes-frontend.php';
