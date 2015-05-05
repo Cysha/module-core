@@ -1,17 +1,16 @@
 <?php
 
-return array(
+return [
     'site-name' => 'PhoenixCMS',
-    'debugfile' => storage_path().'/meta/debugfile',
+    'debugfile' => storage_path().'/app/debugfile',
 
-    'themes'    => array(
+    'themes'    => [
         'frontend' => 'default',
         'backend'  => 'default_admin',
-    ),
+    ],
 
-    'pxcms-index' => 'Cysha\Modules\Core\Controllers\Module\ExtrasController@getHomepage',
     'default-editor' => 'core::editors.pagedown-bootstrap',
     'editors' => [
         'core::editors.pagedown-bootstrap',
     ],
-);
+];

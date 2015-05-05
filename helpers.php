@@ -10,14 +10,6 @@ if (!function_exists('artisan_call')) {
     }
 }
 
-if (!function_exists('save_config_var')) {
-    function save_config_var($setting, $value, $env = null)
-    {
-        $controller = with(new \Cysha\Modules\Core\Controllers\Admin\Config\BaseConfigController);
-        return $controller->saveSetting($setting, $value, $env);
-    }
-}
-
 if (!function_exists('is_number')) {
     function is_number($number)
     {
@@ -41,16 +33,17 @@ if (!function_exists('partial')) {
     function partial($view)
     {
         $theme = Request::is('admin/*')
-            ? Config::get('core::app.themes.backend')
-            : Config::get('core::app.themes.frontend');
+            ? config('core::app.themes.backend')
+            : config('core::app.themes.frontend');
         $viewStr = 'theme.'.$theme.'::views.modules.'.str_replace('::', '.', $view);
-        if (View::exists($viewStr)) {
+        if (view()->exists($viewStr)) {
             $view = $viewStr;
         }
 
         return $view;
     }
 }
+
 
 if (!function_exists('date_array')) {
     /**
@@ -77,6 +70,7 @@ if (!function_exists('date_array')) {
         return $return;
     }
 }
+
 
 if (!function_exists('date_carbon')) {
     function date_carbon($value, $format = null)
@@ -212,10 +206,10 @@ if (!function_exists('date_fuzzy')) {
 function getCurrentTheme()
 {
     if (Request::is('admin/*')) {
-        return Config::get('core::app.themes.backend', 'default_admin');
+        return config('core::app.themes.backend', 'default_admin');
     }
 
-    return Config::get('core::app.themes.frontend', 'default');
+    return config('core::app.themes.frontend', 'default');
 }
 
 function escape($value)

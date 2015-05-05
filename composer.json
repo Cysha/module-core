@@ -1,21 +1,20 @@
 {
     "name": "cysha/pxcms-core",
     "type": "pxcms-module",
-    "description": "Core Module for Phoenix CMS",
+    "description": "Core Module for Phoenix CMS v1",
     "license": "MIT",
     "authors": [
         { "name": "xLink", "email": "xLink@cybershade.org" }
     ],
     "minimum-stability": "dev",
     "require": {
-        "composer/installers" : "dev-master",
+        "composer/installers"               : "dev-master",
 
-        "teepluss/theme"                    : "~1.2",
-        "stolz/assets"                      : "0.0.9",
-        "anahkiasen/former"                 : "~3.5",
-        "vespakoen/menu"                    : "~2.0",
-        "liebig/cron"                       : "~1.0",
-        "mews/purifier"                     : "1.0.2"
+        "guzzlehttp/guzzle"                 : "~5.0",
+        "laravelcollective/html"            : "~5.0",
+        "teepluss/theme"                    : "~2.0",
+        "anahkiasen/former"                 : "~4.0",
+        "mews/purifier"                     : "~2.0"
     },
     "repositories": [
         { "type": "vcs", "url": "https://github.com/cysha/installers" }
