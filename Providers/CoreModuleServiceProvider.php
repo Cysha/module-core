@@ -18,12 +18,24 @@ class CoreModuleServiceProvider extends ServiceProvider
     protected $defer = false;
 
     /**
+     * The filters base class name.
+     *
+     * @var array
+     */
+    protected $middleware = [
+        'Core' => [
+            'isInstalled'             => 'IsInstalledMiddleware',
+        ],
+    ];
+
+    /**
      * Register the service provider.
      *
      * @return void
      */
     public function register()
     {
+        $this->registerMiddleware($this->app['router']);
         $this->registerModuleResourceNamespaces();
     }
 
@@ -35,6 +47,23 @@ class CoreModuleServiceProvider extends ServiceProvider
     public function provides()
     {
         return [];
+    }
+
+    /**
+     * Register the middleware.
+     *
+     * @param  Router $router
+     * @return void
+     */
+    public function registerMiddleware(Router $router)
+    {
+
+        foreach ($this->middleware as $module => $middlewares) {
+            foreach ($middlewares as $name => $middleware) {
+                $class = sprintf('Cms\Modules\%s\Http\Middleware\%s', $module, $middleware);
+                $router->middleware($name, $class);
+            }
+        }
     }
 
     /**
@@ -106,9 +135,7 @@ class CoreModuleServiceProvider extends ServiceProvider
     {
         $name = preg_replace('/\\.[^.\\s]{3,4}$/', '', basename($file));
 
-        $filename = $package . '.' . $name;
-
-        return $filename;
+        return sprintf('modules.%s.%s', $package, $name);
     }
 
 }
