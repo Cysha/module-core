@@ -11,13 +11,15 @@
         "Cms\\Modules\\Core\\Providers\\CoreModuleServiceProvider",
         "Collective\\Html\\HtmlServiceProvider",
         "Teepluss\\Theme\\ThemeServiceProvider",
+        "Mews\\Purifier\\PurifierServiceProvider",
         "Former\\FormerServiceProvider"
     ],
     "aliases": {
         "HTML": "Collective\\Html\\HTMLFacade",
         "Form": "Collective\\Html\\FormFacade",
+        "Former": "Former\\Facades\\Former",
         "Theme": "Teepluss\\Theme\\Facades\\Theme",
-        "Former": "Former\\Facades\\Former"
+        "Purifier": "Mews\\Purifier\\Facades\\Purifier"
     },
     "files": [
         "start.php",
