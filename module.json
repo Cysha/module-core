@@ -9,6 +9,7 @@
     "order": 0,
     "providers": [
         "Cms\\Modules\\Core\\Providers\\CoreModuleServiceProvider",
+        "Cms\\Modules\\Core\\Providers\\CmsConfigProvider",
         "Collective\\Html\\HtmlServiceProvider",
         "Teepluss\\Theme\\ThemeServiceProvider",
         "Mews\\Purifier\\PurifierServiceProvider",
