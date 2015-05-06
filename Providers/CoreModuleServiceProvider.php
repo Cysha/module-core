@@ -36,6 +36,7 @@ class CoreModuleServiceProvider extends ServiceProvider
     public function register()
     {
         $this->registerMiddleware($this->app['router']);
+        $this->registerModuleCommands();
         $this->registerModuleResourceNamespaces();
     }
 
@@ -47,6 +48,27 @@ class CoreModuleServiceProvider extends ServiceProvider
     public function provides()
     {
         return [];
+    }
+
+
+    private function registerModuleCommands()
+    {
+        $namespace = 'Cms\Modules\Core\Console';
+        $commands = [
+            //'cms.modules.core:install' => $namespace.'\InstallCommand',
+            //'cms:install'              => $namespace.'\CmsInstallCommand',
+            //'modules:install'          => $namespace.'\ModulesInstallCommand',
+            //'modules:codecept'         => $namespace.'\ModulesCodeceptCommand',
+            // 'themes:publish'              => $namespace.'\ThemePublishCommand',
+            'themes:gulp'              => $namespace.'\ThemeGulpCommand',
+        ];
+
+        foreach ($commands as $command => $class) {
+            $this->app[$command] = $this->app->share(function () use ($class) {
+                return new $class($this->app);
+            });
+            $this->commands($command);
+        }
     }
 
     /**
