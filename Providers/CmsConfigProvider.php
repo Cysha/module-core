@@ -16,6 +16,10 @@ class CmsConfigProvider extends ServiceProvider
      */
     public function register()
     {
+        if (Cache::has('core.config_table')) {
+            return Cache::get('core.config_table');
+        }
+
         // test for db connectivity
         try {
             DB::connection()->getDatabaseName();
