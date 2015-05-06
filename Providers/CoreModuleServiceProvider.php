@@ -24,7 +24,6 @@ class CoreModuleServiceProvider extends ServiceProvider
      */
     protected $middleware = [
         'Core' => [
-            'isInstalled'             => 'IsInstalledMiddleware',
         ],
     ];
 
@@ -79,8 +78,14 @@ class CoreModuleServiceProvider extends ServiceProvider
      */
     public function registerMiddleware(Router $router)
     {
+        if (!count($this->middleware)) {
+            return;
+        }
 
         foreach ($this->middleware as $module => $middlewares) {
+            if (!count($middlewares)) {
+                continue;
+            }
             foreach ($middlewares as $name => $middleware) {
                 $class = sprintf('Cms\Modules\%s\Http\Middleware\%s', $module, $middleware);
                 $router->middleware($name, $class);
