@@ -17,25 +17,25 @@ class CmsConfigProvider extends ServiceProvider
     public function register()
     {
         if (Cache::has('core.config_table')) {
-            return Cache::get('core.config_table');
-        }
+            $table = Cache::get('core.config_table');
+        } else {
+            // test for db connectivity
+            try {
+                DB::connection()->getDatabaseName();
+            } catch (\PDOException $e) {
+                return;
+            }
 
-        // test for db connectivity
-        try {
-            DB::connection()->getDatabaseName();
-        } catch (\PDOException $e) {
-            return;
-        }
+            // make sure the config table is installed
+            if (!Schema::hasTable(with(new Core\Models\DBConfig)->table)) {
+                return;
+            }
 
-        // make sure the config table is installed
-        if (!Schema::hasTable(with(new Core\Models\DBConfig)->table)) {
-            return;
+            // cache the config table
+            $table = Cache::rememberForever('core.config_table', function () {
+                return Core\Models\DBConfig::orderBy('environment', 'asc')->get();
+            });
         }
-
-        // cache the config table
-        $table = Cache::rememberForever('core.config_table', function () {
-            return Core\Models\DBConfig::orderBy('environment', 'asc')->get();
-        });
 
         if ($table->count() == 0) {
             return;
