@@ -2,7 +2,9 @@
     "name": "Core",
     "alias": "core",
     "description": "Core Module for Phoenix CMS v1",
-    "author": "xLink (Dan Aldridge)",
+    "authors": [
+        { "name": "xLink (Dan Aldridge)", "email": "xLink@cybershade.org" }
+    ],
     "keywords": [
         "core-module"
     ],
