@@ -2,8 +2,10 @@
     "name": "Core",
     "alias": "core",
     "description": "Core Module for Phoenix CMS v1",
-    "keywords": [],
-    "require": {},
+    "author": "xLink (Dan Aldridge)",
+    "keywords": [
+        "core-module"
+    ],
     "version": "v1.0.0",
     "active": 1,
     "order": 0,
