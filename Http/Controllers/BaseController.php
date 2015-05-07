@@ -1,8 +1,8 @@
 <?php namespace Cms\Modules\Core\Http\Controllers;
 
+use Illuminate\Filesystem\Filesystem;
 use Pingpong\Modules\Routing\Controller;
 use Teepluss\Theme\Contracts\Theme;
-use Config;
 
 class BaseController extends Controller
 {
@@ -56,12 +56,20 @@ class BaseController extends Controller
      */
     private $type = null;
 
-    public function __construct(Theme $theme)
+    /**
+     * File from the IoC
+     *
+     * @var string
+     */
+    private $file = null;
+
+    public function __construct(Theme $theme, Filesystem $file)
     {
+        $this->file = $file;
 
         // set some theme options up
         if (!isset($this->themeName)) {
-            $this->themeName = Config::get('core::app.themes.frontend', 'default');
+            $this->themeName = config('core::app.themes.frontend', 'default');
         }
 
         try {
@@ -152,7 +160,7 @@ class BaseController extends Controller
         }
 
         $layoutFile = sprintf('%s/themes/%s/layouts/%s.blade.php', public_path(), $this->themeName, $layout);
-        if (File::exists($layoutFile)) {
+        if ($this->file->exists($layoutFile)) {
             $this->layout = $layout;
             $this->theme->layout($layout);
 
