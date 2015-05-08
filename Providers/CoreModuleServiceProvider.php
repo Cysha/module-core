@@ -20,7 +20,8 @@ class CoreModuleServiceProvider extends BaseModuleProvider
      */
     protected $commands = [
         'Core' => [
-            'themes:gulp' => 'ThemeGulpCommand',
+            'cms:install'    => 'CmsInstallCommand',
+            'themes:gulp'    => 'ThemeGulpCommand',
             'themes:publish' => 'ThemePublishCommand',
         ],
     ];
