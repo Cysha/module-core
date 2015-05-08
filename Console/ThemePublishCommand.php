@@ -6,6 +6,7 @@ use Symfony\Component\Console\Input\InputArgument;
 class ThemePublishCommand extends Command
 {
     protected $name = 'theme:publish';
+    protected $readableName = 'Publish Theme Assets';
     protected $description = 'Publish theme assets';
 
     protected $file;

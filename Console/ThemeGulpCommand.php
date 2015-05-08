@@ -2,28 +2,10 @@
 
 use Symfony\Component\Console\Input\InputArgument;
 
-/**
- * Themes console commands
- */
 class ThemeGulpCommand extends BaseCommand
 {
-    /**
-     * Name of the command
-     * @var string
-     */
     protected $name = 'theme:gulp';
-
-    /**
-     * The Readable Command Name.
-     *
-     * @var string
-     */
     protected $readableName = 'Theme gulp runner';
-
-    /**
-     * Command description
-     * @var string
-     */
     protected $description = 'Run gulp from a Theme.';
 
     /**
