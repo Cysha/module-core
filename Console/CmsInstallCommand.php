@@ -29,20 +29,24 @@ class CmsInstallCommand extends BaseCommand
             $this->info('Generating Secure Key...');
             $this->call('key:generate');
 
+            // if we have migrations in the db already
             if (Schema::hasTable('migrations')) {
+                // just run a reset
                 $this->info('Clearing out the database...');
                 $this->call('migrate:reset');
-            } else {
-                $this->info('Setting up the database...');
-                $this->call('migrate:install');
             }
 
-            // $path = app_path().'/storage/migrations/';
-            // if (File::exists($path)) {
-            //     $this->info('Clearing out the Module Migrations Folder...');
-            //     File::cleanDirectory($path);
-            //     File::deleteDirectory($path);
-            // }
+            // wipe out the migrations in there
+            $this->info('Clearing out migration directory...');
+            File::cleanDirectory(config('modules.paths.migration'));
+
+            // publish the module migrations again
+            $this->info('Publishing Module Migrations...');
+            $this->call('module:publish-migration');
+
+            // then actually migrate!
+            $this->info('Setting up the database...');
+            $this->call('migrate');
 
             $seed = false;
             if ($this->confirm(' Do you want to install test data into the database? [yes|no]', true)) {
@@ -78,7 +82,7 @@ class CmsInstallCommand extends BaseCommand
             }
 
         }
-        // $this->call('dump-autoload');
+        $this->call('dump-autoload');
         $this->info('Done');
         $this->comment('=====================================');
         $this->comment('');
