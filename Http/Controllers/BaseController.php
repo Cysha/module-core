@@ -67,6 +67,10 @@ class BaseController extends Controller
     {
         $this->_setDependencies($theme, $file);
 
+        if (method_exists($this, 'boot')) {
+            $this->boot();
+        }
+
         // start a debug timer going
         class_exists('Debugbar') && App::environment() !== 'testing' ? Debugbar::startMeasure('module_timer', 'Module Run') : null;
     }
