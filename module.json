@@ -18,14 +18,16 @@
         "Collective\\Html\\HtmlServiceProvider",
         "Teepluss\\Theme\\ThemeServiceProvider",
         "Mews\\Purifier\\PurifierServiceProvider",
-        "Former\\FormerServiceProvider"
+        "Former\\FormerServiceProvider",
+        "Menu\\MenuServiceProvider"
     ],
     "aliases": {
         "HTML": "Collective\\Html\\HTMLFacade",
         "Form": "Collective\\Html\\FormFacade",
         "Former": "Former\\Facades\\Former",
         "Theme": "Teepluss\\Theme\\Facades\\Theme",
-        "Purifier": "Mews\\Purifier\\Facades\\Purifier"
+        "Purifier": "Mews\\Purifier\\Facades\\Purifier",
+        "Menu": "Menu\\Menu"
     },
     "files": [
         "start.php",
