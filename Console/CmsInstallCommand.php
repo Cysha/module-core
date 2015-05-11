@@ -43,6 +43,7 @@ class CmsInstallCommand extends BaseCommand
             // publish the module migrations again
             $this->info('Publishing Module Migrations...');
             $this->call('module:publish-migration');
+            $this->call('dump-autoload');
 
             // then actually migrate!
             $this->info('Setting up the database...');

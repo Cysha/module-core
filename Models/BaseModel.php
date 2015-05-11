@@ -1,6 +1,8 @@
 <?php namespace Cms\Modules\Core\Models;
 
-class BaseModel extends \Eloquent
+use Illuminate\Database\Eloquent\Model;
+
+class BaseModel extends Model
 {
     //use \Cms\Modules\Core\Traits\LinkableTrait;
 

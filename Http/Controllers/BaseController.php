@@ -1,7 +1,7 @@
 <?php namespace Cms\Modules\Core\Http\Controllers;
 
-use Illuminate\Filesystem\Filesystem;
 use Pingpong\Modules\Routing\Controller;
+use Illuminate\Filesystem\Filesystem;
 use Teepluss\Theme\Contracts\Theme;
 
 class BaseController extends Controller
@@ -65,6 +65,19 @@ class BaseController extends Controller
 
     public function __construct(Theme $theme, Filesystem $file)
     {
+        $this->_setDependencies($theme, $file);
+
+        // start a debug timer going
+        class_exists('Debugbar') && App::environment() !== 'testing' ? Debugbar::startMeasure('module_timer', 'Module Run') : null;
+    }
+
+    public function __destruct()
+    {
+        class_exists('Debugbar') && App::environment() !== 'testing' ? Debugbar::stopMeasure('module_timer') : null;
+    }
+
+    public function _setDependencies(Theme $theme, Filesystem $file)
+    {
         $this->file = $file;
 
         // set some theme options up
@@ -80,14 +93,6 @@ class BaseController extends Controller
 
         // figure out which module we are currently in
         $this->module = $this->getModule($this);
-
-        // start a debug timer going
-        class_exists('Debugbar') && App::environment() !== 'testing' ? Debugbar::startMeasure('module_timer', 'Module Run') : null;
-    }
-
-    public function __destruct()
-    {
-        class_exists('Debugbar') && App::environment() !== 'testing' ? Debugbar::stopMeasure('module_timer') : null;
     }
 
     /**
@@ -120,15 +125,14 @@ class BaseController extends Controller
             return false;
         }
 
-        try {
+        if ($this->theme->exists($theme)) {
+            $this->themeName = $theme;
             $this->theme->uses($theme);
-        } catch (\Teepluss\Theme\UnknownThemeException $e) {
-            return false;
+
+            return true;
         }
 
-        $this->themeName = $theme;
-
-        return true;
+        return false;
     }
 
     /**
