@@ -22,10 +22,11 @@ class CoreModuleServiceProvider extends BaseModuleProvider
      */
     protected $commands = [
         'Core' => [
-            'dump-autoload'  => 'DumpAutoloadCommand',
-            'cms:install'    => 'CmsInstallCommand',
-            'themes:gulp'    => 'ThemeGulpCommand',
-            'themes:publish' => 'ThemePublishCommand',
+            'dump-autoload'          => 'DumpAutoloadCommand',
+            'cms:install'            => 'CmsInstallCommand',
+            'themes:gulp'            => 'ThemeGulpCommand',
+            'themes:publish'         => 'ThemePublishCommand',
+            'modules:publish-config' => 'ConfigPublishCommand',
         ],
     ];
 
@@ -101,6 +102,6 @@ class CoreModuleServiceProvider extends BaseModuleProvider
     {
         $name = preg_replace('/\\.[^.\\s]{3,4}$/', '', basename($file));
 
-        return sprintf('modules.%s.%s', $module, $name);
+        return sprintf('cms.%s.%s', $module, $name);
     }
 }
