@@ -1,7 +1,7 @@
 <?php namespace Cms\Modules\Core\Console;
 
 use Illuminate\Console\Command;
-use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputOption;
 
 class ConfigPublishCommand extends Command
 {
@@ -16,7 +16,7 @@ class ConfigPublishCommand extends Command
             '--provider' => 'Cms\Modules\Core\Providers\CoreModuleServiceProvider'
         ];
 
-        if ($this->argument('force')) {
+        if ($this->option('force', false)) {
             $options[] = '--force';
         }
 
@@ -24,10 +24,10 @@ class ConfigPublishCommand extends Command
     }
 
 
-    protected function getArgument()
+    protected function getOptions()
     {
         return [
-            ['force', InputArgument::OPTIONAL, 'Name of the theme you wish to publish']
+            ['force', null, InputOption::VALUE_NONE, 'Do we want to force the publish?']
         ];
     }
 }

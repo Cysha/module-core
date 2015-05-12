@@ -2,7 +2,6 @@
 
 return [
     'site-name' => 'PhoenixCMS',
-    'debugfile' => storage_path().'/app/debugfile',
 
     'themes'    => [
         'frontend' => 'default',
