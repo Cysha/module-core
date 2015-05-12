@@ -78,8 +78,11 @@ class CmsInstallCommand extends BaseCommand
                     }
                 }
 
-                $this->comment('Publishing Module Assets...'.$moduleName);
+                $this->comment('Publishing Module Assets...');
                 $this->call('module:publish');
+
+                $this->comment('Publishing Module Configs...');
+                $this->call('vendor:publish', [['--tag' => 'Cms\Modules\Core\Providers\CoreModuleServiceProvider']]);
             }
 
         }
