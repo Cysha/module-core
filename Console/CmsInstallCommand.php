@@ -94,7 +94,6 @@ class CmsInstallCommand extends BaseCommand
 
     protected function getOptions()
     {
-        return array(
-        );
+        return [];
     }
 }

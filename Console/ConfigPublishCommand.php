@@ -16,7 +16,7 @@ class ConfigPublishCommand extends Command
             '--provider' => 'Cms\Modules\Core\Providers\CoreModuleServiceProvider'
         ];
 
-        if ($this->argument('force')) {
+        if ($this->option('force', false)) {
             $options[] = '--force';
         }
 
@@ -24,10 +24,10 @@ class ConfigPublishCommand extends Command
     }
 
 
-    protected function getArgument()
+    protected function getOptions()
     {
         return [
-            ['force', InputArgument::OPTIONAL, 'Name of the theme you wish to publish']
+            ['force', InputArgument::OPTIONAL, 'Force the override the config ']
         ];
     }
 }

@@ -28,7 +28,7 @@ class BaseAdminController extends BaseController
     public function boot()
     {
         // reset the themeName to whatever is in the config
-        $this->setTheme(config('core::app.themes.backend', 'default_admin'));
+        $this->setTheme(config('cms.core.app.themes.backend', 'default_admin'));
 
         // then add the control panel stuff
         $this->addPageAssets();
@@ -75,21 +75,22 @@ class BaseAdminController extends BaseController
 
         foreach (app('modules')->getOrdered() as $module) {
             $name = $module->getName();
-echo \Debug::dump(Config::has($name.'::admin.acp_menu'), $name);
+
             // process any acp_menus this module might have
-            if (Config::has($name.'::admin.acp_menu')) {
-                foreach (Config::get($name.'::admin.acp_menu') as $section => $menu) {
+            $configStr = sprintf('cms.%s.admin.acp_menu', $name);
+            if (Config::has($configStr)) {
+                foreach (Config::get($configStr) as $section => $menu) {
                     $acp[$section] = !empty($acp[$section]) ? array_merge($acp[$section], $menu) : $menu;
                 }
             }
 
             // process any config menus this module might have
-            if (Config::has($name.'::admin.config_menu')) {
-                foreach (Config::get($name.'::admin.config_menu') as $section => $menu) {
+            $configStr = sprintf('cms.%s.admin.config_menu', $name);
+            if (Config::has($configStr)) {
+                foreach (Config::get($configStr) as $section => $menu) {
                     $inline[$section] = !empty($inline[$section]) ? array_merge($inline[$section], $menu) : $menu;
                 }
             }
-
         }
 
         // add the menus to the system
@@ -151,9 +152,9 @@ echo \Debug::dump(Config::has($name.'::admin.acp_menu'), $name);
         if (is_number($section)) {
             $menu->add('#', $link)->addClass('divider');
         } else {
-            if (Auth::user()->can($section) === false) {
-                return;
-            }
+            //if (Auth::user()->can($section) === false) {
+            //    return;
+            //}
             $menu->add(route($section), $link);
         }
     }
