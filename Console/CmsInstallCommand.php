@@ -82,7 +82,7 @@ class CmsInstallCommand extends BaseCommand
                 $this->call('module:publish');
 
                 $this->comment('Publishing Module Configs...');
-                $this->call('vendor:publish', [['--tag' => 'Cms\Modules\Core\Providers\CoreModuleServiceProvider']]);
+                $this->call('vendor:publish', ['--provider' => 'Cms\Modules\Core\Providers\CoreModuleServiceProvider']);
             }
 
         }
