@@ -61,9 +61,9 @@ abstract class CmsRoutingProvider extends ServiceProvider
 
         if ($frontend && file_exists($frontend)) {
             $router->group([
-                'namespace'    => $this->namespace.'\Frontend',
-                'prefix'       => config('cms.core.app.paths.frontend', '/'),
-                //'middleware' => ['auth.admin', 'permissions']
+                'namespace'  => $this->namespace.'\Frontend',
+                'prefix'     => config('cms.core.app.paths.frontend', '/'),
+                // 'middleware' => ['permissions']
             ], function (Router $router) use ($frontend) {
                 require $frontend;
             });
@@ -79,9 +79,9 @@ abstract class CmsRoutingProvider extends ServiceProvider
 
         if ($backend && file_exists($backend)) {
             $router->group([
-                'namespace'    => $this->namespace.'\Backend',
-                'prefix'       => config('cms.core.app.paths.backend', 'admin/'),
-                //'middleware' => ['auth.admin', 'permissions']
+                'namespace'  => $this->namespace.'\Backend',
+                'prefix'     => config('cms.core.app.paths.backend', 'admin/'),
+                'middleware' => ['auth.admin'/*, 'permissions'*/]
             ], function (Router $router) use ($backend) {
                 require $backend;
             });
