@@ -17,7 +17,7 @@ class ConfigPublishCommand extends Command
         ];
 
         if ($this->option('force', false)) {
-            $options[] = '--force';
+            $options['--force'] = null;
         }
 
         $this->call('vendor:publish', $options);
