@@ -89,7 +89,17 @@ class DBConfig extends BaseModel
 
     public function setValueAttribute($value)
     {
-        $this->attributes['value'] = empty($value) ? NULL : json_encode($value);
+        if (is_bool($value)) {
+            $this->attributes['value'] = json_encode(($value ? 'true' : 'false'));
+            return;
+        }
+
+        if (empty($value)) {
+            $this->attributes['value'] = NULL;
+            return;
+        }
+
+        $this->attributes['value'] = json_encode($value);
     }
 
 }
