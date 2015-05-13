@@ -79,7 +79,7 @@ class BaseAdminController extends BaseController
             // process any acp_menus this module might have
             $configStr = sprintf('cms.%s.admin.acp_menu', $name);
             if (Config::has($configStr)) {
-                foreach (Config::get($configStr) as $section => $menu) {
+                foreach (config($configStr) as $section => $menu) {
                     $acp[$section] = !empty($acp[$section]) ? array_merge($acp[$section], $menu) : $menu;
                 }
             }
@@ -87,7 +87,7 @@ class BaseAdminController extends BaseController
             // process any config menus this module might have
             $configStr = sprintf('cms.%s.admin.config_menu', $name);
             if (Config::has($configStr)) {
-                foreach (Config::get($configStr) as $section => $menu) {
+                foreach (config($configStr) as $section => $menu) {
                     $inline[$section] = !empty($inline[$section]) ? array_merge($inline[$section], $menu) : $menu;
                 }
             }

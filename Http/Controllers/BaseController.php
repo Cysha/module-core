@@ -86,7 +86,7 @@ class BaseController extends Controller
 
         // set some theme options up
         if (!isset($this->themeName)) {
-            $this->themeName = config('core::app.themes.frontend', 'default');
+            $this->themeName = config('cms.core.app.themes.frontend', 'default');
         }
 
         try {
@@ -191,22 +191,10 @@ class BaseController extends Controller
         $module = strtolower($module === null ? $this->module : $module);
 
         if ($var !== null) {
-            return $module.'::'.$var;
+            return sprintf('%s::%s', $module, $var);
         }
 
         return $module;
-    }
-
-    /**
-     * Returns a config variable for this module
-     *
-     * @param  string $key
-     * @param  string $default
-     * @return mixed
-     */
-    public function getConfig($key, $default = null)
-    {
-        return config($this->getModuleNamespace($key), $default);
     }
 
     /**

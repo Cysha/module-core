@@ -33,8 +33,8 @@ if (!function_exists('partial')) {
     function partial($view)
     {
         $theme = Request::is('admin/*')
-            ? config('core::app.themes.backend')
-            : config('core::app.themes.frontend');
+            ? config('cms.core.app.themes.backend')
+            : config('cms.core.app.themes.frontend');
         $viewStr = 'theme.'.$theme.'::views.modules.'.str_replace('::', '.', $view);
         if (view()->exists($viewStr)) {
             $view = $viewStr;
@@ -75,11 +75,11 @@ if (!function_exists('date_array')) {
 if (!function_exists('date_carbon')) {
     function date_carbon($value, $format = null)
     {
-        if (!Config::has('core::module.date-format')) {
+        if (!Config::has('cms.core.config.date-format')) {
             return $value;
         } else {
             if ($format === null) {
-                $format = Config::get('core::module.date-format');
+                $format = config('cms.core.config.date-format');
             }
         }
 
@@ -206,10 +206,10 @@ if (!function_exists('date_fuzzy')) {
 function getCurrentTheme()
 {
     if (Request::is('admin/*')) {
-        return config('core::app.themes.backend', 'default_admin');
+        return config('cms.core.app.themes.backend', 'default_admin');
     }
 
-    return config('core::app.themes.frontend', 'default');
+    return config('cms.core.app.themes.frontend', 'default');
 }
 
 function escape($value)
