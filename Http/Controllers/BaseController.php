@@ -72,12 +72,12 @@ class BaseController extends Controller
         }
 
         // start a debug timer going
-        class_exists('Debugbar') && App::environment() !== 'testing' ? Debugbar::startMeasure('module_timer', 'Module Run') : null;
+        class_exists('Debugbar') && app()->environment() !== 'testing' ? \Debugbar::startMeasure('module_timer', 'Module Run') : null;
     }
 
     public function __destruct()
     {
-        class_exists('Debugbar') && App::environment() !== 'testing' ? Debugbar::stopMeasure('module_timer') : null;
+        class_exists('Debugbar') && app()->environment() !== 'testing' ? \Debugbar::stopMeasure('module_timer') : null;
     }
 
     public function _setDependencies(Theme $theme, Filesystem $file)

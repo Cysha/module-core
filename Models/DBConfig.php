@@ -12,21 +12,10 @@ class DBConfig extends BaseModel
     protected $fillable = ['environment', 'group', 'namespace', 'item', 'value'];
     public $appends = ['key'];
 
-    /** ModelEvents **/
-    public static function boot()
-    {
-        parent::boot();
-
-        static::saved(function ($model) {
-            Cache::forget('core.config_table');
-            Event::fire('core.config.saved', [$model->key, $model->value]);
-        });
-    }
-
     /**
+     * Sets a settings value
      *
-     *
-     *
+     * @return bool
      */
     public function set($setting, $value)
     {
@@ -84,17 +73,13 @@ class DBConfig extends BaseModel
 
     public function getValueAttribute($value)
     {
-        return json_decode($value);
+        $value = json_decode($value);
+        return $value;
     }
 
     public function setValueAttribute($value)
     {
-        if (is_bool($value)) {
-            $this->attributes['value'] = json_encode(($value ? 'true' : 'false'));
-            return;
-        }
-
-        if (empty($value)) {
+        if (strlen($value) == 0 || $value === null) {
             $this->attributes['value'] = NULL;
             return;
         }
