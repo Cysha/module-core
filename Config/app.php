@@ -1,8 +1,10 @@
 <?php
 
 return [
-    'site-name' => 'PhoenixCMS',
-    'debugfile' => storage_path('app/debugfile'),
+    'site-name'    => 'PhoenixCMS',
+    'debugfile'    => storage_path('app/debugfile'),
+    'force-secure' => 'false',
+    'debug'        => 'false',
 
     'themes'    => [
         'frontend' => 'default',
