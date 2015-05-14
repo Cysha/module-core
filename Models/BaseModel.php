@@ -1,10 +1,12 @@
 <?php namespace Cms\Modules\Core\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Watson\Rememberable\Rememberable;
 
 class BaseModel extends Model
 {
     //use \Cms\Modules\Core\Traits\LinkableTrait;
+    use Rememberable;
 
     //protected $identifiableName = 'name';
 
