@@ -4,6 +4,7 @@ use Route;
 use File;
 use Menu;
 use Config;
+use Lock;
 
 class BaseAdminController extends BaseController
 {
@@ -44,7 +45,6 @@ class BaseAdminController extends BaseController
 
     /**
      * Determines whether we have a file in the right place for this module
-     *
      */
     public function addPageAssets()
     {
@@ -111,29 +111,38 @@ class BaseAdminController extends BaseController
             return false;
         }
 
-        $acp = Menu::handler($handler);
+        // create a handler for this menu
+        $menuInstance = Menu::handler($handler);
 
-        foreach ($menus as $section => $link) {
-            if (empty($link)) {
+        // roll over the menu links
+        foreach ($menus as $section => $links) {
+            if (empty($links)) {
                 continue;
             }
 
-            if (!is_array($link) || !count($link)) {
-                $this->addSection($acp, $link, $section);
+            // create a new subHandler
+            $subHandler = Menu::items($handler.'-'.trim(e($section)));
+
+            // if the links arent part of a sub menu
+            if (is_number($section)) {
+                // add them directly to the main instance
+                $this->addSection($menuInstance, $links);
                 continue;
             }
 
-            $section = trim(e($section));
-            $s = Menu::items('section-'.$section);
-
+            // check see if the links are in a sub menu
             $children = false;
-            foreach ($link as $url => $anchor) {
-                $this->addSection($s, $anchor, $url);
-                $children = true;
+            foreach ($links as $info) {
+                // make sure everything happened as expected
+                if ($this->addSection($subHandler, $info)) {
+                    $children = true;
+                }
             }
 
+            // make sure we have something to add
             if ($children === true) {
-                $acp->add('#', $section, $s);
+                // add the sub menu to the main instance
+                $menuInstance->add('#', $section, $subHandler);
             }
         }
 
@@ -147,15 +156,38 @@ class BaseAdminController extends BaseController
      * @param string $link
      * @param string $section
      */
-    public function addSection(&$menu, $link, $section)
+    public function addSection(&$menu, $link)
     {
-        if (is_number($section)) {
-            $menu->add('#', $link)->addClass('divider');
-        } else {
-            //if (Auth::user()->can($section) === false) {
-            //    return;
-            //}
-            $menu->add(route($section), $link);
+        //echo \Debug::dump(func_get_args(), __METHOD__);
+        if (($type = array_get($link, 'type', null)) === 'divider') {
+            $menu->add('#', array_get($link, 'text'))->addClass('divider');
+            return true;
         }
+
+        // check for permissions on this link
+        if (($perm = array_get($link, 'permission', null)) !== null && strpos($perm, '@') !== false) {
+            $perm = explode('@', $perm);
+            if (Lock::cannot($perm[0], $perm[1])) {
+                return false;
+            }
+        }
+
+        // figure out where to link this nav item to
+        $url = '#';
+        if (($route = array_get($link, 'route', null)) !== null) {
+            $url = route($route);
+        } elseif (($direct = array_get($link, 'url', null)) !== null) {
+            $url = $direct;
+        }
+
+        // add the text and if needed an icon
+        $text = array_get($link, 'text');
+        if (($icon = array_get($link, 'icon', null)) !== null) {
+            $text = sprintf('<i class="fa fa-fw %s"></i> %s', $icon, $text);
+        }
+
+        // add the item to the menu
+        $menu->add($url, $text);
+        return true;
     }
 }
