@@ -43,7 +43,7 @@ class ConfigTableSeeder extends Seeder
                 'namespace'   => null,
                 'group'       => 'cms.core.app',
                 'item'        => 'force-secure',
-                'value'       => false,
+                'value'       => 'false',
             ],
             [
                 'environment' => $environment,
@@ -64,7 +64,7 @@ class ConfigTableSeeder extends Seeder
                 'namespace'   => null,
                 'group'       => 'cms.core.app',
                 'item'        => 'debug',
-                'value'       => false,
+                'value'       => 'false',
             ],
         ];
 
