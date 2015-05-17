@@ -86,6 +86,7 @@ class CmsInstallCommand extends BaseCommand
             }
 
         }
+        $this->call('cache:clear');
         $this->call('dump-autoload');
         $this->info('Done');
         $this->comment('=====================================');
