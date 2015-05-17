@@ -12,6 +12,16 @@ class BaseModel extends Model
     protected $identifiableName = 'name';
 
     /**
+     * Fire up the linkableTrait so it can do its thing
+     */
+    public function __construct()
+    {
+        parent::__construct();
+
+        LinkableTrait::constructor();
+    }
+
+    /**
      * Gives the model a identifiable name for links and such
      *
      * @return string
