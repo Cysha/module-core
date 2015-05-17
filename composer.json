@@ -16,7 +16,8 @@
         "anahkiasen/former"                 : "~4.0",
         "mews/purifier"                     : "~2.0",
         "vespakoen/menu"                    : "dev-master",
-        "watson/rememberable"               : "~1.0"
+        "watson/rememberable"               : "~1.0",
+        "dingo/api"                         : "0.9.*@dev"
     },
     "repositories": [
         { "type": "vcs", "url": "https://github.com/cysha/installers" }
