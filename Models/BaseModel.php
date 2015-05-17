@@ -18,7 +18,7 @@ class BaseModel extends Model
     {
         parent::__construct();
 
-        LinkableTrait::linkableConstructor();
+        self::linkableConstructor();
     }
 
     /**
