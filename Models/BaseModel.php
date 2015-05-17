@@ -2,18 +2,24 @@
 
 use Illuminate\Database\Eloquent\Model;
 use Watson\Rememberable\Rememberable;
+use Cms\Modules\Core\Traits\LinkableTrait;
 
 class BaseModel extends Model
 {
-    //use \Cms\Modules\Core\Traits\LinkableTrait;
-    use Rememberable;
+    use LinkableTrait,
+        Rememberable;
 
-    //protected $identifiableName = 'name';
+    protected $identifiableName = 'name';
 
-    //public function identifiableName()
-    //{
-    //    return $this->{$this->identifiableName};
-    //}
+    /**
+     * Gives the model a identifiable name for links and such
+     *
+     * @return string
+     */
+    public function identifiableName()
+    {
+        return $this->{$this->identifiableName};
+    }
 
     /**
      * Fill attributes in $this from Input
