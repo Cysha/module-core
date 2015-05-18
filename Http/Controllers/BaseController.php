@@ -99,6 +99,10 @@ class BaseController extends Controller
         $this->module = $this->getModule($this);
     }
 
+    public function boot()
+    {
+    }
+
     /**
      * Gets the current modules name, presuming this is a CMS Module
      *

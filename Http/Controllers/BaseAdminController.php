@@ -48,7 +48,10 @@ class BaseAdminController extends BaseController
      */
     public function addPageAssets()
     {
-        $routeName = Route::current()->getName() ?: null;
+        if (!is_object(Route::current())) {
+            return;
+        }
+        $routeName = Route::current()->getName();
 
         $path = sprintf('%s/themes/%s/assets/css/%s.css', public_path(), $this->themeName, $routeName);
 
