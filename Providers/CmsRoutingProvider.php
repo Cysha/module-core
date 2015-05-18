@@ -57,15 +57,14 @@ abstract class CmsRoutingProvider extends ServiceProvider
      */
     private function loadFrontendRoutes(Router $router)
     {
-        $frontend = $this->getFrontendRoute();
+        $routes = $this->getFrontendRoute();
 
-        if ($frontend && file_exists($frontend)) {
+        if ($routes && file_exists($routes)) {
             $router->group([
                 'namespace'  => $this->namespace.'\Frontend',
                 'prefix'     => config('cms.core.app.paths.frontend', '/'),
-                // 'middleware' => ['permissions']
-            ], function (Router $router) use ($frontend) {
-                require $frontend;
+            ], function (Router $router) use ($routes) {
+                require $routes;
             });
         }
     }
@@ -75,15 +74,15 @@ abstract class CmsRoutingProvider extends ServiceProvider
      */
     private function loadBackendRoutes(Router $router)
     {
-        $backend = $this->getBackendRoute();
+        $routes = $this->getBackendRoute();
 
-        if ($backend && file_exists($backend)) {
+        if ($routes && file_exists($routes)) {
             $router->group([
                 'namespace'  => $this->namespace.'\Backend',
                 'prefix'     => config('cms.core.app.paths.backend', 'admin/'),
-                'middleware' => ['auth.admin'/*, 'permissions'*/]
-            ], function (Router $router) use ($backend) {
-                require $backend;
+                'middleware' => ['auth.admin']
+            ], function (Router $router) use ($routes) {
+                require $routes;
             });
         }
     }
@@ -93,14 +92,15 @@ abstract class CmsRoutingProvider extends ServiceProvider
      */
     private function loadApiRoutes(Router $router)
     {
-        $api = $this->getApiRoute();
+        $routes = $this->getApiRoute();
 
-        if ($api && file_exists($api)) {
+        if ($routes && file_exists($routes)) {
             $router->group([
                 'namespace' => $this->namespace.'\Api',
-                'prefix'    => config('cms.core.app.paths.api', 'api/')
-            ], function (Router $router) use ($api) {
-                require $api;
+                'prefix'    => config('cms.core.app.paths.api', 'api/'),
+                'version'   => 'v1',
+            ], function (Router $router) use ($routes) {
+                require $routes;
             });
         }
     }

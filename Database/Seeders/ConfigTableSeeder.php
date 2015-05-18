@@ -66,10 +66,38 @@ class ConfigTableSeeder extends Seeder
                 'item'        => 'debug',
                 'value'       => 'false',
             ],
+            [
+                'environment' => $environment,
+                'namespace'   => null,
+                'group'       => 'api',
+                'item'        => 'vendor',
+                'value'       => 'cysha',
+            ],
+            [
+                'environment' => $environment,
+                'namespace'   => null,
+                'group'       => 'api',
+                'item'        => 'strict',
+                'value'       => 'false',
+            ],
+            [
+                'environment' => $environment,
+                'namespace'   => null,
+                'group'       => 'api',
+                'item'        => 'debug',
+                'value'       => 'false',
+            ],
+            [
+                'environment' => $environment,
+                'namespace'   => null,
+                'group'       => 'api',
+                'item'        => 'prefix',
+                'value'       => 'api/',
+            ],
         ];
 
         foreach ($array as $r) {
-            Core\Models\DBConfig::create($r);
+            with(new Core\Models\DBConfig)->fill($r)->save();
         }
 
     }
