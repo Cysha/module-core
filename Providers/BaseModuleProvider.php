@@ -13,6 +13,27 @@ class BaseModuleProvider extends ServiceProvider
     protected $defer = false;
 
     /**
+     * Register the defined middleware.
+     *
+     * @var array
+     */
+    protected $middleware = [];
+
+    /**
+     * The commands to register.
+     *
+     * @var array
+     */
+    protected $commands = [];
+
+    /**
+     * Register repository bindings to the IoC
+     *
+     * @var array
+     */
+    protected $bindings = [];
+
+    /**
      * Register the service provider.
      *
      * @return void
@@ -21,6 +42,7 @@ class BaseModuleProvider extends ServiceProvider
     {
         $this->registerMiddleware($this->app['router']);
         $this->registerModuleCommands();
+        $this->registerModuleBindings();
     }
 
     /**
@@ -80,4 +102,26 @@ class BaseModuleProvider extends ServiceProvider
         }
     }
 
+    /**
+     * Register the bindings for this module.
+     *
+     * @return void
+     */
+    public function registerModuleBindings()
+    {
+        if (!count($this->bindings)) {
+            return;
+        }
+
+        foreach ($this->bindings as $namespace => $classes) {
+            if (!count($classes)) {
+                continue;
+            }
+
+            $this->app->bind(
+                implode('\\', [$namespace, head($classes)]),
+                implode('\\', [$namespace, last($classes)])
+            );
+        }
+    }
 }

@@ -30,6 +30,15 @@ class CoreModuleServiceProvider extends BaseModuleProvider
         ],
     ];
 
+    /**
+     * Register repository bindings to the IoC
+     *
+     * @var array
+     */
+    protected $bindings = [
+
+    ];
+
     public function register()
     {
         parent::register();
