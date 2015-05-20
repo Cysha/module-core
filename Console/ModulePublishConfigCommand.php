@@ -3,7 +3,7 @@
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 
-class ConfigPublishCommand extends Command
+class ModulePublishConfigCommand extends Command
 {
     protected $name = 'module:publish-config';
     protected $readableName = 'Publish a modules configuration';
