@@ -2,6 +2,8 @@
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Container\Container as App;
+use Illuminate\Database\Eloquent\Model;
+use Cms\Modules\Core\Exceptions\RepositoryException;
 
 abstract class BaseEloquentRepository implements BaseRepositoryInterface
 {
@@ -84,10 +86,6 @@ abstract class BaseEloquentRepository implements BaseRepositoryInterface
     {
         $model = $this->app->make($this->getModel());
 
-        if (!$model instanceof Model) {
-            throw new RepositoryException("Class {$this->model()} must be an instance of Illuminate\\Database\\Eloquent\\Model");
-        }
-
         return $this->model = $model;
     }
 
@@ -128,7 +126,14 @@ abstract class BaseEloquentRepository implements BaseRepositoryInterface
     {
         $this->unsetClauses();
 
-        return $this->model->create($data);
+        $model = with(new $this->model);
+        $model->fill($data);
+
+        if ($model->save() === true) {
+            return $model;
+        }
+
+        return false;
     }
 
     /**
