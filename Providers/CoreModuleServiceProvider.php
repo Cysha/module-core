@@ -22,11 +22,15 @@ class CoreModuleServiceProvider extends BaseModuleProvider
      */
     protected $commands = [
         'Core' => [
-            'dump-autoload'          => 'DumpAutoloadCommand',
-            'cms:install'            => 'CmsInstallCommand',
-            'themes:gulp'            => 'ThemeGulpCommand',
-            'themes:publish'         => 'ThemePublishCommand',
-            'modules:publish-config' => 'ModulePublishConfigCommand',
+            'dump-autoload' => 'DumpAutoloadCommand',
+
+            'cms:install' => 'CmsInstallCommand',
+
+            'themes:gulp' => 'ThemeGulpCommand',
+            'themes:publish' => 'ThemePublishCommand',
+
+            'module:publish-config' => 'ModulePublishConfigCommand',
+            'module:publish-permissions'  => 'ModulePublishPermissionsCommand',
         ],
     ];
 

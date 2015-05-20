@@ -69,23 +69,22 @@ class CmsInstallCommand extends BaseCommand
                         $this->call('module:install', ['module' => $moduleName]);
                     }
 
-                    //$this->comment('Migrating module... '.$moduleName);
-                    $this->call('module:migrate', ['module' => $moduleName]);
-
                     if ($seed) {
-                        //$this->comment('Seeding module... '.$moduleName);
-                        $this->call('module:seed', ['module' => $moduleName]);
+                        $this->comment('Seeding Module...');
+                        $this->callSilent('module:seed', ['module' => $moduleName]);
                     }
                 }
 
                 $this->comment('Publishing Module Assets...');
-                $this->call('module:publish');
+                $this->callSilent('module:publish');
 
                 $this->comment('Publishing Module Configs...');
-                $this->call('vendor:publish', ['--provider' => 'Cms\Modules\Core\Providers\CoreModuleServiceProvider']);
+                $this->callSilent('vendor:publish', ['--provider' => 'Cms\Modules\Core\Providers\CoreModuleServiceProvider']);
             }
 
         }
+
+        $this->info('Cleaning Up...');
         $this->call('cache:clear');
         $this->call('dump-autoload');
         $this->info('Done');
