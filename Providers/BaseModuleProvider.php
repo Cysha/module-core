@@ -61,7 +61,7 @@ class BaseModuleProvider extends ServiceProvider
      * @param  Router $router
      * @return void
      */
-    public function registerMiddleware(Router $router)
+    private function registerMiddleware(Router $router)
     {
         if (!count($this->middleware)) {
             return;
@@ -107,7 +107,7 @@ class BaseModuleProvider extends ServiceProvider
      *
      * @return void
      */
-    public function registerModuleBindings()
+    private function registerModuleBindings()
     {
         if (!count($this->bindings)) {
             return;
@@ -118,10 +118,13 @@ class BaseModuleProvider extends ServiceProvider
                 continue;
             }
 
-            $this->app->bind(
-                implode('\\', [$namespace, head($classes)]),
-                implode('\\', [$namespace, last($classes)])
-            );
+            foreach ($classes as $class => $bindAs) {
+                $this->app->bind(
+                    implode('\\', [$namespace, $class]),
+                    implode('\\', [$namespace, $bindAs])
+                );
+            }
         }
+
     }
 }
