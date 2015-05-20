@@ -73,8 +73,8 @@ class BaseAdminController extends BaseController
         $acp->add(route('pxcms.admin.index'), '<i class="fa fa-dashboard"></i> Dashboard');
 
         // loop through each of the menus, merge them and then process them
-        $acp = array();
-        $inline = array();
+        $acp = [];
+        $inline = [];
 
         foreach (app('modules')->getOrdered() as $module) {
             $name = $module->getName();
@@ -95,6 +95,16 @@ class BaseAdminController extends BaseController
                 }
             }
         }
+
+        // sort the menu items
+        foreach ($acp as $section => $items) {
+            usort($acp[$section], function ($a, $b) {
+                return array_get($a, 'order', 1)>array_get($b, 'order', 1);
+            });
+        }
+        usort($inline, function ($a, $b) {
+            return array_get($a, 'order', 1)>array_get($b, 'order', 1);
+        });
 
         // add the menus to the system
         $this->processMenu($acp, 'acp');
