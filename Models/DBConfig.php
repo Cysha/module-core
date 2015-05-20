@@ -36,25 +36,19 @@ class DBConfig extends BaseModel
             list($namespace, $item) = explode('::', $setting);
         }
 
-        $group = null;
-        if (strpos($item, '.') !== false) {
-            $group = str_replace(substr(strrchr($item, '.'), 0), '', $item);
-            $item = substr(strrchr($item, '.'), 1);
-        }
+        $items = explode('.', $item);
+
+        // grab the last element in the items array
+        $item = array_pull($items, count($items)-1);
+
+        // everything else will makeup the group
+        $group = implode('.', $items);
+
         $environment = app()->environment();
 
+        \Debug::console(['saving', compact('environment', 'group', 'namespace', 'item', 'value')]);
         return array_filter(compact('environment', 'group', 'namespace', 'item', 'value'));
     }
-
-
-    /**
-     *
-     */
-    public function getNamespaceAttribute($value)
-    {
-        return str_replace('.', '_', $value);
-    }
-
 
     /**
      *
