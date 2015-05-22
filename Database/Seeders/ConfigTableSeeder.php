@@ -48,14 +48,14 @@ class ConfigTableSeeder extends Seeder
             [
                 'environment' => $environment,
                 'namespace'   => null,
-                'group'       => 'cms.core.themes',
+                'group'       => 'cms.core.app.themes',
                 'item'        => 'frontend',
                 'value'       => 'default',
             ],
             [
                 'environment' => $environment,
                 'namespace'   => null,
-                'group'       => 'cms.core.themes',
+                'group'       => 'cms.core.app.themes',
                 'item'        => 'backend',
                 'value'       => 'default_admin',
             ],
