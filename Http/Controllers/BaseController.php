@@ -171,7 +171,8 @@ class BaseController extends Controller
             return false;
         }
 
-        $layoutFile = sprintf('%s/themes/%s/layouts/%s.blade.php', public_path(), $this->themeName, $layout);
+        $layoutFile = sprintf('%s/%s/layouts/%s.blade.php', public_path(config('theme.themeDir')), $this->themeName, $layout);
+
         if ($this->file->exists($layoutFile)) {
             $this->layout = $layout;
             $this->theme->layout($layout);
