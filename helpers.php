@@ -32,7 +32,7 @@ if (!function_exists('truncate')) {
 if (!function_exists('partial')) {
     function partial($view)
     {
-        $theme = Request::is('admin/*')
+        $theme = Request::is(config('cms.core.app.paths.backend').'*')
             ? config('cms.core.app.themes.backend')
             : config('cms.core.app.themes.frontend');
         $viewStr = 'theme.'.$theme.'::views.modules.'.str_replace('::', '.', $view);
