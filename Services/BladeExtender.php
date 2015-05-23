@@ -26,7 +26,7 @@ class BladeExtender
      */
     public function addMenu($value, Application $app, Compiler $blade)
     {
-        $matcher = '/@menu\([\'"]([\w\d]*)[\'"]\)/';
+        $matcher = '/@menu\([\'"]([a-zA-Z0-9._-]*)[\'"]\)/';
         return preg_replace($matcher, '<?php echo Menu::handler(\'$1\')->render(); ?> ', $value);
     }
 
