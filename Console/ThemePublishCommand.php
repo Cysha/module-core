@@ -2,6 +2,7 @@
 
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputOption;
 
 class ThemePublishCommand extends Command
 {
@@ -59,6 +60,10 @@ class ThemePublishCommand extends Command
 
         $this->line("<info>Published</info>: {$name}");
 
+        if ($this->option('force', false)) {
+            $this->file->cleanDirectory(implode($publicAssetDir, DIRECTORY_SEPARATOR));
+        }
+
         $this->file->copyDirectory(implode($themeAssetDir, DIRECTORY_SEPARATOR), implode($publicAssetDir, DIRECTORY_SEPARATOR));
 
     }
@@ -67,6 +72,13 @@ class ThemePublishCommand extends Command
     {
         return [
             ['theme', InputArgument::OPTIONAL, 'Name of the theme you wish to publish']
+        ];
+    }
+
+    protected function getOptions()
+    {
+        return [
+            ['force', null, InputOption::VALUE_NONE, 'Do we want to force the publish?']
         ];
     }
 }
