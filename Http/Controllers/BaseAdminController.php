@@ -201,6 +201,19 @@ class BaseAdminController extends BaseController
 
         // add the item to the menu
         $menu->add($url, $text);
+
+        // if we have an activePattern, replace any identifiers, and add it
+        if (($activePattern = array_get($link, 'activePattern', null)) !== null) {
+            $activePattern = str_replace(
+                ['{api}', '{frontend}', '{backend}'],
+                array_map(function ($ele) {
+                    return substr($ele, 0, -1);
+                }, config('cms.core.app.paths')),
+                $activePattern
+            );
+
+            $menu->activePattern($activePattern);
+        }
         return true;
     }
 }
