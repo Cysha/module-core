@@ -1,0 +1,41 @@
+<?php namespace Cms\Modules\Core\Services;
+
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\View\Compilers\BladeCompiler as Compiler;
+
+class BladeExtender
+{
+    /**
+     * @param Application $app
+     */
+    public static function attach(Application $app)
+    {
+        $blade = view()->getEngineResolver()->resolve('blade')->getCompiler();
+        $class = new static;
+        foreach (get_class_methods($class) as $method) {
+            if ($method == 'attach') continue;
+
+            $blade->extend(function ($value) use ($app, $class, $blade, $method) {
+                return $class->$method($value, $app, $blade);
+            });
+        }
+    }
+
+    /**
+     * Add @menu support
+     */
+    public function addMenu($value, Application $app, Compiler $blade)
+    {
+        $matcher = '/@menu\([\'"]([\w\d]*)[\'"]\)/';
+        return preg_replace($matcher, '<?php echo Menu::handler(\'$1\')->render(); ?> ', $value);
+    }
+
+    /**
+     * Add @continue & @break support
+     */
+    public function addContinueBreak($value, Application $app, Compiler $blade)
+    {
+        $matcher = '/(\s*)@(break|continue)(\s*)/';
+        return preg_replace($matcher, '$1<?php $2; ?>$3', $value);
+    }
+}

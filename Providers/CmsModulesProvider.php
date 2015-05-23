@@ -2,6 +2,7 @@
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Foundation\AliasLoader;
+use Cms\Modules\Core\Services\BladeExtender;
 
 class CmsModulesProvider extends ServiceProvider
 {
@@ -13,6 +14,8 @@ class CmsModulesProvider extends ServiceProvider
         if (config('app.debug') === true) {
             AliasLoader::getInstance()->alias('Debugbar', 'Barryvdh\Debugbar\Facade');
         }
+
+        BladeExtender::attach($this->app);
     }
 
 }
