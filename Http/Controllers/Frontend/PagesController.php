@@ -7,7 +7,7 @@ class PagesController extends BaseCoreController
     {
         $this->setLayout('homepage');
 
-        return $this->setView('pages.homepage');
+        return $this->setView('home.index', [], 'theme');
     }
 
     public function test()
