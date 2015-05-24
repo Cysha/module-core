@@ -212,16 +212,20 @@ if (!function_exists('get_array_column')) {
     }
 }
 
-function getCurrentTheme()
-{
-    if (Request::is('admin/*')) {
-        return config('cms.core.app.themes.backend', 'default_admin');
-    }
+if (!function_exists('getCurrentTheme')) {
+    function getCurrentTheme()
+    {
+        if (Request::is('admin/*')) {
+            return config('cms.core.app.themes.backend', 'default_admin');
+        }
 
-    return config('cms.core.app.themes.frontend', 'default');
+        return config('cms.core.app.themes.frontend', 'default');
+    }
 }
 
-function escape($value)
-{
-    return Purifier::clean($value);
+if (!function_exists('escape')) {
+    function escape($value)
+    {
+        return Purifier::clean($value);
+    }
 }
