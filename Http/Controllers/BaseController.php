@@ -65,6 +65,9 @@ class BaseController extends Controller
 
     public function __construct(Theme $theme, Filesystem $file)
     {
+        $menuService = app('Cms\Modules\Core\Services\MenuService');
+        $menuService->boot();
+
         $this->_setDependencies($theme, $file);
 
         if (method_exists($this, 'boot')) {
