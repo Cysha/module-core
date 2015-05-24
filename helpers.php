@@ -203,8 +203,8 @@ if (!function_exists('date_fuzzy')) {
     }
 }
 
-if (!function_exists('array_column')) {
-    function array_column($array, $key)
+if (!function_exists('get_array_column')) {
+    function get_get_array_column($array, $key)
     {
         return array_filter(array_map(function ($row) use ($key) {
             return array_get($row, $key, null);

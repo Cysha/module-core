@@ -16,7 +16,7 @@ trait DynamicRelationsTrait
         // grab the module & model
         list(,,$currentModule,,$currentModel) = explode('\\', get_class($this));
 
-        $modelConfig = array_column(config('cms'), 'models');
+        $modelConfig = get_array_column(config('cms'), 'models');
         // if we dont have anything here, just return
         if (empty($modelConfig)) {
             return parent::__call($method, $parameters);

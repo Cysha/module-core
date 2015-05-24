@@ -16,7 +16,7 @@ class ModulePublishPermissionsCommand extends Command
         $this->info('Making sure all the config files are up to date.');
         $this->callSilent('module:publish-config', ['--force' => null]);
 
-        $permissionGroups = array_column(config('cms'), 'permissions');
+        $permissionGroups = get_array_column(config('cms'), 'permissions');
         $seedModel = 'Cms\Modules\Auth\Models\Permission';
 
         $this->comment('Processing Permissions...');
