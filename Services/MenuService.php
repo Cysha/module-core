@@ -31,7 +31,12 @@ class MenuService
         $menus = [];
 
         // loop through each of the menus, merge them into the menus arr
-        foreach (get_array_column(config('cms'), 'menus') as $moduleMenu) {
+        foreach (get_array_column(config('cms'), 'menus') as $module => $moduleMenu) {
+            // quick check to make sure the module isnt enabled
+            if (!app('modules')->find($module)->enabled()) {
+                continue;
+            }
+
             foreach ($moduleMenu as $section => $menu) {
                 $menus[$section] = !empty($menus[$section]) ? array_merge_recursive($menus[$section], $menu) : $menu;
             }
@@ -121,7 +126,15 @@ class MenuService
         // figure out where to link this nav item to
         $url = '#';
         if (($route = array_get($link, 'route', null)) !== null) {
-            $url = route($route);
+
+            // if its an array throw it at route()
+            if (is_array($route)) {
+                $url = call_user_func_array('route', $route);
+            } else {
+                // else just call it normally
+                $url = route($route);
+            }
+
         } elseif (($direct = array_get($link, 'url', null)) !== null) {
             $url = $direct;
         }
@@ -148,5 +161,12 @@ class MenuService
             $menu->activePattern($activePattern);
         }
         return true;
+    }
+
+    public function sortMenu($menu)
+    {
+        return usort($menu, function ($a, $b) {
+            return array_get($a, 'order', 1)>array_get($b, 'order', 1);
+        });
     }
 }
