@@ -47,6 +47,12 @@ class CoreModuleServiceProvider extends BaseModuleProvider
     {
         parent::register();
         $this->registerModuleResourceNamespaces();
+        $this->registerModuleComposers();
+    }
+
+    private function registerModuleComposers()
+    {
+        view()->composer('*', 'Cms\Modules\Core\Composers\CurrentRoute');
     }
 
     /**
