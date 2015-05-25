@@ -129,7 +129,9 @@ class MenuService
 
             // if its an array throw it at route()
             if (is_array($route)) {
-                $url = call_user_func_array('route', $route);
+                list($route, $arguments) = $route;
+
+                $url = route($route, $this->transformArgs($arguments));
             } else {
                 // else just call it normally
                 $url = route($route);
@@ -161,6 +163,28 @@ class MenuService
             $menu->activePattern($activePattern);
         }
         return true;
+    }
+
+    /**
+     * Run a transformer for 'segment:x' calls
+     *
+     * @param  array $args
+     * @return array
+     */
+    public function transformArgs($args)
+    {
+        if (!count($args)) {
+            return $args;
+        }
+
+        foreach ($args as $key => $value) {
+            if (substr($value, 0, 7) == 'segment') {
+                list(, $value) = explode(':', $value);
+                $args[$key] = app('request')->segment($value);
+            }
+        }
+
+        return $args;
     }
 
     public function sortMenu($menu)
