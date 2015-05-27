@@ -117,7 +117,7 @@ class BaseController extends Controller
         $namespace = get_class($class);
         $module = explode('\\', $namespace);
 
-        $module[2] = Module::find(strtolower($module[2]));
+        $module[2] = app('modules')->find(strtolower($module[2]));
         view()->share('_module', $modu);
 
         return $module[2];
