@@ -1,8 +1,8 @@
 <?php namespace Cms\Modules\Core\Http\Controllers\Frontend;
 
-use Cms\Modules\Core\Http\Controllers\BaseModuleController;
+use Cms\Modules\Core\Http\Controllers\BaseFrontendController;
 
-class BaseCoreController extends BaseModuleController
+class BaseCoreController extends BaseFrontendController
 {
 
 

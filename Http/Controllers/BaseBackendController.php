@@ -4,7 +4,7 @@ use Cms\Modules\Core\Services\MenuService;
 use Route;
 use File;
 
-class BaseAdminController extends BaseController
+class BaseBackendController extends BaseController
 {
     /**
      * Controls the layout for a controller

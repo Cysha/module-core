@@ -109,16 +109,16 @@ class BaseController extends Controller
     /**
      * Gets the current modules name, presuming this is a CMS Module
      *
-     * @param  object $class
-     * @return string
+     * @param  string $class
+     * @return object
      */
     public function getModule($class)
     {
         $namespace = get_class($class);
         $module = explode('\\', $namespace);
 
-        $module[2] = strtolower($module[2]);
-        view()->share('_module', $module[2]);
+        $module[2] = Module::find(strtolower($module[2]));
+        view()->share('_module', $modu);
 
         return $module[2];
     }
