@@ -58,7 +58,6 @@ class CoreModuleServiceProvider extends BaseModuleProvider
     {
         parent::register();
         $this->registerModuleResourceNamespaces();
-        $this->registerModuleComposers();
     }
 
     /**
