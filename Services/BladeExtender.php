@@ -38,4 +38,13 @@ class BladeExtender
         $matcher = '/(\s*)@(break|continue)(\s*)/';
         return preg_replace($matcher, '$1<?php $2; ?>$3', $value);
     }
+
+    /**
+     * Add @continue & @break support
+     */
+    public function setVar($value, Application $app, Compiler $blade)
+    {
+        $matcher = '/@set\((.+), (.+)\)/';
+        return preg_replace($matcher, '<?php $1 = $2; ?>', $value);
+    }
 }
