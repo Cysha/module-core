@@ -153,7 +153,11 @@ class BaseModuleProvider extends ServiceProvider
             }
 
             foreach ($composers as $class => $views) {
-                view()->composers($class, $views);
+                if (!is_array($views)) {
+                    $views = [$views];
+                }
+
+                view()->composers($views, $class);
             }
         }
 
