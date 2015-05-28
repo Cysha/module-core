@@ -35,6 +35,17 @@ class CoreModuleServiceProvider extends BaseModuleProvider
     ];
 
     /**
+     * Register view composers
+     *
+     * @var array
+     */
+    protected $composers = [
+        'Core' => [
+            'Cms\Modules\Core\Composers\CurrentRoute' => '*',
+        ],
+    ];
+
+    /**
      * Register repository bindings to the IoC
      *
      * @var array
@@ -48,11 +59,6 @@ class CoreModuleServiceProvider extends BaseModuleProvider
         parent::register();
         $this->registerModuleResourceNamespaces();
         $this->registerModuleComposers();
-    }
-
-    private function registerModuleComposers()
-    {
-        view()->composer('*', 'Cms\Modules\Core\Composers\CurrentRoute');
     }
 
     /**

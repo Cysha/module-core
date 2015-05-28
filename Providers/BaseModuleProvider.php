@@ -27,6 +27,13 @@ class BaseModuleProvider extends ServiceProvider
     protected $commands = [];
 
     /**
+     * Register view composers
+     *
+     * @var array
+     */
+    protected $composers = [];
+
+    /**
      * Register repository bindings to the IoC
      *
      * @var array
@@ -43,6 +50,7 @@ class BaseModuleProvider extends ServiceProvider
         $this->registerMiddleware($this->app['router']);
         $this->registerModuleCommands();
         $this->registerModuleBindings();
+        $this->registerModuleComposers();
     }
 
     /**
@@ -123,6 +131,29 @@ class BaseModuleProvider extends ServiceProvider
                     implode('\\', [$namespace, $class]),
                     implode('\\', [$namespace, $bindAs])
                 );
+            }
+        }
+
+    }
+
+    /**
+     * Register the Ciew Composers
+     *
+     * @return void
+     */
+    private function registerModuleComposers()
+    {
+        if (!count($this->composers)) {
+            return;
+        }
+
+        foreach ($this->composers as $namespace => $composers) {
+            if (!count($composers)) {
+                continue;
+            }
+
+            foreach ($composers as $class => $views) {
+                view()->composers($class, $views);
             }
         }
 
