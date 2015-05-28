@@ -102,7 +102,7 @@ class BaseModuleProvider extends ServiceProvider
 
             foreach ($commands as $command => $class) {
                 $this->app[$command] = $this->app->share(function () use ($module, $class) {
-                    $class = sprintf('Cms\Modules\%s\Console\%s', $module, $class);
+                    $class = sprintf('Cms\Modules\%s\Console\Commands\%s', $module, $class);
                     return new $class($this->app);
                 });
                 $this->commands($command);

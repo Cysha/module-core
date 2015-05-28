@@ -1,4 +1,4 @@
-<?php namespace Cms\Modules\Core\Console;
+<?php namespace Cms\Modules\Core\Console\Commands;
 
 use Symfony\Component\Console\Input\InputArgument;
 
