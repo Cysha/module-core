@@ -28,18 +28,25 @@ class MenuService
      */
     public function boot()
     {
-        $menus = [];
+        $menus = \Cache::remember('cms.menu.processing', 10, function () {
+            $menus = [];
+            // loop through each of the menus, merge them into the menus arr
+            foreach (get_array_column(config('cms'), 'menus') as $module => $moduleMenu) {
+                // quick check to make sure the module isnt enabled
+                if (!app('modules')->find($module)->enabled()) {
+                    continue;
+                }
 
-        // loop through each of the menus, merge them into the menus arr
-        foreach (get_array_column(config('cms'), 'menus') as $module => $moduleMenu) {
-            // quick check to make sure the module isnt enabled
-            if (!app('modules')->find($module)->enabled()) {
-                continue;
+                foreach ($moduleMenu as $section => $menu) {
+                    $menus[$section] = !empty($menus[$section]) ? array_merge_recursive($menus[$section], $menu) : $menu;
+                }
             }
 
-            foreach ($moduleMenu as $section => $menu) {
-                $menus[$section] = !empty($menus[$section]) ? array_merge_recursive($menus[$section], $menu) : $menu;
-            }
+            return $menus;
+        });
+
+        if (empty($menus)) {
+            return;
         }
 
         // and then process em
