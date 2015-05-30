@@ -21,6 +21,7 @@ class ModulePublishConfigCommand extends Command
         }
 
         $this->call('vendor:publish', $options);
+        $this->call('cache:clear');
     }
 
 
