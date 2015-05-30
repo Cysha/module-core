@@ -42,6 +42,7 @@ class CoreModuleServiceProvider extends BaseModuleProvider
     protected $composers = [
         'Core' => [
             'CurrentRoute' => '*',
+            'EditorPagedown' => ['core::editors.pagedown-bootstrap'],
         ],
     ];
 
