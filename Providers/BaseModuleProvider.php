@@ -137,7 +137,7 @@ class BaseModuleProvider extends ServiceProvider
     }
 
     /**
-     * Register the Ciew Composers
+     * Register the View Composers
      *
      * @return void
      */
