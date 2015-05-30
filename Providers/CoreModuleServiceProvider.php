@@ -30,7 +30,6 @@ class CoreModuleServiceProvider extends BaseModuleProvider
             'themes:publish' => 'ThemePublishCommand',
 
             'module:publish-config' => 'ModulePublishConfigCommand',
-            'module:publish-permissions'  => 'ModulePublishPermissionsCommand',
         ],
     ];
 
