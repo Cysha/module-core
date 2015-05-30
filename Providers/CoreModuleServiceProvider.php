@@ -41,7 +41,7 @@ class CoreModuleServiceProvider extends BaseModuleProvider
      */
     protected $composers = [
         'Core' => [
-            'Cms\Modules\Core\Composers\CurrentRoute' => '*',
+            'CurrentRoute' => '*',
         ],
     ];
 

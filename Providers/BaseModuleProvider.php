@@ -147,7 +147,7 @@ class BaseModuleProvider extends ServiceProvider
             return;
         }
 
-        foreach ($this->composers as $namespace => $composers) {
+        foreach ($this->composers as $module => $composers) {
             if (!count($composers)) {
                 continue;
             }
@@ -157,7 +157,8 @@ class BaseModuleProvider extends ServiceProvider
                     $views = [$views];
                 }
 
-                view()->composers($views, $class);
+                $class = sprintf('Cms\Modules\%1$s\Composers\%2$s', $module, $class);
+                view()->composer($views, $class);
             }
         }
 
