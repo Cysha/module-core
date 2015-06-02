@@ -20,7 +20,7 @@ class BaseApiController extends BaseController
      * @param string  $message
      * @param integer $status  HTTP Status Code
      */
-    public function sendResponse($message = 'ok', $status = 200, $data = array())
+    public function sendResponse($message = 'ok', $status = 200, $data = [])
     {
         $reply = array(
             'message'     => $message,

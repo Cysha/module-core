@@ -20,6 +20,8 @@ interface BaseRepositoryInterface
 
     public function first();
 
+    public function findOrCreate(array $where, array $attributes = []);
+
     public function get();
 
     public function getById($id);

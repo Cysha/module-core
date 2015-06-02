@@ -214,6 +214,19 @@ abstract class BaseEloquentRepository implements BaseRepositoryInterface
     }
 
     /**
+     *
+     */
+    public function findOrCreate(array $where, array $attributes = [])
+    {
+        $model = $this->model->where(key($where), head($where))->first();
+        if ($model === null) {
+            $model = $this->create(array_merge($attributes, $where));
+        }
+
+        return $model;
+    }
+
+    /**
      * Get all the specified model records in the database
      *
      * @return \Illuminate\Database\Eloquent\Collection
