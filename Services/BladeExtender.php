@@ -44,7 +44,7 @@ class BladeExtender
      */
     public function setVar($value, Application $app, Compiler $blade)
     {
-        $matcher = '/@set\((.+), (.+)\)/';
+        $matcher = '/@set\(([a-zA-Z$_\[\]\'\"]+), (.+)\)/';
         return preg_replace($matcher, '<?php $1 = $2; ?>', $value);
     }
 }
