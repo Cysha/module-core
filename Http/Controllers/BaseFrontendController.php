@@ -9,4 +9,15 @@ class BaseFrontendController extends BaseController
      */
     public $layout = '3-column';
 
+    public function boot()
+    {
+        parent::boot();
+
+        $this->setSidebar();
+    }
+
+    public function setSidebar($set = 'default')
+    {
+        $this->theme->setSidebar($set);
+    }
 }

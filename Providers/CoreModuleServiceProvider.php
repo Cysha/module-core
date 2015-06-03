@@ -42,6 +42,8 @@ class CoreModuleServiceProvider extends BaseModuleProvider
         'Core' => [
             'CurrentRoute' => '*',
             'EditorPagedown' => ['core::editors.pagedown-bootstrap'],
+            'Sidebars@left' => ['theme.*::views.partials.theme.sidebar-left'],
+            'Sidebars@right' => ['theme.*::views.partials.theme.sidebar-right'],
         ],
     ];
 
