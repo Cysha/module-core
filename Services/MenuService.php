@@ -28,7 +28,31 @@ class MenuService
      */
     public function boot()
     {
-        $menus = \Cache::remember('cms.menu.processing', 10, function () {
+        $menus = $this->getMenuData();
+        if (empty($menus)) {
+            return;
+        }
+
+        // and then process em
+        foreach (array_keys($menus) as $key) {
+            $this->processMenu($menus[$key], $key);
+        }
+    }
+
+    /**
+     * Get the menu data from the configs
+     */
+    public function getMenuData()
+    {
+        if (\Cache::has('cms.menu.processing')) {
+            $menu = \Cache::get('cms.menu.processing', []);
+            if (!empty($menu)) {
+                return $menu;
+            }
+            \Cache::forget('cms.menu.processing');
+        }
+
+        return \Cache::remember('cms.menu.processing', 10, function () {
             $menus = [];
             // loop through each of the menus, merge them into the menus arr
             foreach (get_array_column(config('cms'), 'menus') as $module => $moduleMenu) {
@@ -44,17 +68,7 @@ class MenuService
 
             return $menus;
         });
-
-        if (empty($menus)) {
-            return;
-        }
-
-        // and then process em
-        foreach (array_keys($menus) as $key) {
-            $this->processMenu($menus[$key], $key);
-        }
     }
-
 
     /**
      * Processes the arrays into a menu set
@@ -113,10 +127,11 @@ class MenuService
      * @param object $menu
      * @param string $link
      * @param string $section
+     *
+     * @return bool
      */
     private function addSection(&$menu, $link)
     {
-        //echo \Debug::dump(func_get_args(), __METHOD__);
         if (($type = array_get($link, 'type', null)) === 'divider') {
             $menu->add('#', array_get($link, 'text'))->addClass('divider');
             return true;
@@ -124,8 +139,18 @@ class MenuService
 
         // check for permissions on this link
         if (($perm = array_get($link, 'permission', null)) !== null && strpos($perm, '@') !== false) {
-            $perm = explode('@', $perm);
-            if (Lock::cannot($perm[0], $perm[1])) {
+            list($permission, $resource) = explode('@', $perm);
+
+            // check if there is an identifier in there
+            if (strpos($resource, ':') !== false) {
+                list($resource, $id) = explode(':', $resource);
+                $test = Lock::can($permission, $resource, $id);
+            } else {
+                $test = Lock::can($permission, $resource);
+            }
+
+            // return false, we shouldn't show this link
+            if ($test === false) {
                 return false;
             }
         }
