@@ -15,28 +15,28 @@ class BaseApiController extends BaseController
     }
 
     /**
-     * Alias method for sending an error back
+     * Alias method for sending an response back
      *
      * @param string  $message
      * @param integer $status  HTTP Status Code
      */
     public function sendResponse($message = 'ok', $status = 200, $data = [])
     {
-        $reply = array(
+        $reply = [
             'message'     => $message,
             'status_code' => $status,
-        );
+        ];
 
         if (!empty($data)) {
             $reply['data'] = $data;
         }
 
         //return $this->response->array($reply)->setStatusCode($status);
-        return Response::json($reply, $status);
+        return response()->json($reply, $status);
     }
 
     /**
-     * Alias method for sending an error back
+     * Alias method for sending an error status back
      *
      * @param string  $message
      * @param integer $status  HTTP Status Code
@@ -47,7 +47,7 @@ class BaseApiController extends BaseController
     }
 
     /**
-     * Alias method for sending an error back
+     * Alias method for sending an ok status back
      *
      * @param string  $message
      * @param integer $status  HTTP Status Code
@@ -62,7 +62,7 @@ class BaseApiController extends BaseController
      *
      * @param array $parameters
      */
-    public function missingMethod($parameters = array())
+    public function missingMethod($parameters = [])
     {
         return $this->sendError('Invalid Method');
     }
