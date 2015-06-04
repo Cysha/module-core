@@ -138,21 +138,9 @@ class MenuService
         }
 
         // check for permissions on this link
-        if (($perm = array_get($link, 'permission', null)) !== null && strpos($perm, '@') !== false) {
-            list($permission, $resource) = explode('@', $perm);
+        if (($perm = array_get($link, 'permission', null)) !== null && hasPermission($perm) === false) {
 
-            // check if there is an identifier in there
-            if (strpos($resource, ':') !== false) {
-                list($resource, $id) = explode(':', $resource);
-                $test = Lock::can($permission, $resource, $id);
-            } else {
-                $test = Lock::can($permission, $resource);
-            }
-
-            // return false, we shouldn't show this link
-            if ($test === false) {
-                return false;
-            }
+            return false;
         }
 
         // figure out where to link this nav item to
