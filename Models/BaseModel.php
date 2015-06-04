@@ -12,6 +12,15 @@ class BaseModel extends Model
     protected $identifiableName = 'name';
 
     /**
+     * The attributes that should be casted to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'id' => 'integer',
+    ];
+
+    /**
      * Fire up the linkableTrait so it can do its thing
      */
     public function __construct()
