@@ -44,20 +44,22 @@ class MenuService
      */
     public function getMenuData()
     {
-        if (\Cache::has('cms.menu.processing')) {
-            $menu = \Cache::get('cms.menu.processing', []);
+        if (\Cache::tags('menu')->has('cms.menu.processing')) {
+            $menu = \Cache::tags('menu')->get('cms.menu.processing', []);
             if (!empty($menu)) {
                 return $menu;
             }
             \Cache::forget('cms.menu.processing');
         }
 
-        return \Cache::remember('cms.menu.processing', 10, function () {
+        return \Cache::tags('menu')->remember('cms.menu.processing', 10, function () {
             $menus = [];
             // loop through each of the menus, merge them into the menus arr
-            foreach (get_array_column(config('cms'), 'menus') as $module => $moduleMenu) {
+            foreach (get_array_column(config('cms'), 'menus') as $moduleName => $moduleMenu) {
+                $module = app('modules')->find($moduleName);
                 // quick check to make sure the module isnt enabled
-                if (!app('modules')->find($module)->enabled()) {
+                if ($module === null || !$module->enabled()) {
+                    \Debug::console($moduleName);
                     continue;
                 }
 
