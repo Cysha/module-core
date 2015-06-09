@@ -21,8 +21,13 @@ class CmsUpdateCommand extends BaseCommand
         $this->comment('Publishing Module Configs...');
         $this->$cmd('module:publish-config', ['--force' => null]);
 
-        $this->comment('Publishing New Module Permissions...');
-        $this->$cmd('module:publish-permissions');
+        try {
+            \DB::connection()->getDatabaseName();
+            $this->comment('Publishing New Module Permissions...');
+            $this->$cmd('module:publish-permissions');
+        } catch (\PDOException $e) {
+            $this->error('Database Details seem to be invalid, cannot publish module permissions...');
+        }
 
         $this->comment('Publishing New Module Translations...');
         $this->$cmd('module:publish-translation');
@@ -30,8 +35,13 @@ class CmsUpdateCommand extends BaseCommand
         $this->comment('Publishing Module Migrations...');
         $this->$cmd('module:publish-migration');
 
-        $this->comment('Migrating New Module Migrations...');
-        $this->$cmd('module:migrate');
+        try {
+            \DB::connection()->getDatabaseName();
+            $this->comment('Migrating New Module Migrations...');
+            $this->$cmd('module:migrate');
+        } catch (\PDOException $e) {
+            $this->error('Database Details seem to be invalid, cannot migrate modules...');
+        }
 
         $this->comment('Generating autoload files...');
         $this->$cmd('dump-autoload');
