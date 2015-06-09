@@ -62,6 +62,26 @@ class BaseModel extends Model
         return $this->fill($input);
     }
 
+    /**
+     * Beatswitch\Lock Methods
+     */
+    public function getCallerType()
+    {
+        list(,, $module,, $model) = explode('\\', __CLASS__);
+
+        return sprintf('%s_%s', $module, $model);
+    }
+
+    public function getCallerId()
+    {
+        return $this->id;
+    }
+
+    public function getCallerRoles()
+    {
+        return [];
+    }
+
     public function transform()
     {
         return $this->toArray();
