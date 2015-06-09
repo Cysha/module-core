@@ -69,6 +69,13 @@ class ConfigTableSeeder extends Seeder
             [
                 'environment' => $environment,
                 'namespace'   => null,
+                'group'       => 'cms.core.app',
+                'item'        => 'maintenance',
+                'value'       => 'false',
+            ],
+            [
+                'environment' => $environment,
+                'namespace'   => null,
                 'group'       => 'api',
                 'item'        => 'vendor',
                 'value'       => 'cysha',
