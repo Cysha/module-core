@@ -1,7 +1,7 @@
 <?php namespace Cms\Modules\Core\Console\Commands;
 
 use Illuminate\Console\Command;
-use Symfony\Component\Console\Input\InputArgument;
+use Illuminate\Foundation\Composer;
 
 class DumpAutoloadCommand extends Command
 {
@@ -9,11 +9,30 @@ class DumpAutoloadCommand extends Command
     protected $readableName = 'Re Adds dump-autoload';
     protected $description = 'Re Adds dump-autoload';
 
+    /**
+     * @var \Illuminate\Foundation\Composer
+     */
+    protected $composer;
+
+    /**
+     * Create a new queue job table command instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->boot();
+    }
+
+    public function boot()
+    {
+        $this->composer = app('Illuminate\Foundation\Composer');
+    }
+
     public function fire()
     {
-        $command = 'composer dump-autoload';
-
-        //echo ' $ '.$command . PHP_EOL;
-        system($command);
+        $this->composer->dumpAutoloads();
     }
 }

@@ -59,7 +59,7 @@ class ThemeGulpCommand extends BaseCommand
     {
         return array(
             array('theme', InputArgument::OPTIONAL, 'The name of theme.', '0'),
-            array('task', InputArgument::OPTIONAL, 'The task to run from the gulp file.', 'theme'),
+            array('task', InputArgument::OPTIONAL, 'The task to run from the gulp file.', 'watch'),
         );
     }
 

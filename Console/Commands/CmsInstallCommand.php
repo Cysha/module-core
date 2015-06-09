@@ -6,7 +6,7 @@ use File;
 class CmsInstallCommand extends BaseCommand
 {
     protected $name = 'cms:install';
-    protected $readableName = 'Core Install';
+    protected $readableName = 'Phoenix CMS Installer';
     protected $description = 'Installs the CMS';
 
     public function fire()

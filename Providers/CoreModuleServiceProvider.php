@@ -25,6 +25,7 @@ class CoreModuleServiceProvider extends BaseModuleProvider
             'dump-autoload' => 'DumpAutoloadCommand',
 
             'cms:install' => 'CmsInstallCommand',
+            'cms:update' => 'CmsUpdateCommand',
 
             'themes:gulp' => 'ThemeGulpCommand',
             'themes:publish' => 'ThemePublishCommand',
