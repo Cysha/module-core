@@ -35,7 +35,7 @@ class BladeExtender
      */
     public function addContinueBreak($value, Application $app, Compiler $blade)
     {
-        $matcher = '/(\s*)@(break|continue)(\s*)/';
+        $matcher = '/@(break|continue)/';
         return preg_replace($matcher, '$1<?php $2; ?>$3', $value);
     }
 
@@ -44,7 +44,7 @@ class BladeExtender
      */
     public function setVar($value, Application $app, Compiler $blade)
     {
-        $matcher = '/@set\(([a-zA-Z$_\[\]\'\"]+), (.+)\)/';
+        $matcher = '/@set\(([a-zA-Z0-9\$\_\[\]\'\"]+), (.+)\)/';
         return preg_replace($matcher, '<?php $1 = $2; ?>', $value);
     }
 }
