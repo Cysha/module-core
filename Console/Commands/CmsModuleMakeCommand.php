@@ -26,17 +26,7 @@ class CmsModuleMakeCommand extends BaseCommand
 
         $this->info('Gathering Info...');
 
-        #$info = $this->gatherData();
-        $info = [
-            "%author_name" => "Dan Aldridge",
-            "%author_username" => "xLink",
-            "%author_website" => "http://github.com/xLink",
-            "%author_email" => "xLink@cybershade.org",
-            "%module_name_lower" => "faq",
-            "%module_name" => "Faq",
-            "%package_name" => "xLink/pxcms-faq",
-            "%module_description" => "blah blah",
-        ];
+        $info = $this->gatherData();
 
         $this->spawnModule($info);
 
