@@ -48,6 +48,13 @@ class ConfigTableSeeder extends Seeder
             [
                 'environment' => $environment,
                 'namespace'   => null,
+                'group'       => 'cms.core.app',
+                'item'        => 'minify-html',
+                'value'       => 'false',
+            ],
+            [
+                'environment' => $environment,
+                'namespace'   => null,
                 'group'       => 'cms.core.app.themes',
                 'item'        => 'frontend',
                 'value'       => 'default',

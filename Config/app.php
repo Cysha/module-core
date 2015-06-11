@@ -3,8 +3,9 @@
 return [
     'site-name'    => 'PhoenixCMS',
     'debugfile'    => storage_path('app/debugfile'),
-    'force-secure' => 'false',
     'debug'        => 'false',
+    'force-secure' => 'false',
+    'minify-html'  => 'false',
 
     'themes'    => [
         'frontend' => 'default',
