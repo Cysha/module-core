@@ -29,11 +29,13 @@ class CmsInstallCommand extends BaseCommand
         $this->do_cacheClear();
         $this->do_keyGenerate();
         $this->do_migrateCheck();
-        $this->do_modulePublish();
-        $this->do_modulePublishTranslation();
-        $this->do_modulePublishConfig();
         $this->do_clearMigrationPath();
-        $this->do_modulePublishMigration();
+
+        $this->do_modulePublish();
+        $this->do_modulePublishTranslations();
+        $this->do_modulePublishConfig();
+
+        $this->do_modulePublishMigrations();
         $this->do_migrate();
 
         $this->do_moduleProcessing();
@@ -49,7 +51,7 @@ class CmsInstallCommand extends BaseCommand
 /**
  * INSTALLER METHODS
  */
-    private function do_dbCheck()
+    protected function do_dbCheck()
     {
         try {
             \DB::connection()->getDatabaseName();
@@ -60,25 +62,25 @@ class CmsInstallCommand extends BaseCommand
         return true;
     }
 
-    private function do_cacheClear()
+    protected function do_cacheClear()
     {
-        $this->info('Clearing out the System Cache...');
+        $this->comment('Clearing out the System Cache...');
         $this->{$this->cmd}('cache:clear');
     }
 
-    private function do_keyGenerate()
+    protected function do_keyGenerate()
     {
-        $this->info('Generating Secure Key...');
+        $this->comment('Generating Secure Key...');
         $this->{$this->cmd}('key:generate');
     }
 
-    private function do_migrate()
+    protected function do_migrate()
     {
-        $this->info('Setting up the database...');
+        $this->comment('Setting up the database...');
         $this->{$this->cmd}('migrate');
     }
 
-    private function do_migrateCheck()
+    protected function do_migrateCheck()
     {
         // if we have migrations in the db already
         if (!Schema::hasTable('migrations')) {
@@ -86,41 +88,58 @@ class CmsInstallCommand extends BaseCommand
         }
 
         // just run a reset
-        $this->info('Clearing out the database...');
+        $this->comment('Migrating all the new things!...');
         $this->{$this->cmd}('migrate:reset');
     }
 
-    private function do_modulePublish()
+    protected function do_themePublish()
+    {
+        $this->comment('Publishing Theme Assets...');
+        $this->{$this->cmd}('theme:publish', ['--force' => null]);
+    }
+
+    protected function do_modulePublish()
     {
         $this->comment('Publishing Module Assets...');
         $this->{$this->cmd}('module:publish');
     }
 
-    private function do_modulePublishTranslation()
+    protected function do_modulePublishTranslations()
     {
         $this->comment('Publishing Module Translations...');
         $this->{$this->cmd}('module:publish-translation');
     }
 
-    private function do_modulePublishConfig()
+    protected function do_modulePublishPermissions()
+    {
+        try {
+            \DB::connection()->getDatabaseName();
+            $this->comment('Publishing Module Permissions...');
+            $this->{$this->cmd}('module:publish-permissions');
+        } catch (\PDOException $e) {
+            $this->error('Database Details seem to be invalid, cannot publish module permissions...');
+        }
+    }
+
+    protected function do_modulePublishConfig()
     {
         $this->comment('Publishing Module Configs...');
         $this->{$this->cmd}('module:publish-config', ['--force' => null]);
     }
 
-    private function do_clearMigrationPath()
+    protected function do_clearMigrationPath()
     {
         $this->comment('Clearing out migration directory...');
         File::cleanDirectory(config('modules.paths.migration'));
     }
 
-    private function do_modulePublishMigration()
+    protected function do_modulePublishMigrations()
     {
         $this->comment('Publishing Module Migrations...');
         $this->{$this->cmd}('module:publish-migration');
     }
 
-    private function do_moduleProcessing()
+    protected function do_moduleProcessing()
     {
         $objModules = app('modules');
         if (!count($objModules->enabled())) {
@@ -138,13 +157,13 @@ class CmsInstallCommand extends BaseCommand
         }
     }
 
-    private function do_modulesSeeding($module)
+    protected function do_modulesSeeding($module)
     {
         $this->comment('Seeding Module...');
         $this->{$this->cmd}('module:seed', ['module' => $module->getName()]);
     }
 
-    private function do_modulesDependencyInstallers($module)
+    protected function do_modulesDependencyInstallers($module)
     {
         // $this->comment($module->getPath().'/Console/InstallCommand.php');
         // if (File::exists($module->getPath().'/Console/InstallCommand.php')) {
@@ -153,11 +172,9 @@ class CmsInstallCommand extends BaseCommand
         // }
     }
 
-    private function done()
+    protected function done()
     {
-        $this->call('dump-autoload');
-        $this->info('Done');
-        $this->comment('=====================================');
-        $this->comment('');
+        $this->{$this->cmd}('dump-autoload');
+        $this->info('Done!');
     }
 }

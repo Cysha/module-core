@@ -2,7 +2,7 @@
 
 use Symfony\Component\Console\Input\InputOption;
 
-class CmsUpdateCommand extends BaseCommand
+class CmsUpdateCommand extends CmsInstallCommand
 {
     protected $name = 'cms:update';
     protected $readableName = 'Phoenix CMS Updater';
@@ -10,43 +10,23 @@ class CmsUpdateCommand extends BaseCommand
 
     public function fire()
     {
-        $cmd = $this->option('verbose') ? 'call' : 'callSilent';
+        $this->cmd = $this->option('verbose') ? 'call' : 'callSilent';
 
-        $this->comment('Publishing Theme Assets...');
-        $this->$cmd('theme:publish', ['--force' => null]);
+        $this->info('Updating...');
 
-        $this->comment('Publishing Module Assets...');
-        $this->$cmd('module:publish');
+        $this->do_themePublish();
 
-        $this->comment('Publishing Module Configs...');
-        $this->$cmd('module:publish-config', ['--force' => null]);
+        $this->do_modulePublish();
+        $this->do_modulePublishConfig();
+        $this->do_modulePublishPermissions();
+        $this->do_modulePublishTranslations();
 
-        try {
-            \DB::connection()->getDatabaseName();
-            $this->comment('Publishing New Module Permissions...');
-            $this->$cmd('module:publish-permissions');
-        } catch (\PDOException $e) {
-            $this->error('Database Details seem to be invalid, cannot publish module permissions...');
-        }
-
-        $this->comment('Publishing New Module Translations...');
-        $this->$cmd('module:publish-translation');
-
-        $this->comment('Publishing Module Migrations...');
-        $this->$cmd('module:publish-migration');
-
-        try {
-            \DB::connection()->getDatabaseName();
-            $this->comment('Migrating New Module Migrations...');
-            $this->$cmd('module:migrate');
-        } catch (\PDOException $e) {
-            $this->error('Database Details seem to be invalid, cannot migrate modules...');
-        }
+        $this->do_modulePublishMigrations();
+        $this->do_migrate();
 
         $this->comment('Generating autoload files...');
-        $this->$cmd('dump-autoload');
 
-        $this->info('Done');
+        $this->done();
     }
 
     /**
