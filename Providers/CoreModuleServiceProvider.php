@@ -26,6 +26,7 @@ class CoreModuleServiceProvider extends BaseModuleProvider
 
             'cms:install' => 'CmsInstallCommand',
             'cms:update' => 'CmsUpdateCommand',
+            'cms:module:make' => 'CmsModuleMakeCommand',
 
             'themes:gulp' => 'ThemeGulpCommand',
             'themes:publish' => 'ThemePublishCommand',
