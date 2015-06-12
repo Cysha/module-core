@@ -1,9 +1,8 @@
 <?php namespace Cms\Modules\Core\Http\Controllers;
 
-use Illuminate\Auth\AuthManager;
-use Illuminate\Filesystem\Filesystem;
-use Illuminate\Foundation\Http\Response;
 use Pingpong\Modules\Routing\Controller;
+use Illuminate\Foundation\Http\Response;
+use Illuminate\Filesystem\Filesystem;
 use Teepluss\Theme\Contracts\Theme;
 
 class BaseController extends Controller
@@ -292,9 +291,9 @@ class BaseController extends Controller
      *
      * @return mixed
      */
-    protected function user(AuthManager $auth)
+    protected function user()
     {
-        return $auth->user();
+        return app('Illuminate\Auth\AuthManager')->user();
     }
 
     /**
@@ -302,9 +301,9 @@ class BaseController extends Controller
      *
      * @return \Illuminate\Auth\AuthManager
      */
-    protected function auth(AuthManager $auth)
+    protected function auth()
     {
-        return $auth;
+        return app('Illuminate\Auth\AuthManager');
     }
 
     /**
