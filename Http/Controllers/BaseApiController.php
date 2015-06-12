@@ -1,10 +1,11 @@
 <?php namespace Cms\Modules\Core\Http\Controllers;
 
+use Dingo\Api\Routing\Helpers;
 use Illuminate\Support\Facades\Response;
 
 class BaseApiController extends BaseController
 {
-    use \Dingo\Api\Routing\Helpers;
+    use Helpers;
 
     /**
      * Alias method for sending an response back
