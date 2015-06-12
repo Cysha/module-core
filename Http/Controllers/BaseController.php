@@ -1,6 +1,7 @@
 <?php namespace Cms\Modules\Core\Http\Controllers;
 
 use Pingpong\Modules\Routing\Controller;
+use Illuminate\Foundation\Http\Response;
 use Illuminate\Filesystem\Filesystem;
 use Teepluss\Theme\Contracts\Theme;
 
@@ -281,5 +282,59 @@ class BaseController extends Controller
 
         echo '<pre><code>',print_r($body, true),'</code></pre>';
         echo '<hr />';
+    }
+
+
+
+    /**
+     * Get the authenticated user.
+     *
+     * @return mixed
+     */
+    protected function user()
+    {
+        return app('Illuminate\Auth\AuthManager')->user();
+    }
+
+    /**
+     * Get the auth instance.
+     *
+     * @return \Illuminate\Auth\AuthManager
+     */
+    protected function auth()
+    {
+        return app('Illuminate\Auth\AuthManager');
+    }
+
+    /**
+     * Get the response factory instance.
+     *
+     * @return \Illuminate\Foundation\Http\Response
+     */
+    protected function response()
+    {
+        return response();
+    }
+
+    /**
+     * Magically handle calls to certain properties.
+     *
+     * @param string $key
+     *
+     * @throws \ErrorException
+     *
+     * @return mixed
+     */
+    public function __get($key)
+    {
+        $callable = [
+            'user', 'auth', 'response'
+        ];
+
+        if (in_array($key, $callable) && method_exists($this, $key)) {
+            return $this->$key();
+        }
+
+        throw new ErrorException('Undefined property '.get_class($this).'::'.$key);
     }
 }
