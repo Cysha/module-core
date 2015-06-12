@@ -1,8 +1,9 @@
 <?php namespace Cms\Modules\Core\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
-use Illuminate\Routing\Router;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+use Dingo\Api\Routing\Router as ApiRouter;
+use Illuminate\Routing\Router;
 
 abstract class CmsRoutingProvider extends ServiceProvider
 {
@@ -47,9 +48,9 @@ abstract class CmsRoutingProvider extends ServiceProvider
      */
     public function map(Router $router)
     {
-        $this->loadApiRoutes($router);
-        $this->loadBackendRoutes($router);
         $this->loadFrontendRoutes($router);
+        $this->loadBackendRoutes($router);
+        $this->loadApiRoutes($this->app['api.router']);
     }
 
     /**
@@ -90,16 +91,16 @@ abstract class CmsRoutingProvider extends ServiceProvider
     /**
      * @param Router $router
      */
-    private function loadApiRoutes(Router $router)
+    private function loadApiRoutes(ApiRouter $router)
     {
         $routes = $this->getApiRoute();
 
         if ($routes && file_exists($routes)) {
             $router->group([
+                'version'   => 'v1',
                 'namespace' => $this->namespace.'\Api',
                 'prefix'    => config('cms.core.app.paths.api', 'api/'),
-                'version'   => 'v1',
-            ], function (Router $router) use ($routes) {
+            ], function (ApiRouter $router) use ($routes) {
                 require $routes;
             });
         }

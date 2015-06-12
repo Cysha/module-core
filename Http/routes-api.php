@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Routing\Router;
+use Dingo\Api\Routing\Router as ApiRouter;
 
-$router->group(['version' => 'v1', 'namespace' => 'V1'], function (Router $router) {
+$router->version('v1', ['namespace' => 'v1'], function (ApiRouter $router) {
     $router->get('user', ['uses' => 'PagesController@getUser']);
 });

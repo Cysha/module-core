@@ -1,18 +1,10 @@
 <?php namespace Cms\Modules\Core\Http\Controllers;
 
 use Illuminate\Support\Facades\Response;
-// use Dingo\Api\Http\ResponseFactory;
 
 class BaseApiController extends BaseController
 {
-    //use \Dingo\Api\Routing\ControllerTrait;
-
-    public function boot()
-    {
-        // parent::boot();
-
-        // $this->setResponseFactory(app('Dingo\Api\Http\ResponseFactory'));
-    }
+    use \Dingo\Api\Routing\Helpers;
 
     /**
      * Alias method for sending an response back
@@ -31,8 +23,7 @@ class BaseApiController extends BaseController
             $reply['data'] = $data;
         }
 
-        //return $this->response->array($reply)->setStatusCode($status);
-        return response()->json($reply, $status);
+        return $this->response->array($reply)->setStatusCode($status);
     }
 
     /**

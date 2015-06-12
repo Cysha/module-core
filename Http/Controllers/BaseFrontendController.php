@@ -12,7 +12,10 @@ class BaseFrontendController extends BaseController
     public function boot()
     {
         parent::boot();
+        // spawn the menu service
+        app('Cms\Modules\Core\Services\MenuService')->boot();
 
+        // set the sidebar
         $this->setSidebar();
     }
 
