@@ -71,11 +71,11 @@ class CmsModuleMakeCommand extends BaseCommand
         $info['%author_website'] = $this->ask('What is your website address? (%author_website)', 'http://github.com/'.$info['%author_username']);
         $info['%author_email'] = $this->ask('What is your email address? (%author_email)');
 
-        $module_name = $this->ask('What is your name? (%module_name)');
+        $module_name = $this->ask('What is your modules name? (%module_name)');
 
         $info['%module_name_lower'] = strtolower($module_name);
         $info['%module_name'] = ucwords($module_name);
-        $info['%package_name'] = $this->ask('What is your module name? (%package_name)', sprintf('%s/pxcms-%s', $info['%author_username'], $info['%module_name_lower']));
+        $info['%package_name'] = $this->ask('What is your package string? (%package_name)', sprintf('%s/pxcms-%s', $info['%author_username'], $info['%module_name_lower']));
         $info['%module_description'] = $this->ask('What is the purpose of your module? (%module_description)');
 
         return $info;
