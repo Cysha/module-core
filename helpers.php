@@ -84,9 +84,11 @@ if (!function_exists('date_carbon')) {
         }
 
         if (is_number($value)) {
-            $carbon = \Carbon\Carbon::createFromTimeStamp($value);
+            $carbon = \Carbon\Carbon::createFromTimeStamp($value)
+                ->timezone(config('app.timezone'));
         } else {
-            $carbon = \Carbon\Carbon::parse($value);
+            $carbon = \Carbon\Carbon::parse($value)
+                ->timezone(config('app.timezone'));
         }
 
         if ($format !== null) {
@@ -108,14 +110,19 @@ if (!function_exists('date_now')) {
 if (!function_exists('date_ago')) {
     function date_ago($string)
     {
-        return \Carbon\Carbon::createFromTimeStamp(strtotime($string))->diffForHumans();
+        return \Carbon\Carbon::createFromTimeStamp(strtotime($string))
+            ->timezone(config('app.timezone'))
+            ->diffForHumans();
     }
 }
 
 if (!function_exists('date_difference')) {
     function date_difference($string)
     {
-        return \Carbon\Carbon::now()->subSeconds($string)->diffForHumans();
+        return \Carbon\Carbon::now()
+            ->subSeconds($string)
+            ->timezone(config('app.timezone'))
+            ->diffForHumans();
     }
 }
 
