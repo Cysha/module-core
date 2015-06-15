@@ -236,3 +236,49 @@ if (!function_exists('escape')) {
         return Purifier::clean($value);
     }
 }
+
+
+if (!function_exists('cache')) {
+    function cache($tag, $key, $length, $callback)
+    {
+        if (Cache::getFacadeRoot() instanceof TaggableStore) {
+            return Cache::tags($tag)->remember($key, $length, $callback);
+        }
+
+        return Cache::remember($tag.$key, $length, $callback);
+    }
+}
+
+if (!function_exists('cache_flush')) {
+    function cache_flush($tag)
+    {
+        if (Cache::getFacadeRoot() instanceof TaggableStore) {
+            Cache::tags($tag)->flush();
+            return;
+        }
+
+        artisan_call('cache:clear');
+    }
+}
+
+if (!function_exists('cache_has')) {
+    function cache_has($tag, $key)
+    {
+        if (Cache::getFacadeRoot() instanceof TaggableStore) {
+            return Cache::tags($tag)->has($key);
+        }
+
+        return Cache::has($tag.$key);
+    }
+}
+
+if (!function_exists('cache_get')) {
+    function cache_get($tag, $key)
+    {
+        if (Cache::getFacadeRoot() instanceof TaggableStore) {
+            return Cache::tags($tag)->get($key);
+        }
+
+        return Cache::get($tag.$key);
+    }
+}
