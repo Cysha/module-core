@@ -1,19 +1,20 @@
 <?php
 
 return [
-    'site-name'    => 'PhoenixCMS',
-    'debugfile'    => storage_path('app/debugfile'),
-    'debug'        => 'false',
+    'site-name' => 'PhoenixCMS',
+    'debugfile' => storage_path('app/debugfile'),
+    'debug' => 'false',
     'force-secure' => 'false',
-    'minify-html'  => 'false',
+    'minify-html' => 'false',
+    'timezone' => 'UTC',
 
-    'themes'    => [
+    'themes' => [
         'frontend' => 'default',
-        'backend'  => 'default_admin',
+        'backend' => 'default_admin',
     ],
 
     'paths' => [
-        'api'      => 'api/',
+        'api' => 'api/',
         'frontend' => '/',
         'backend'  => 'admin/',
     ],
