@@ -141,7 +141,7 @@ class MenuService
 
         // check for permissions on this link
         if (($perm = array_get($link, 'permission', null)) !== null && hasPermission($perm) === false) {
-
+            \Debug::console(['Permission Denied', $perm]);
             return false;
         }
 
