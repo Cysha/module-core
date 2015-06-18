@@ -45,6 +45,14 @@ trait DynamicRelationsTrait
             foreach ($parameters as $p) {
                 $params[] = $p;
             }
+
+            // test if $function is serialized
+            $test_unserialize = unserialize($function);
+            if (is_object($test_unserialize)) {
+                $function = $test_unserialize;
+            }
+
+            // we do run run run
             return call_user_func_array($function, $params);
         }
 
