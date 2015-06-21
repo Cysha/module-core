@@ -249,6 +249,17 @@ if (!function_exists('cache')) {
     }
 }
 
+if (!function_exists('cache_forever')) {
+    function cache_forever($tag, $key, $callback)
+    {
+        if (Cache::getFacadeRoot() instanceof TaggableStore) {
+            return Cache::tags($tag)->rememberForever($key, $callback);
+        }
+
+        return Cache::rememberForever($tag.$key, $callback);
+    }
+}
+
 if (!function_exists('cache_flush')) {
     function cache_flush($tag)
     {
