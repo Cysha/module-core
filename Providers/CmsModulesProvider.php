@@ -8,11 +8,15 @@ class CmsModulesProvider extends ServiceProvider
 {
     public function register()
     {
-        $this->app->register('Pingpong\Modules\ModulesServiceProvider');
+        if (app()->environment() !== 'production' && class_exists('Barryvdh\Debugbar\ServiceProvider')) {
+            $this->app->register('Barryvdh\Debugbar\ServiceProvider');
 
-        if (config('app.debug') === true) {
-            AliasLoader::getInstance()->alias('Debugbar', 'Barryvdh\Debugbar\Facade');
+            if (config('app.debug') === true) {
+                AliasLoader::getInstance()->alias('Debugbar', 'Barryvdh\Debugbar\Facade');
+            }
         }
+
+        $this->app->register('Pingpong\Modules\ModulesServiceProvider');
 
         BladeExtender::attach($this->app);
     }
