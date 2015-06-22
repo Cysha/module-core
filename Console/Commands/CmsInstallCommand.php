@@ -76,8 +76,13 @@ class CmsInstallCommand extends BaseCommand
 
     protected function do_migrate()
     {
-        $this->comment('Setting up the database...');
-        $this->{$this->cmd}('migrate');
+        try {
+            \DB::connection()->getDatabaseName();
+            $this->comment('Setting up the database...');
+            $this->{$this->cmd}('migrate');
+        } catch (\PDOException $e) {
+            $this->error('Database Details seem to be invalid, cannot run migrations...');
+        }
     }
 
     protected function do_migrateCheck()
