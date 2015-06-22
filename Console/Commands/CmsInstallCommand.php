@@ -79,7 +79,7 @@ class CmsInstallCommand extends BaseCommand
         try {
             \DB::connection()->getDatabaseName();
             $this->comment('Setting up the database...');
-            $this->{$this->cmd}('migrate');
+            $this->{$this->cmd}('migrate', ['--force' => null]);
         } catch (\PDOException $e) {
             $this->error('Database Details seem to be invalid, cannot run migrations...');
         }
