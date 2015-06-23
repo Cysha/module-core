@@ -8,12 +8,10 @@ class CmsModulesProvider extends ServiceProvider
 {
     public function register()
     {
-        if (app()->environment() !== 'production' && class_exists('Barryvdh\Debugbar\ServiceProvider')) {
+        // register debug bar if we have it installed & debug is on
+        if (config('app.debug') === true && class_exists('Barryvdh\Debugbar\ServiceProvider')) {
             $this->app->register('Barryvdh\Debugbar\ServiceProvider');
-
-            if (config('app.debug') === true) {
-                AliasLoader::getInstance()->alias('Debugbar', 'Barryvdh\Debugbar\Facade');
-            }
+            AliasLoader::getInstance()->alias('Debugbar', 'Barryvdh\Debugbar\Facade');
         }
 
         $this->app->register('Pingpong\Modules\ModulesServiceProvider');

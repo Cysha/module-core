@@ -33,10 +33,34 @@ class MenuService
             return;
         }
 
+        // run over them with a good sorting
+        foreach ($menus as $key => $menu) {
+            $menus[$key] = $this->sortMenu($menus[$key]);
+        }
+
+
         // and then process em
         foreach (array_keys($menus) as $key) {
             $this->processMenu($menus[$key], $key);
         }
+    }
+
+    public function sortMenu($menus)
+    {
+
+        // sort the parent categories
+        uasort($menus, function ($a, $b) {
+            return array_get($a, 'order', 1) > array_get($b, 'order', 1);
+        });
+
+        // run over the menus
+        foreach ($menus as $key => $menu) {
+            if (isset($menu['children']) && is_array($menu['children'])) {
+                $menus[$key] = $this->sortMenu($menus[$key]['children']);
+            }
+        }
+
+        return $menus;
     }
 
     /**
@@ -90,6 +114,18 @@ class MenuService
         // roll over the menu links
         foreach ($menus as $section => $links) {
             if (empty($links)) {
+                continue;
+            }
+
+            if ($section === '_root') {
+                foreach ($links as $info) {
+                    if (!is_array($info)) {
+                        continue;
+                    }
+
+                    // add them directly to the main instance
+                    $this->addSection($menuInstance, $info);
+                }
                 continue;
             }
 
@@ -208,10 +244,4 @@ class MenuService
         return $args;
     }
 
-    public function sortMenu($menu)
-    {
-        return usort($menu, function ($a, $b) {
-            return array_get($a, 'order', 1)>array_get($b, 'order', 1);
-        });
-    }
 }

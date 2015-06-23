@@ -3,14 +3,25 @@
 return [
 
     'backend_sidebar' => [
-        [
-            'route'         => 'pxcms.admin.index',
-            'text'          => 'Dashboard',
-            'icon'          => 'fa-dashboard',
-            'order'         => 1,
+        '_root' => [
+            'order' => 1,
+            'children' => [
+                [
+                    'route' => 'pxcms.admin.index',
+                    'text' => 'Dashboard',
+                    'icon' => 'fa-dashboard',
+                    'order' => 1,
+                ],
+            ],
         ],
-        'User Management' => [],
-        'System' => [],
+        'User Management' => [
+            'order' => 2,
+            'children' => [],
+        ],
+        'System' => [
+            'order' => 3,
+            'children' => [],
+        ],
     ],
 
 ];
