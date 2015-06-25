@@ -14,6 +14,8 @@ class CmsUpdateCommand extends CmsInstallCommand
 
         $this->info('Updating...');
 
+        $this->do_clearCompiled();
+
         $this->do_themePublish();
 
         $this->do_modulePublish();
@@ -24,7 +26,9 @@ class CmsUpdateCommand extends CmsInstallCommand
         $this->do_modulePublishMigrations();
         $this->do_migrate();
 
-        $this->comment('Generating autoload files...');
+        $this->do_cacheClear();
+        $this->do_autoload();
+        $this->do_optimize();
 
         $this->done();
     }

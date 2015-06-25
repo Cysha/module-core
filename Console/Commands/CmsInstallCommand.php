@@ -26,6 +26,7 @@ class CmsInstallCommand extends BaseCommand
             return;
         }
 
+        $this->do_clearCompiled();
         $this->do_cacheClear();
         $this->do_keyGenerate();
         $this->do_migrateCheck();
@@ -40,6 +41,9 @@ class CmsInstallCommand extends BaseCommand
 
         $this->do_moduleProcessing();
         $this->do_cacheClear();
+        $this->do_autoload();
+        $this->do_optimize();
+
         $this->done();
     }
 
@@ -168,6 +172,24 @@ class CmsInstallCommand extends BaseCommand
         $this->{$this->cmd}('module:seed', ['module' => $module->getName()]);
     }
 
+    protected function do_clearCompiled()
+    {
+        $this->comment('Clearing compiled classes...');
+        $this->{$this->cmd}('clear-compiled');
+    }
+
+    protected function do_optimize()
+    {
+        $this->comment('Generating optimized class loader...');
+        $this->{$this->cmd}('optimize');
+    }
+
+    protected function do_autoload()
+    {
+        $this->comment('Generating autoload files...');
+        $this->{$this->cmd}('dump-autoload');
+    }
+
     protected function do_modulesDependencyInstallers($module)
     {
         // $this->comment($module->getPath().'/Console/InstallCommand.php');
@@ -179,7 +201,6 @@ class CmsInstallCommand extends BaseCommand
 
     protected function done()
     {
-        $this->{$this->cmd}('dump-autoload');
         $this->info('Done!');
     }
 }
