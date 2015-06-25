@@ -13,17 +13,16 @@ class CORSMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if (config('cms.core.app.cors', 'false') === 'false') {
+        if (config('cms.core.app.api.cors', 'false') === 'false') {
             return $next($request);
         }
 
         $response = $next($request);
-        if(!($response instanceof \Illuminate\Http\Response)) {
+        if(!($response instanceof \Illuminate\Http\Response) && $request->is(config('cms.core.app.paths.api', 'api/'))) {
             $response
-                ->header('Access-Control-Allow-Origin' , $request->server('HTTP_HOST'))
+                ->header('Access-Control-Allow-Origin', config('cms.core.app.api.origin', $request->server('HTTP_HOST')))
                 ->header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS')
-                ->header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Origin')
-                ->header('Access-Control-Allow-Credentials', 'true');
+                ->header('Access-Control-Allow-Headers', 'X-Auth-Token');
         }
 
         return $response;

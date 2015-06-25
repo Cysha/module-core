@@ -12,7 +12,12 @@ return [
     // middleware
     'force-secure' => 'false',
     'minify-html' => 'false',
-    'cors' => 'false',
+
+    'api' => [
+        'admin-only-keys' => 'true',
+        'cors' => 'false',
+        'origin' => '*',
+    ],
 
     // themes
     'themes' => [
