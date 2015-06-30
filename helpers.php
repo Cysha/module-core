@@ -293,3 +293,28 @@ if (!function_exists('cache_get')) {
         return Cache::get($tag.$key);
     }
 }
+
+if (!function_exists('transform_button_args')) {
+    /**
+     * Run a transformer for 'segment:x' calls for the button helper
+     *
+     * @param  array $args
+     * @return array
+     */
+    function transform_button_args($args)
+    {
+        if (!count($args)) {
+            return $args;
+        }
+
+        foreach ($args as $key => $value) {
+            if (substr($value, 0, 7) == 'segment') {
+                list(, $value) = explode(':', $value);
+                $args[$key] = Request::segment($value);
+            }
+        }
+
+        return $args;
+    }
+}
+
