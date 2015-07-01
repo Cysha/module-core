@@ -1,8 +1,9 @@
 <?php namespace Cms\Modules\Core\Http\Controllers;
 
 use Cms\Modules\Core\Services\MenuService;
-use Route;
-use File;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Request;
 
 class BaseBackendController extends BaseController
 {
@@ -60,4 +61,24 @@ class BaseBackendController extends BaseController
         }
     }
 
+    /**
+     * Will send a message back to the browser, if ajax will return as json
+     *
+     * @param  string  $message
+     * @param  integer $status
+     * @param  Request $input
+     *
+     * @return json|Redirect
+     */
+    protected function sendMessage($message, $status = 200)
+    {
+        if (Request::ajax()) {
+            return [
+                'status' => $status,
+                'message' => $message,
+            ];
+        }
+
+        return redirect()->back($status)->withInfo($message);
+    }
 }
