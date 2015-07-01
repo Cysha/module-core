@@ -24,10 +24,7 @@ class Theme
                 continue;
             }
             $options = json_decode(File::get($dir.'/theme.json'), true);
-
-            $options['dir'] = str_replace('\\', '/', $dir);
-            $options['dir'] = explode('/', $options['dir']);
-            $options['dir'] = end($options['dir']);
+            $options['dir'] = class_basename($dir);
 
             self::$themes[$dir] = (object)array_only($options, ['name', 'author', 'site', 'type', 'dir', 'version']);
         }
