@@ -108,6 +108,13 @@ class ConfigTableSeeder extends Seeder
                 'item'        => 'prefix',
                 'value'       => 'api/',
             ],
+            [
+                'environment' => $environment,
+                'namespace'   => null,
+                'group'       => 'cms.core.app',
+                'item'        => 'csrf-except',
+                'value'       => '["api/*"]',
+            ],
         ];
 
         foreach ($array as $r) {

@@ -32,6 +32,8 @@ return [
         'backend'  => 'admin/',
     ],
 
+    'csrf-except' => [],
+
     // editors
     'default-editor' => 'core::editors.pagedown-bootstrap',
     'editors' => [
