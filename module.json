@@ -23,7 +23,7 @@
         "Menu\\MenuServiceProvider"
     ],
     "aliases": {
-        "HTML": "Collective\\Html\\HTMLFacade",
+        "HTML": "Collective\\Html\\HtmlFacade",
         "Form": "Collective\\Html\\FormFacade",
         "Former": "Former\\Facades\\Former",
         "Theme": "Teepluss\\Theme\\Facades\\Theme",
