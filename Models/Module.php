@@ -15,29 +15,44 @@ class Module
         if (count(self::$modules)) {
             return;
         }
+        self::$modules = new Collection(self::$modules);
+
+        $empty = [
+            'order' => 0,
+            'name' => null,
+            'alias' => null,
+            'authors' => [],
+            'version' => null,
+            'keywords' => [],
+            'active' => false,
+            'path' => null,
+        ];
 
         foreach (app('modules')->toCollection() as $module) {
             $directory = $module->getPath();
             $moduleName = $module->getName();
 
+            if (!File::exists($directory.'/module.json')) {
+                self::$modules->push(
+                    (object)array_merge($empty, ['name' => $moduleName, 'path' => $directory])
+                );
+                continue;
+            }
             $module = json_decode(file_get_contents($directory.'/module.json'));
 
-            self::$modules[] = (object)[
+            self::$modules->push((object)[
                 'order' => (int) $module->order,
                 'name' => $module->name,
                 'alias' => $module->alias,
                 'authors' => $module->authors,
                 'version' => $module->version,
-                'keywords' => $module->keywords,
+                'keywords' => (array) $module->keywords,
                 'active' => $module->active == '1' ? true : false,
                 'path' => $directory,
-            ];
+            ]);
         }
 
-        uasort(self::$modules, function ($a, $b) {
-            return $a->order > $b->order ? 1 : -1;
-        });
-        self::$modules = new Collection(self::$modules);
+        self::$modules = self::$modules->sortBy('order');
     }
 
     /**
