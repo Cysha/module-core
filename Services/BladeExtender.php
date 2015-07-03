@@ -36,7 +36,7 @@ class BladeExtender
     public function addContinueBreak($value, Application $app, Compiler $blade)
     {
         $matcher = '/@(break|continue)/';
-        return preg_replace($matcher, '$1<?php $2; ?>$3', $value);
+        return preg_replace($matcher, '<?php $1; ?>', $value);
     }
 
     /**
