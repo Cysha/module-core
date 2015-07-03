@@ -1,9 +1,12 @@
 <?php namespace Cms\Modules\Core\Models;
 
-use Illuminate\Support\Collection;
+use Illuminate\Contracts\Support\Jsonable;
+use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Collection;
+use JsonSerializable;
 
-class Module
+class Module implements Arrayable, Jsonable, JsonSerializable
 {
     protected static $modules = [];
 
@@ -34,13 +37,13 @@ class Module
 
             if (!File::exists($directory.'/module.json')) {
                 self::$modules->push(
-                    (object)array_merge($empty, ['name' => $moduleName, 'path' => $directory])
+                    array_merge($empty, ['name' => $moduleName, 'path' => $directory])
                 );
                 continue;
             }
             $module = json_decode(file_get_contents($directory.'/module.json'));
 
-            self::$modules->push((object)[
+            self::$modules->push([
                 'order' => (int) $module->order,
                 'name' => $module->name,
                 'alias' => $module->alias,
@@ -98,4 +101,14 @@ class Module
         return $filter;
     }
 
+
+    public function toArray() {
+        return self::$modules->toArray();
+    }
+    public function toJson($options = 0) {
+        return self::$modules->toJson($options);
+    }
+    public function jsonSerialize() {
+        return self::$modules->jsonSerialize();
+    }
 }

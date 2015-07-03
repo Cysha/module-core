@@ -1,9 +1,13 @@
 <?php namespace Cms\Modules\Core\Models;
 
-use File;
-use Config;
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Jsonable;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Collection;
+use JsonSerializable;
 
-class Theme
+class Theme implements ArrayAccess, Arrayable, Jsonable, JsonSerializable
 {
     protected static $themes = array();
 
@@ -102,5 +106,17 @@ class Theme
         return array_filter(self::$themes, function ($theme) use ($name) {
             return $theme->dir == $name;
         });
+    }
+
+
+
+    public function toArray() {
+        return self::$themes->toArray();
+    }
+    public function toJson($options = 0) {
+        return self::$themes->toJson($options);
+    }
+    public function jsonSerialize() {
+        return self::$themes->jsonSerialize();
     }
 }
