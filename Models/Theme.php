@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Collection;
 use JsonSerializable;
 
-class Theme implements ArrayAccess, Arrayable, Jsonable, JsonSerializable
+class Theme implements Arrayable, Jsonable, JsonSerializable
 {
     protected static $themes = array();
 
@@ -110,13 +110,16 @@ class Theme implements ArrayAccess, Arrayable, Jsonable, JsonSerializable
 
 
 
-    public function toArray() {
+    public function toArray()
+    {
         return self::$themes->toArray();
     }
-    public function toJson($options = 0) {
+    public function toJson($options = 0)
+    {
         return self::$themes->toJson($options);
     }
-    public function jsonSerialize() {
+    public function jsonSerialize()
+    {
         return self::$themes->jsonSerialize();
     }
 }

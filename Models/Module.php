@@ -1,7 +1,7 @@
 <?php namespace Cms\Modules\Core\Models;
 
-use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Collection;
 use JsonSerializable;
@@ -102,13 +102,16 @@ class Module implements Arrayable, Jsonable, JsonSerializable
     }
 
 
-    public function toArray() {
+    public function toArray()
+    {
         return self::$modules->toArray();
     }
-    public function toJson($options = 0) {
+    public function toJson($options = 0)
+    {
         return self::$modules->toJson($options);
     }
-    public function jsonSerialize() {
+    public function jsonSerialize()
+    {
         return self::$modules->jsonSerialize();
     }
 }
