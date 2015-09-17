@@ -40,7 +40,7 @@ class BladeExtender
     }
 
     /**
-     * Add @continue & @break support
+     * Add @set($var, 'value') support
      */
     public function setVar($value, Application $app, Compiler $blade)
     {
