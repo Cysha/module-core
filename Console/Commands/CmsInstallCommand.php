@@ -159,7 +159,7 @@ class CmsInstallCommand extends BaseCommand
             if (!$module->enabled()) {
                 continue;
             }
-            $this->info($module->getName().' module...');
+            $this->info(ucwords($module->getName()).' module...');
 
             $this->do_modulesDependencyInstallers($module);
             $this->do_modulesSeeding($module);
@@ -169,7 +169,7 @@ class CmsInstallCommand extends BaseCommand
     protected function do_modulesSeeding($module)
     {
         $this->comment('Seeding Module...');
-        $this->{$this->cmd}('module:seed', ['module' => $module->getName()]);
+        $this->{$this->cmd}('module:seed', ['module' => ucwords($module->getName())]);
     }
 
     protected function do_clearCompiled()
