@@ -35,11 +35,10 @@ trait LinkableTrait
             return null;
         }
 
-        foreach ($link->attributes as &$attr) {
+        foreach ($link->attributes as $attr) {
             if (!isset($this->{$attr})) {
                 throw new \InvalidArgumentException('Cant use "'.$attr.'" attribute from model "'.get_class($this).'"');
             }
-            $attr = $this->{$attr};
         }
 
         $url = route($link->route, $link->attributes);
