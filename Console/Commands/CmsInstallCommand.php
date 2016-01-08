@@ -127,12 +127,18 @@ class CmsInstallCommand extends BaseCommand
 
     protected function do_modulePublishPermissions()
     {
+        $this->comment('Publishing Module Permissions...');
         try {
             \DB::connection()->getDatabaseName();
-            $this->comment('Publishing Module Permissions...');
+        } catch (\PDOException $e) {
+            $this->error('Database Details seem to be invalid, cannot continue...');
+            return false;
+        }
+
+        try {
             $this->{$this->cmd}('module:publish-permissions');
         } catch (\PDOException $e) {
-            $this->error('Database Details seem to be invalid, cannot publish module permissions...');
+            $this->error('Module Permissions seem to be invalid, cannot continue...');
         }
     }
 
