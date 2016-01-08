@@ -80,12 +80,18 @@ class CmsInstallCommand extends BaseCommand
 
     protected function do_migrate()
     {
+        $this->comment('Setting up the database...');
         try {
             \DB::connection()->getDatabaseName();
-            $this->comment('Setting up the database...');
-            $this->{$this->cmd}('migrate', ['--force' => null]);
         } catch (\PDOException $e) {
             $this->error('Database Details seem to be invalid, cannot run migrations...');
+            return false;
+        }
+
+        try {
+            $this->{$this->cmd}('migrate', ['--force' => null]);
+        } catch (Exception $e) {
+            $this->error('There appears to be an invalid Migration, cannot run migrations...');
         }
     }
 
@@ -159,7 +165,7 @@ class CmsInstallCommand extends BaseCommand
             if (!$module->enabled()) {
                 continue;
             }
-            $this->info(ucwords($module->getName()).' module...');
+            $this->info($module->getName().' module...');
 
             $this->do_modulesDependencyInstallers($module);
             $this->do_modulesSeeding($module);
@@ -169,7 +175,7 @@ class CmsInstallCommand extends BaseCommand
     protected function do_modulesSeeding($module)
     {
         $this->comment('Seeding Module...');
-        $this->{$this->cmd}('module:seed', ['module' => ucwords($module->getName())]);
+        $this->{$this->cmd}('module:seed', ['module' => $module->getName()]);
     }
 
     protected function do_clearCompiled()
