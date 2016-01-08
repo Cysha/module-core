@@ -181,7 +181,7 @@ class CmsInstallCommand extends BaseCommand
     protected function do_modulesSeeding($module)
     {
         $this->comment('Seeding Module...');
-        $this->{$this->cmd}('module:seed', ['module' => $module->getName()]);
+        $this->{$this->cmd}('module:seed', ['module' => ucwords($module->getName())]);
     }
 
     protected function do_clearCompiled()
