@@ -65,18 +65,40 @@ class CmsModuleMakeCommand extends BaseCommand
             '%module_description' => null,
         ];
 
-        // actually gather the info
-        $info['%author_name'] = $this->ask('What is your full name? (%author_name)');
-        $info['%author_username'] = $this->ask('What is your github username? (%author_username)');
-        $info['%author_website'] = $this->ask('What is your website address? (%author_website)', 'http://github.com/'.$info['%author_username']);
-        $info['%author_email'] = $this->ask('What is your email address? (%author_email)');
+        // gather the info, and save the user details to make future module making easier
+        $filePath = storage_path('app/module_make_info.json');
+        if (!$this->files->exists($filePath)) {
+            $info = array_merge($info, $this->getUserData());
 
+            $data = array_only($info, ['%author_name', '%author_username', '%author_website', '%author_email']);
+            $this->files->put($filePath, json_encode($data));
+            $this->comment('We have saved your user details incase you want to make more :)');
+        } else {
+            $info = json_decode($this->files->get($filePath), true);
+
+            if (!is_array($info)) {
+                $info = array_merge($info, $this->getUserData());
+            }
+            $this->comment('We already have your user details, just the module ones left...');
+        }
+
+        // we still need the module details
         $module_name = $this->ask('What is your modules name? (%module_name)');
 
         $info['%module_name_lower'] = strtolower($module_name);
         $info['%module_name'] = ucwords($module_name);
         $info['%package_name'] = $this->ask('What is your package string? (%package_name)', sprintf('%s/pxcms-%s', $info['%author_username'], $info['%module_name_lower']));
         $info['%module_description'] = $this->ask('What is the purpose of your module? (%module_description)');
+
+        return $info;
+    }
+
+    private function getUserData() {
+
+        $info['%author_name'] = $this->ask('What is your full name? (%author_name)');
+        $info['%author_username'] = $this->ask('What is your github username? (%author_username)');
+        $info['%author_website'] = $this->ask('What is your website address? (%author_website)', 'http://github.com/'.$info['%author_username']);
+        $info['%author_email'] = $this->ask('What is your email address? (%author_email)');
 
         return $info;
     }
