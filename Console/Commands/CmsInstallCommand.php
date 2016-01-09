@@ -1,5 +1,6 @@
 <?php namespace Cms\Modules\Core\Console\Commands;
 
+use Carbon\Carbon;
 use Schema;
 use File;
 
@@ -40,6 +41,7 @@ class CmsInstallCommand extends BaseCommand
         $this->do_migrate();
 
         $this->do_moduleProcessing();
+        $this->do_installAdmin();
         $this->do_cacheClear();
         $this->do_autoload();
         $this->do_optimize();
@@ -209,6 +211,51 @@ class CmsInstallCommand extends BaseCommand
         //     $this->comment('Running the dependency installer for the '.$module->getName().' module...');
         //     $this->{$this->cmd}('module:install', ['module' => $module->getName()]);
         // }
+    }
+
+    protected function do_installAdmin() {
+        $this->info('Building Admin User...');
+
+        $data = [
+            'name' => null,
+            'username' => null,
+            'email' => null,
+            'password' => null,
+        ];
+
+        $data['name'] = $this->ask('What is your full name?');
+        $data['username'] = $this->ask('What is your user name?');
+        $data['email'] = $this->ask('What is your email?');
+        $data['password'] = $this->secret('Please enter your password');
+
+        if ($this->secret('Please enter your password for confirmation') !== $data['password']) {
+            $this->error('Could not verify password, exiting here');
+            return;
+        }
+
+        // add some data tot the array
+        $data['verified_at'] = Carbon::now();
+        $data['role'] = 1;
+
+        // grab the auth model
+        $userModel = config('auth.model');
+
+        // spawn a new copy and fill with the data details
+        $user = with(new $userModel);
+        $user->fill(array_except($data, 'role'));
+        $save = $user->save();
+
+        // if we cant save throw out the errors
+        if ($save === false) {
+            print_r($user->getErrors());
+            die();
+        }
+
+        // attach the admin role to this user
+        $user->roles()->attach(
+            array_get($data, 'role'),
+            ['caller_type' => $user->getCallerType()]
+        );
     }
 
     protected function done()
