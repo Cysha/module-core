@@ -64,7 +64,7 @@ if (!function_exists('date_array')) {
             '<time datetime="%s" title="%s">%s</time>',
             array_get($return, 'atom'),
             array_get($return, 'fuzzy'),
-            array_get($return, 'ago')
+            in_array($date, [null, '0000-00-00 00:00:00']) ? 'Never' : array_get($return, 'ago')
         );
 
         return $return;
