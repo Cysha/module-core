@@ -53,7 +53,7 @@ class BladeExtender
      */
     public function addDebug($value, Application $app, Compiler $blade)
     {
-        $matcher = '/@debug\s*\(([a-zA-Z0-9\$\_\[\]\'\"]+)(?:\,\s*[\"\']{1}(.+)[\"\']{1})?\)/';
+        $matcher = '/@debug\s*\(([a-zA-Z0-9\$\_\[\]\-\>\<\)\(\'\"]+)(?:\,\s*[\"\']{1}(.+)[\"\']{1})?\)/';
         return preg_replace($matcher, '<?php echo \Debug::dump($1, \'$2\'); ?>', $value);
     }
 }
