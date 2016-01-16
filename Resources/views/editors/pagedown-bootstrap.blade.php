@@ -1,6 +1,6 @@
 @if (isset($id))
 
-<textarea id="txt_{{ $id }}" name="{{ $id }}" class="form-control" rows="10">{!! $content or '' !!}</textarea>
+<textarea id="txt_{{ $id }}" name="{{ $id }}" class="form-control" rows="10" tabindex="{{ $tabindex or '1' }}">{!! $content or '' !!}</textarea>
 
 @if ($errors->has($id))
 
