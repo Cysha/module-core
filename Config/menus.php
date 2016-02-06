@@ -7,6 +7,11 @@ return [
             'order' => 1,
             'children' => [
                 [
+                    'text' => 'System',
+                    'type' => 'header',
+                    'order' => 0,
+                ],
+                [
                     'route' => 'pxcms.admin.index',
                     'text' => 'Dashboard',
                     'icon' => 'fa-dashboard',
@@ -14,13 +19,18 @@ return [
                 ],
             ],
         ],
-        'User Management' => [
+        'Site Management' => [
             'order' => 2,
             'children' => [],
         ],
-        'System' => [
+        'User Management' => [
             'order' => 3,
             'children' => [],
+        ],
+        [
+            'text' => 'Modules',
+            'type' => 'header',
+            'order' => 100,
         ],
     ],
 

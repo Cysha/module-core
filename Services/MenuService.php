@@ -174,6 +174,11 @@ class MenuService
             return true;
         }
 
+        if (($type = array_get($link, 'type', null)) === 'header') {
+            $menu->add('#', array_get($link, 'text'));
+            return true;
+        }
+
         // check for permissions on this link
         if (($perm = array_get($link, 'permission', null)) !== null && hasPermission($perm) === false) {
             \Debug::console(['Permission Denied', $perm]);
