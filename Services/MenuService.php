@@ -162,20 +162,19 @@ class MenuService
      * Checks the permissions on the routes
      *
      * @param object $menu
-     * @param string $link
-     * @param string $section
+     * @param array $link
      *
      * @return bool
      */
     private function addSection(&$menu, $link)
     {
         if (($type = array_get($link, 'type', null)) === 'divider') {
-            $menu->add('#', array_get($link, 'text'))->addClass('divider');
+            $menu->add('#', $this->getText($link))->addClass('divider');
             return true;
         }
 
         if (($type = array_get($link, 'type', null)) === 'header') {
-            $menu->add('#', array_get($link, 'text'));
+            $menu->add('#', $this->getText($link));
             return true;
         }
 
@@ -204,7 +203,7 @@ class MenuService
         }
 
         // add the text and if needed an icon
-        $text = array_get($link, 'text');
+        $text = $this->getText($link);
         if (($icon = array_get($link, 'icon', null)) !== null) {
             $text = sprintf('<i class="fa fa-fw %s"></i> %s', $icon, $text);
         }
@@ -225,5 +224,21 @@ class MenuService
             $menu->activePattern($activePattern);
         }
         return true;
+    }
+
+    /**
+     * Decide which text attribute to use off the link array
+     *
+     * @param array $link
+     *
+     * @return string
+     */
+    private function getText($link) {
+
+        if (array_get($link, 'trans', null) !== null) {
+            return trans($link);
+        }
+
+        return array_get($link, 'text', null);
     }
 }
