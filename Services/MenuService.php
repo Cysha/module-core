@@ -235,8 +235,8 @@ class MenuService
      */
     private function getText($link) {
 
-        if (array_get($link, 'trans', null) !== null) {
-            return trans($link);
+        if (($trans = array_get($link, 'trans', null)) !== null) {
+            return trans($trans);
         }
 
         return array_get($link, 'text', null);
