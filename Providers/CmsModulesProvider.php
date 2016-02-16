@@ -16,6 +16,12 @@ class CmsModulesProvider extends ServiceProvider
 
         $this->app->register('Pingpong\Modules\ModulesServiceProvider');
 
+        // if social module installed, load the socialite service provider
+        $class = 'Cms\Modules\Social\Providers\RegisterSocialitesProvider';
+        if (class_exists($class)) {
+            $this->app->register($class);
+        }
+
         BladeExtender::attach($this->app);
     }
 
