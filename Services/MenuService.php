@@ -209,7 +209,8 @@ class MenuService
         }
 
         if (($label = array_get($link, 'label', null)) !== null) {
-            $text .= $label();
+            list($class, $method) = explode('@', $label);
+            $text .= app($class)->$method();
         }
 
         // add the item to the menu
