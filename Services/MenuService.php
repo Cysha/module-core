@@ -208,6 +208,10 @@ class MenuService
             $text = sprintf('<i class="fa fa-fw %s"></i> %s', $icon, $text);
         }
 
+        if (($label = array_get($link, 'label', null)) !== null) {
+            $text .= $label();
+        }
+
         // add the item to the menu
         $menu->add($url, $text);
 
