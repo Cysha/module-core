@@ -141,7 +141,7 @@ class BladeExtender
     /**
      * Add a bunch of rules for endif statements
      */
-    public function endif($value, Application $app, Compiler $blade)
+    public function addEndif($value, Application $app, Compiler $blade)
     {
         $matcher = '/@(endroles|endrole|endauthed|endnotauthed|endhaspermission|endpermission)/i';
         $replace = '<?php endif; ?>';
