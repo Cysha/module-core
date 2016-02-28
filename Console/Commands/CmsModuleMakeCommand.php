@@ -87,7 +87,7 @@ class CmsModuleMakeCommand extends BaseCommand
 
         $info['%module_name_lower'] = strtolower($module_name);
         $info['%module_name'] = ucwords($module_name);
-        $info['%package_name'] = $this->ask('What is your package string? (%package_name)', sprintf('%s/pxcms-%s', $info['%author_username'], $info['%module_name_lower']));
+        $info['%package_name'] = $this->ask('What is your package string? (%package_name)', sprintf('%s/module-%s', $info['%author_username'], $info['%module_name_lower']));
         $info['%module_description'] = $this->ask('What is the purpose of your module? (%module_description)');
 
         return $info;
@@ -106,13 +106,13 @@ class CmsModuleMakeCommand extends BaseCommand
     protected function spawnModule(array $info) {
         $this->info('Creating Module...');
 
-        if ($this->files->isDirectory(app_path('Modules/PxcmsSkeleton'))) {
-            $this->files->deleteDirectory(app_path('Modules/PxcmsSkeleton'));
+        if ($this->files->isDirectory(app_path('Modules/ModuleSkeleton'))) {
+            $this->files->deleteDirectory(app_path('Modules/ModuleSkeleton'));
         }
 
         ob_start();
         $installer = new Installer(
-            'Cysha/pxcms-skeleton',
+            'Cysha/module-skeleton',
             null,
             'github',
             false
@@ -137,9 +137,9 @@ class CmsModuleMakeCommand extends BaseCommand
             }
         }
 
-        if ($this->files->isDirectory(app_path('Modules/PxcmsSkeleton'))) {
+        if ($this->files->isDirectory(app_path('Modules/ModuleSkeleton'))) {
             $this->files->move(
-                app_path('Modules/PxcmsSkeleton'),
+                app_path('Modules/ModuleSkeleton'),
                 app_path('Modules/'.$info['%module_name'])
             );
 
