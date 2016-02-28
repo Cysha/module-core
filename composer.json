@@ -1,7 +1,7 @@
 {
-    "name": "cysha/pxcms-core",
+    "name": "cysha/module-core",
     "type": "pxcms-module",
-    "description": "Core Module for Phoenix CMS v1",
+    "description": "Core Module for Phoenix CMS",
     "license": "MIT",
     "authors": [
         { "name": "xLink", "email": "xLink@cybershade.org" }
