@@ -245,6 +245,10 @@ if (!function_exists('cache')) {
             return Cache::tags($tag)->remember($key, $length, $callback);
         }
 
+        if (is_array($tag)) {
+            $tag = implode('.', $tag).'.';
+        }
+
         return Cache::remember($tag.$key, $length, $callback);
     }
 }
@@ -254,6 +258,10 @@ if (!function_exists('cache_forever')) {
     {
         if (Cache::getFacadeRoot() instanceof TaggableStore) {
             return Cache::tags($tag)->rememberForever($key, $callback);
+        }
+
+        if (is_array($tag)) {
+            $tag = implode('.', $tag).'.';
         }
 
         return Cache::rememberForever($tag.$key, $callback);
@@ -279,6 +287,10 @@ if (!function_exists('cache_has')) {
             return Cache::tags($tag)->has($key);
         }
 
+        if (is_array($tag)) {
+            $tag = implode('.', $tag).'.';
+        }
+
         return Cache::has($tag.$key);
     }
 }
@@ -288,6 +300,10 @@ if (!function_exists('cache_get')) {
     {
         if (Cache::getFacadeRoot() instanceof TaggableStore) {
             return Cache::tags($tag)->get($key);
+        }
+
+        if (is_array($tag)) {
+            $tag = implode('.', $tag).'.';
         }
 
         return Cache::get($tag.$key);
