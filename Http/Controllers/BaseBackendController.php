@@ -1,6 +1,7 @@
-<?php namespace Cms\Modules\Core\Http\Controllers;
+<?php
 
-use Cms\Modules\Core\Services\MenuService;
+namespace Cms\Modules\Core\Http\Controllers;
+
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Request;
@@ -8,19 +9,22 @@ use Illuminate\Support\Facades\Request;
 class BaseBackendController extends BaseController
 {
     /**
-     * Controls the layout for a controller
+     * Controls the layout for a controller.
+     *
      * @var string
      */
     public $layout = '1-column';
 
     /**
-     * The theme object
+     * The theme object.
+     *
      * @var object
      */
     public $theme;
 
     /**
-     * The theme to load
+     * The theme to load.
+     *
      * @var string
      */
     protected $themeName = null;
@@ -45,7 +49,7 @@ class BaseBackendController extends BaseController
     }
 
     /**
-     * Determines whether we have a file in the right place for this module
+     * Determines whether we have a file in the right place for this module.
      */
     public function addPageAssets()
     {
@@ -62,11 +66,11 @@ class BaseBackendController extends BaseController
     }
 
     /**
-     * Will send a message back to the browser, if ajax will return as json
+     * Will send a message back to the browser, if ajax will return as json.
      *
-     * @param  string  $message
-     * @param  integer $status
-     * @param  Request $input
+     * @param string  $message
+     * @param int     $status
+     * @param Request $input
      *
      * @return json|Redirect
      */

@@ -1,14 +1,17 @@
-<?php namespace Cms\Modules\Core\Http\Middleware;
+<?php
+
+namespace Cms\Modules\Core\Http\Middleware;
 
 use Closure;
 
 class MinifyHtmlMiddleware
 {
     /**
-     * Minify HTML
+     * Minify HTML.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure                 $next
+     *
      * @return mixed
      */
     public function handle($request, Closure $next)
@@ -19,7 +22,7 @@ class MinifyHtmlMiddleware
 
         // make sure we are a Response and not json etc
         $response = $next($request);
-        if($response instanceof \Illuminate\Http\Response) {
+        if ($response instanceof \Illuminate\Http\Response) {
             // get the content into $buffer and check to make sure its a string
             $buffer = $response->getContent();
             if (!is_string($buffer)) {
@@ -59,5 +62,4 @@ class MinifyHtmlMiddleware
 
         return $response;
     }
-
 }

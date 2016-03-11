@@ -1,8 +1,8 @@
-<?php namespace Cms\Modules\Core\Console\Commands;
+<?php
 
-use Illuminate\Filesystem\Filesystem;
+namespace Cms\Modules\Core\Console\Commands;
+
 use Pingpong\Modules\Process\Installer;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Finder\Finder;
 
 class CmsModuleMakeCommand extends BaseCommand
@@ -52,7 +52,8 @@ class CmsModuleMakeCommand extends BaseCommand
         ];
     }
 
-    protected function gatherData() {
+    protected function gatherData()
+    {
         // set defaults
         $info = [
             '%author_name' => null,
@@ -93,8 +94,8 @@ class CmsModuleMakeCommand extends BaseCommand
         return $info;
     }
 
-    private function getUserData() {
-
+    private function getUserData()
+    {
         $info['%author_name'] = $this->ask('What is your full name? (%author_name)');
         $info['%author_username'] = $this->ask('What is your github username? (%author_username)');
         $info['%author_website'] = $this->ask('What is your website address? (%author_website)', 'http://github.com/'.$info['%author_username']);
@@ -103,7 +104,8 @@ class CmsModuleMakeCommand extends BaseCommand
         return $info;
     }
 
-    protected function spawnModule(array $info) {
+    protected function spawnModule(array $info)
+    {
         $this->info('Creating Module...');
 
         if ($this->files->isDirectory(app_path('Modules/ModuleSkeleton'))) {
@@ -126,7 +128,8 @@ class CmsModuleMakeCommand extends BaseCommand
         ob_end_clean();
     }
 
-    protected function moveModule(array $info) {
+    protected function moveModule(array $info)
+    {
         if ($this->files->isDirectory(app_path('Modules/'.$info['%module_name']))) {
             $this->error('[ERROR] The module you are trying to create already exists.');
 
@@ -149,7 +152,8 @@ class CmsModuleMakeCommand extends BaseCommand
         return false;
     }
 
-    protected function renamePlaceholderFiles(array $info) {
+    protected function renamePlaceholderFiles(array $info)
+    {
         $files = Finder::create()
             ->in(app_path('Modules/'.$info['%module_name']))
             ->name('*.php');
@@ -166,7 +170,8 @@ class CmsModuleMakeCommand extends BaseCommand
         }
     }
 
-    protected function replacePlaceholdersInFiles(array $info) {
+    protected function replacePlaceholdersInFiles(array $info)
+    {
         $files = Finder::create()
             ->in(app_path('Modules/'.$info['%module_name']))
             ->name('*.php')
@@ -184,7 +189,8 @@ class CmsModuleMakeCommand extends BaseCommand
         }
     }
 
-    protected function replacePlaceholders($string, array $info) {
+    protected function replacePlaceholders($string, array $info)
+    {
         $infoKeys = array_keys($info);
         $infoValues = array_values($info);
 

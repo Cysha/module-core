@@ -1,4 +1,5 @@
 <?php
+
 if (!function_exists('artisan_call')) {
     function artisan_call($command, array $parameters = array())
     {
@@ -25,6 +26,7 @@ if (!function_exists('truncate')) {
         $text = substr($text, 0, $chars);
         $text = substr($text, 0, strrpos($text, ' '));
         $text = $text.'...';
+
         return $text;
     }
 }
@@ -44,10 +46,9 @@ if (!function_exists('partial')) {
     }
 }
 
-
 if (!function_exists('date_array')) {
     /**
-     * Compiles a list of dates to return
+     * Compiles a list of dates to return.
      *
      * @return array
      */
@@ -55,9 +56,9 @@ if (!function_exists('date_array')) {
     {
         $return = [
             'default' => $date,
-            'atom'    => date_carbon($date, DateTime::ATOM),
-            'ago'     => date_ago($date),
-            'fuzzy'   => date_fuzzy($date),
+            'atom' => date_carbon($date, DateTime::ATOM),
+            'ago' => date_ago($date),
+            'fuzzy' => date_fuzzy($date),
         ];
 
         $return['element'] = sprintf(
@@ -70,7 +71,6 @@ if (!function_exists('date_array')) {
         return $return;
     }
 }
-
 
 if (!function_exists('date_carbon')) {
     function date_carbon($value, $format = null)
@@ -130,11 +130,11 @@ if (!function_exists('date_fuzzy')) {
     /* http://daveyshafik.com/archives/28101-datetime-timestamp-parsing.html */
     function date_fuzzy($date, $inputFormat = null, $outputDateFormat = null, $outputTimeFormat = null)
     {
-        $inputFormat      = $inputFormat ?: DateTime::ATOM;
+        $inputFormat = $inputFormat ?: DateTime::ATOM;
         $outputDateFormat = $outputDateFormat ?: 'F dS Y';
         $outputTimeFormat = $outputTimeFormat ?: 'H:ia';
 
-        $dateTime = (is_int($date) ? with(new Carbon\Carbon)->createFromTimestamp($date) : new DateTime($date));
+        $dateTime = (is_int($date) ? with(new Carbon\Carbon())->createFromTimestamp($date) : new DateTime($date));
 
         // Failed to parse, probably invalid date
         if (!$dateTime) {
@@ -237,7 +237,6 @@ if (!function_exists('escape')) {
     }
 }
 
-
 if (!function_exists('cache')) {
     function cache($tag, $key, $length, $callback)
     {
@@ -273,6 +272,7 @@ if (!function_exists('cache_flush')) {
     {
         if (Cache::getFacadeRoot() instanceof TaggableStore) {
             Cache::tags($tag)->flush();
+
             return;
         }
 
@@ -312,9 +312,10 @@ if (!function_exists('cache_get')) {
 
 if (!function_exists('transform_button_args')) {
     /**
-     * Run a transformer for 'segment:x' calls for the button helper
+     * Run a transformer for 'segment:x' calls for the button helper.
      *
-     * @param  array $args
+     * @param array $args
+     *
      * @return array
      */
     function transform_button_args($args)
@@ -333,4 +334,3 @@ if (!function_exists('transform_button_args')) {
         return $args;
     }
 }
-

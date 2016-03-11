@@ -1,4 +1,6 @@
-<?php namespace Cms\Modules\Core\Console\Commands;
+<?php
+
+namespace Cms\Modules\Core\Console\Commands;
 
 use Carbon\Carbon;
 use Schema;
@@ -19,11 +21,13 @@ class CmsInstallCommand extends BaseCommand
         // test for db connectivity
         if ($this->do_dbCheck() === false) {
             $this->error('Database Details seem to be invalid, you need to fix this before we can continue...');
+
             return;
         }
 
         if ($this->confirm(' This command will (re)build your database! Continue? ', true) === false) {
             $this->done();
+
             return;
         }
 
@@ -54,9 +58,9 @@ class CmsInstallCommand extends BaseCommand
         return [];
     }
 
-/**
- * INSTALLER METHODS
- */
+    /**
+     * INSTALLER METHODS.
+     */
     protected function do_dbCheck()
     {
         try {
@@ -87,6 +91,7 @@ class CmsInstallCommand extends BaseCommand
             \DB::connection()->getDatabaseName();
         } catch (\PDOException $e) {
             $this->error('Database Details seem to be invalid, cannot run migrations...');
+
             return false;
         }
 
@@ -134,6 +139,7 @@ class CmsInstallCommand extends BaseCommand
             \DB::connection()->getDatabaseName();
         } catch (\PDOException $e) {
             $this->error('Database Details seem to be invalid, cannot continue...');
+
             return false;
         }
 
@@ -213,7 +219,8 @@ class CmsInstallCommand extends BaseCommand
         // }
     }
 
-    protected function do_installAdmin() {
+    protected function do_installAdmin()
+    {
         $this->info('Building Admin User...');
 
         $data = [
@@ -230,6 +237,7 @@ class CmsInstallCommand extends BaseCommand
 
         if ($this->secret('Please enter your password for confirmation') !== $data['password']) {
             $this->error('Could not verify password, exiting here');
+
             return;
         }
 
@@ -241,7 +249,7 @@ class CmsInstallCommand extends BaseCommand
         $userModel = config('auth.model');
 
         // spawn a new copy and fill with the data details
-        $user = with(new $userModel);
+        $user = with(new $userModel());
         $user->fill(array_except($data, 'role'));
         $save = $user->save();
 

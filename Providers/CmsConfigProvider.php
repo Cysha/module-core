@@ -1,4 +1,6 @@
-<?php namespace Cms\Modules\Core\Providers;
+<?php
+
+namespace Cms\Modules\Core\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Cms\Modules\Core;
@@ -11,8 +13,6 @@ class CmsConfigProvider extends ServiceProvider
 {
     /**
      * Register the service provider.
-     *
-     * @return void
      */
     public function register()
     {
@@ -27,7 +27,7 @@ class CmsConfigProvider extends ServiceProvider
             }
 
             // make sure the config table is installed
-            if (!Schema::hasTable(with(new Core\Models\DBConfig)->table)) {
+            if (!Schema::hasTable(with(new Core\Models\DBConfig())->table)) {
                 return;
             }
 
@@ -53,6 +53,5 @@ class CmsConfigProvider extends ServiceProvider
                 Config::set($item->key, $item->value);
             }
         }
-
     }
 }

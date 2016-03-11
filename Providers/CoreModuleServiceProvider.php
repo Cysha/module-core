@@ -1,10 +1,11 @@
-<?php namespace Cms\Modules\Core\Providers;
+<?php
+
+namespace Cms\Modules\Core\Providers;
 
 use Pingpong\Modules\Module;
 
 class CoreModuleServiceProvider extends BaseModuleProvider
 {
-
     /**
      * Register the defined middleware.
      *
@@ -36,7 +37,7 @@ class CoreModuleServiceProvider extends BaseModuleProvider
     ];
 
     /**
-     * Register view composers
+     * Register view composers.
      *
      * @var array
      */
@@ -50,7 +51,7 @@ class CoreModuleServiceProvider extends BaseModuleProvider
     ];
 
     /**
-     * Register repository bindings to the IoC
+     * Register repository bindings to the IoC.
      *
      * @var array
      */
@@ -65,7 +66,7 @@ class CoreModuleServiceProvider extends BaseModuleProvider
     }
 
     /**
-     * Register the modules aliases
+     * Register the modules aliases.
      */
     private function registerModuleResourceNamespaces()
     {
@@ -77,36 +78,39 @@ class CoreModuleServiceProvider extends BaseModuleProvider
     }
 
     /**
-     * Register the view namespaces for the modules
+     * Register the view namespaces for the modules.
+     *
      * @param Module $module
      */
     protected function registerViewNamespace(Module $module)
     {
         $this->app['view']->addNamespace(
             $module->getName(),
-            $module->getPath() . '/Resources/views'
+            $module->getPath().'/Resources/views'
         );
     }
 
     /**
-     * Register the language namespaces for the modules
+     * Register the language namespaces for the modules.
+     *
      * @param Module $module
      */
     protected function registerLanguageNamespace(Module $module)
     {
         $this->app['translator']->addNamespace(
             $module->getName(),
-            $module->getPath() . '/Resources/lang'
+            $module->getPath().'/Resources/lang'
         );
     }
 
     /**
-     * Register the config namespace
+     * Register the config namespace.
+     *
      * @param Module $module
      */
     private function registerConfigNamespace(Module $module)
     {
-        $files = $this->app['files']->files($module->getPath() . '/Config');
+        $files = $this->app['files']->files($module->getPath().'/Config');
 
         $package = $module->getName();
 
@@ -116,7 +120,7 @@ class CoreModuleServiceProvider extends BaseModuleProvider
             $this->mergeConfigFrom($file, $filename);
 
             $this->publishes([
-                $file => config_path($filename . '.php'),
+                $file => config_path($filename.'.php'),
             ]);
         }
     }
@@ -124,6 +128,7 @@ class CoreModuleServiceProvider extends BaseModuleProvider
     /**
      * @param $file
      * @param $module
+     *
      * @return string
      */
     private function getConfigFilename($file, $module)

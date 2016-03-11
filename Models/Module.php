@@ -1,4 +1,6 @@
-<?php namespace Cms\Modules\Core\Models;
+<?php
+
+namespace Cms\Modules\Core\Models;
 
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
@@ -66,6 +68,7 @@ class Module implements Arrayable, Jsonable, JsonSerializable
     public static function all()
     {
         self::gatherInfo();
+
         return self::$modules;
     }
 
@@ -75,7 +78,7 @@ class Module implements Arrayable, Jsonable, JsonSerializable
     }
 
     /**
-     * Returns info about a single module
+     * Returns info about a single module.
      *
      * @return array
      */
@@ -91,16 +94,16 @@ class Module implements Arrayable, Jsonable, JsonSerializable
             if (!isset($module->alias)) {
                 return false;
             }
+
             return $module->alias === strtolower($name);
         })->first();
 
         if (empty($filter)) {
-            throw new ModelNotFoundException;
+            throw new ModelNotFoundException();
         }
 
         return $filter;
     }
-
 
     public function toArray()
     {

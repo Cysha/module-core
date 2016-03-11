@@ -1,4 +1,6 @@
-<?php namespace Cms\Modules\Core\Console\Commands;
+<?php
+
+namespace Cms\Modules\Core\Console\Commands;
 
 use Symfony\Component\Console\Input\InputArgument;
 
@@ -10,7 +12,6 @@ class ThemeGulpCommand extends BaseCommand
 
     /**
      * Execute the console command.
-     * @return void
      */
     public function fire()
     {
@@ -31,13 +32,15 @@ class ThemeGulpCommand extends BaseCommand
         }
         if (!in_array($themeName, $themes)) {
             $this->error('No theme selected, exiting...');
+
             return;
         }
 
         // make sure the test dir & file actually exists
         $gulpFile = $themeDir.'/'.$themeName.'/gulpfile.js';
         if (!$this->app['files']->exists($gulpFile)) {
-            $this->error('Theme <info>\'' . $themeName . '\'</info> has no gulpfile to run.');
+            $this->error('Theme <info>\''.$themeName.'\'</info> has no gulpfile to run.');
+
             return;
         }
 
@@ -47,12 +50,13 @@ class ThemeGulpCommand extends BaseCommand
 
         // Run baby, run
         $command = sprintf('cd %3$s/%1$s/ && gulp %2$s', $themeName, $task, $themeDir);
-        echo ' $ '.$command . PHP_EOL;
+        echo ' $ '.$command.PHP_EOL;
         system($command);
     }
 
     /**
      * Get the console command arguments.
+     *
      * @return array
      */
     protected function getArguments()
@@ -65,6 +69,7 @@ class ThemeGulpCommand extends BaseCommand
 
     /**
      * Get the console command options.
+     *
      * @return array
      */
     protected function getOptions()
@@ -72,5 +77,4 @@ class ThemeGulpCommand extends BaseCommand
         return array(
         );
     }
-
 }

@@ -1,19 +1,22 @@
-<?php namespace Cms\Modules\Core\Console\Commands;
+<?php
+
+namespace Cms\Modules\Core\Console\Commands;
 
 use Illuminate\Console\Command;
 use File;
 
 class BaseCommand extends Command
 {
-
     /**
-     * IoC
+     * IoC.
+     *
      * @var Illuminate\Foundation\Application
      */
     protected $app;
 
     /**
-     * DI
+     * DI.
+     *
      * @param Application $app
      */
     public function __construct()
@@ -50,7 +53,6 @@ class BaseCommand extends Command
         parent::comment('');
         parent::comment('-------------------------------------');
         parent::comment('');
-
     }
 
     public function install(array $packages)

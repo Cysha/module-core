@@ -1,4 +1,6 @@
-<?php namespace Cms\Modules\Core\Repositories;
+<?php
+
+namespace Cms\Modules\Core\Repositories;
 
 interface BaseRepositoryInterface
 {
@@ -41,5 +43,4 @@ interface BaseRepositoryInterface
     public function paginate($perPage = 0, $columns = ['*']);
 
     public function transformModels($data);
-
 }

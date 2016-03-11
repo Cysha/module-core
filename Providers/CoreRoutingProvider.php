@@ -1,8 +1,9 @@
-<?php namespace Cms\Modules\Core\Providers;
+<?php
+
+namespace Cms\Modules\Core\Providers;
 
 class CoreRoutingProvider extends CmsRoutingProvider
 {
-
     protected $namespace = 'Cms\Modules\Core\Http\Controllers';
 
     /**
@@ -10,7 +11,7 @@ class CoreRoutingProvider extends CmsRoutingProvider
      */
     protected function getFrontendRoute()
     {
-        return __DIR__ . '/../Http/routes-frontend.php';
+        return __DIR__.'/../Http/routes-frontend.php';
     }
 
     /**
@@ -18,7 +19,7 @@ class CoreRoutingProvider extends CmsRoutingProvider
      */
     protected function getBackendRoute()
     {
-        return __DIR__ . '/../Http/routes-backend.php';
+        return __DIR__.'/../Http/routes-backend.php';
     }
 
     /**
@@ -26,6 +27,6 @@ class CoreRoutingProvider extends CmsRoutingProvider
      */
     protected function getApiRoute()
     {
-        return __DIR__ . '/../Http/routes-api.php';
+        return __DIR__.'/../Http/routes-api.php';
     }
 }

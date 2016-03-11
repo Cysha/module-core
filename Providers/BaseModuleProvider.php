@@ -1,4 +1,6 @@
-<?php namespace Cms\Modules\Core\Providers;
+<?php
+
+namespace Cms\Modules\Core\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Routing\Router;
@@ -27,14 +29,14 @@ class BaseModuleProvider extends ServiceProvider
     protected $commands = [];
 
     /**
-     * Register view composers
+     * Register view composers.
      *
      * @var array
      */
     protected $composers = [];
 
     /**
-     * Register repository bindings to the IoC
+     * Register repository bindings to the IoC.
      *
      * @var array
      */
@@ -42,8 +44,6 @@ class BaseModuleProvider extends ServiceProvider
 
     /**
      * Register the service provider.
-     *
-     * @return void
      */
     public function register()
     {
@@ -66,8 +66,7 @@ class BaseModuleProvider extends ServiceProvider
     /**
      * Register the middleware.
      *
-     * @param  Router $router
-     * @return void
+     * @param Router $router
      */
     private function registerMiddleware(Router $router)
     {
@@ -103,6 +102,7 @@ class BaseModuleProvider extends ServiceProvider
             foreach ($commands as $command => $class) {
                 $this->app[$command] = $this->app->share(function () use ($module, $class) {
                     $class = sprintf('Cms\Modules\%s\Console\Commands\%s', $module, $class);
+
                     return new $class($this->app);
                 });
                 $this->commands($command);
@@ -112,8 +112,6 @@ class BaseModuleProvider extends ServiceProvider
 
     /**
      * Register the bindings for this module.
-     *
-     * @return void
      */
     private function registerModuleBindings()
     {
@@ -133,13 +131,10 @@ class BaseModuleProvider extends ServiceProvider
                 );
             }
         }
-
     }
 
     /**
-     * Register the View Composers
-     *
-     * @return void
+     * Register the View Composers.
      */
     private function registerModuleComposers()
     {
@@ -161,6 +156,5 @@ class BaseModuleProvider extends ServiceProvider
                 view()->composer($views, $class);
             }
         }
-
     }
 }

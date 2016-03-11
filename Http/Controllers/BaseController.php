@@ -1,4 +1,6 @@
-<?php namespace Cms\Modules\Core\Http\Controllers;
+<?php
+
+namespace Cms\Modules\Core\Http\Controllers;
 
 use Pingpong\Modules\Routing\Controller;
 use Illuminate\Foundation\Http\Response;
@@ -7,7 +9,6 @@ use Teepluss\Theme\Contracts\Theme;
 
 class BaseController extends Controller
 {
-
     /**
      * Theme instance.
      *
@@ -16,49 +17,49 @@ class BaseController extends Controller
     protected $theme;
 
     /**
-     * The theme to load
+     * The theme to load.
      *
      * @var string
      */
     protected $themeName = null;
 
     /**
-     * The currently loaded module
+     * The currently loaded module.
      *
      * @var string
      */
     protected $module = null;
 
     /**
-     * Controls the layout for a controller
+     * Controls the layout for a controller.
      *
      * @var string
      */
     public $layout = 'basic';
 
     /**
-     * The view path to load
+     * The view path to load.
      *
      * @var string
      */
     private $view = null;
 
     /**
-     * Populates the view with contents
+     * Populates the view with contents.
      *
      * @var string
      */
     private $data = [];
 
     /**
-     * The type of view, module, theme, app etc
+     * The type of view, module, theme, app etc.
      *
      * @var string
      */
     private $type = null;
 
     /**
-     * File from the IoC
+     * File from the IoC.
      *
      * @var string
      */
@@ -66,7 +67,7 @@ class BaseController extends Controller
 
     public function __construct(Theme $theme, Filesystem $file)
     {
-        $this->_setDependencies($theme, $file);
+        $this->setDependencies($theme, $file);
 
         if (method_exists($this, 'boot')) {
             $this->boot();
@@ -78,10 +79,12 @@ class BaseController extends Controller
 
     public function __destruct()
     {
-        class_exists('Debugbar') && app()->environment() !== 'testing' ? \Debugbar::stopMeasure('module_timer') : null;
+        class_exists('Debugbar') && app()->environment() !== 'testing'
+            ? \Debugbar::stopMeasure('module_timer')
+            : null;
     }
 
-    public function _setDependencies(Theme $theme, Filesystem $file)
+    private function setDependencies(Theme $theme, Filesystem $file)
     {
         $this->file = $file;
 
@@ -105,9 +108,10 @@ class BaseController extends Controller
     }
 
     /**
-     * Gets the current modules name, presuming this is a CMS Module
+     * Gets the current modules name, presuming this is a CMS Module.
      *
-     * @param  string $class
+     * @param string $class
+     *
      * @return object
      */
     public function getModule($class)
@@ -121,11 +125,11 @@ class BaseController extends Controller
         return $module[2];
     }
 
-
     /**
-     * Sets the current theme
+     * Sets the current theme.
      *
-     * @param  string $theme
+     * @param string $theme
+     *
      * @return bool
      */
     public function setTheme($theme = null)
@@ -145,10 +149,8 @@ class BaseController extends Controller
     }
 
     /**
-     *
-     *
-     * @param  string $title
-     * @param  string $seperator
+     * @param string $title
+     * @param string $seperator
      */
     public function setTitle($title, $seperator = ' | ')
     {
@@ -161,9 +163,10 @@ class BaseController extends Controller
     }
 
     /**
-     * Verifies the layout exists before being set
+     * Verifies the layout exists before being set.
      *
-     * @param  string $layout
+     * @param string $layout
+     *
      * @return bool
      */
     public function setLayout($layout = null)
@@ -184,12 +187,12 @@ class BaseController extends Controller
         return false;
     }
 
-
     /**
-     * Returns a valid namespace string for the module
+     * Returns a valid namespace string for the module.
      *
-     * @param  string $var    The config var
-     * @param  string $module Overloads the module to use this name instead
+     * @param string $var    The config var
+     * @param string $module Overloads the module to use this name instead
+     *
      * @return string
      */
     public function getModuleNamespace($var = null, $module = null)
@@ -204,7 +207,7 @@ class BaseController extends Controller
     }
 
     /**
-     * Determines where to load the view from
+     * Determines where to load the view from.
      *
      * @param string $view Path to the view file
      * @param array  $data Data to pass through to the view
@@ -232,7 +235,7 @@ class BaseController extends Controller
                     break;
 
                 default:
-                case ($type === 'module' || substr($type, 0, 6) === 'module'):
+                case $type === 'module' || substr($type, 0, 6) === 'module':
                     $module = strtolower($this->module);
                     if (str_contains($type, ':')) {
                         $type = explode(':', $type);
@@ -267,13 +270,11 @@ class BaseController extends Controller
         $length = $end_line - $start_line;
 
         $source = file($filename);
-        $body = implode("", array_slice($source, $start_line, $length));
+        $body = implode('', array_slice($source, $start_line, $length));
 
         echo '<pre><code>',print_r($body, true),'</code></pre>';
         echo '<hr />';
     }
-
-
 
     /**
      * Get the authenticated user.
@@ -317,7 +318,7 @@ class BaseController extends Controller
     public function __get($key)
     {
         $callable = [
-            'user', 'auth', 'response'
+            'user', 'auth', 'response',
         ];
 
         if (in_array($key, $callable) && method_exists($this, $key)) {

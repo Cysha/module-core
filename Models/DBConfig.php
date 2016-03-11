@@ -1,8 +1,6 @@
-<?php namespace Cms\Modules\Core\Models;
+<?php
 
-use Cache;
-use DB;
-use Event;
+namespace Cms\Modules\Core\Models;
 
 class DBConfig extends BaseModel
 {
@@ -13,18 +11,19 @@ class DBConfig extends BaseModel
     public $appends = ['key'];
 
     /**
-     * Sets a settings value
+     * Sets a settings value.
      *
      * @return bool
      */
     public function set($setting, $value)
     {
         $this->fill($this->explodeSetting($setting, $value));
+
         return $this->save();
     }
 
     /**
-     * Explodes the setting passed into its separate parts
+     * Explodes the setting passed into its separate parts.
      *
      * @return array
      */
@@ -39,7 +38,7 @@ class DBConfig extends BaseModel
         $items = explode('.', $item);
 
         // grab the last element in the items array
-        $item = array_pull($items, count($items)-1);
+        $item = array_pull($items, count($items) - 1);
 
         // everything else will makeup the group
         $group = implode('.', $items);
@@ -47,6 +46,7 @@ class DBConfig extends BaseModel
         $environment = app()->environment();
 
         \Debug::console(['saving', compact('environment', 'group', 'namespace', 'item', 'value')]);
+
         return array_filter(compact('environment', 'group', 'namespace', 'item', 'value'));
     }
 
@@ -68,17 +68,18 @@ class DBConfig extends BaseModel
     public function getValueAttribute($value)
     {
         $value = json_decode($value);
+
         return $value;
     }
 
     public function setValueAttribute($value)
     {
         if (strlen($value) == 0 || $value === null) {
-            $this->attributes['value'] = NULL;
+            $this->attributes['value'] = null;
+
             return;
         }
 
         $this->attributes['value'] = json_encode($value);
     }
-
 }

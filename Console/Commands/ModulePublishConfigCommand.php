@@ -1,4 +1,6 @@
-<?php namespace Cms\Modules\Core\Console\Commands;
+<?php
+
+namespace Cms\Modules\Core\Console\Commands;
 
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
@@ -11,9 +13,8 @@ class ModulePublishConfigCommand extends Command
 
     public function fire()
     {
-
         $options = [
-            '--provider' => 'Cms\Modules\Core\Providers\CoreModuleServiceProvider'
+            '--provider' => 'Cms\Modules\Core\Providers\CoreModuleServiceProvider',
         ];
 
         if ($this->option('force', false)) {
@@ -24,11 +25,10 @@ class ModulePublishConfigCommand extends Command
         $this->call('cache:clear');
     }
 
-
     protected function getOptions()
     {
         return [
-            ['force', null, InputOption::VALUE_NONE, 'Do we want to force the publish?']
+            ['force', null, InputOption::VALUE_NONE, 'Do we want to force the publish?'],
         ];
     }
 }

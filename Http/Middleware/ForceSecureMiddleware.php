@@ -1,4 +1,6 @@
-<?php namespace Cms\Modules\Core\Http\Middleware;
+<?php
+
+namespace Cms\Modules\Core\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Request;
@@ -6,10 +8,11 @@ use Illuminate\Support\Facades\Request;
 class ForceSecureMiddleware
 {
     /**
-     * Force Secure on the CMS
+     * Force Secure on the CMS.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure                 $next
+     *
      * @return mixed
      */
     public function handle($request, Closure $next)
@@ -24,5 +27,4 @@ class ForceSecureMiddleware
 
         return $response;
     }
-
 }

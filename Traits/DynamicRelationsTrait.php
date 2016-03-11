@@ -1,20 +1,22 @@
-<?php namespace Cms\Modules\Core\Traits;
+<?php
+
+namespace Cms\Modules\Core\Traits;
 
 trait DynamicRelationsTrait
 {
-
     /**
-     * This function will be called when a function is missing on this model
+     * This function will be called when a function is missing on this model.
      *
      * @param string $method
-     * @param array $parameters
+     * @param array  $parameters
+     *
      * @return mixed
      */
     public function __call($method, $parameters)
     {
         $currentClass = class_basename($this);
         // grab the module & model
-        list(,,$currentModule,,$currentModel) = explode('\\', get_class($this));
+        list(, , $currentModule, , $currentModel) = explode('\\', get_class($this));
 
         $modelConfig = get_array_column(config('cms'), 'models');
         // if we dont have anything here, just return

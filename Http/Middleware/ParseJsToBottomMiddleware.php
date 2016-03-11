@@ -1,31 +1,35 @@
-<?php namespace Cms\Modules\Core\Http\Middleware;
+<?php
+
+namespace Cms\Modules\Core\Http\Middleware;
 
 use Closure;
 
 class ParseJsToBottomMiddleware
 {
-
     /**
      * Will finally contain all js tags to move.
+     *
      * @var string
      */
     private $jsTags = '';
 
     /**
      * Contains all exclude regex patterns.
+     *
      * @var array
      */
     private $excludeList = array();
 
     /**
      * Process the JS and move it all down the bottom of the page.
-     * This not only speeds up the pages, but allows us to throw js in the partials and it should still work
+     * This not only speeds up the pages, but allows us to throw js in the partials and it should still work.
      *
      * This has been reworked from a Magento Plugin
      * https://github.com/mediarox/pagespeed/blob/e1df909d03379da1dbe3cb43a4da90e69b24a75d/app/code/community/Pagespeed/Js/Model/Observer.php
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure                 $next
+     *
      * @return mixed
      */
     public function handle($request, Closure $next)
@@ -36,7 +40,7 @@ class ParseJsToBottomMiddleware
 
         // make sure we are a Response and not json etc
         $response = $next($request);
-        if($response instanceof \Illuminate\Http\Response) {
+        if ($response instanceof \Illuminate\Http\Response) {
             // get the content into $buffer and check to make sure its a string
             $buffer = $response->getContent();
             if (!is_string($buffer)) {
@@ -88,6 +92,7 @@ class ParseJsToBottomMiddleware
      * Processes the matched single js tag or the conditional js tag group.
      *
      * @param array $hits
+     *
      * @return string
      */
     public function processHit($hits)
@@ -99,6 +104,7 @@ class ParseJsToBottomMiddleware
 
         // Add hit to js tag list and return empty string for the replacement.
         $this->jsTags .= $hits[0]."\n";
+
         return '';
     }
 
@@ -106,12 +112,14 @@ class ParseJsToBottomMiddleware
      * Is hit on exclude list?
      *
      * @param string $hit
+     *
      * @return bool
      */
     protected function isHitExcluded($hit)
     {
         $c = 0;
         preg_replace($this->excludeList, '', $hit, -1, $c);
-        return ($c > 0);
+
+        return $c > 0;
     }
 }

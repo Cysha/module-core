@@ -1,4 +1,6 @@
-<?php namespace Cms\Modules\Core\Providers;
+<?php
+
+namespace Cms\Modules\Core\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Foundation\AliasLoader;
@@ -24,5 +26,4 @@ class CmsModulesProvider extends ServiceProvider
 
         BladeExtender::attach($this->app);
     }
-
 }

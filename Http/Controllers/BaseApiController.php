@@ -1,4 +1,6 @@
-<?php namespace Cms\Modules\Core\Http\Controllers;
+<?php
+
+namespace Cms\Modules\Core\Http\Controllers;
 
 use Dingo\Api\Routing\Helpers;
 use Illuminate\Support\Facades\Response;
@@ -8,15 +10,15 @@ class BaseApiController extends BaseController
     use Helpers;
 
     /**
-     * Alias method for sending an response back
+     * Alias method for sending an response back.
      *
-     * @param string  $message
-     * @param integer $status  HTTP Status Code
+     * @param string $message
+     * @param int    $status  HTTP Status Code
      */
     public function sendResponse($message = 'ok', $status = 200, $data = [])
     {
         $reply = [
-            'message'     => $message,
+            'message' => $message,
             'status_code' => $status,
         ];
 
@@ -28,10 +30,10 @@ class BaseApiController extends BaseController
     }
 
     /**
-     * Alias method for sending an error status back
+     * Alias method for sending an error status back.
      *
-     * @param string  $message
-     * @param integer $status  HTTP Status Code
+     * @param string $message
+     * @param int    $status  HTTP Status Code
      */
     public function sendError($message, $status = 500)
     {
@@ -39,10 +41,10 @@ class BaseApiController extends BaseController
     }
 
     /**
-     * Alias method for sending an ok status back
+     * Alias method for sending an ok status back.
      *
-     * @param string  $message
-     * @param integer $status  HTTP Status Code
+     * @param string $message
+     * @param int    $status  HTTP Status Code
      */
     public function sendOK($message, $status = 200)
     {
@@ -50,7 +52,7 @@ class BaseApiController extends BaseController
     }
 
     /**
-     * On missing method, throw an error
+     * On missing method, throw an error.
      *
      * @param array $parameters
      */

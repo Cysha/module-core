@@ -1,8 +1,9 @@
-<?php namespace Cms\Modules\Core\Traits;
+<?php
+
+namespace Cms\Modules\Core\Traits;
 
 trait LinkableTrait
 {
-
     public function linkableConstructor()
     {
         $appends = ['slug'];
@@ -22,17 +23,17 @@ trait LinkableTrait
         if (!isset($link->route)) {
             throw new \InvalidArgumentException('Could not find a route. '.get_class($this));
 
-            return null;
+            return;
         }
         if (!isset($link->attributes)) {
             throw new \InvalidArgumentException('Could not find any attributes. '.get_class($this));
 
-            return null;
+            return;
         }
         if (!isset($this->identifiableName)) {
             throw new \InvalidArgumentException('Could not find a identifiableName. '.get_class($this));
 
-            return null;
+            return;
         }
 
         $attributes = [];
@@ -50,5 +51,4 @@ trait LinkableTrait
 
         return \HTML::link($url, $this->{$this->identifiableName});
     }
-
 }

@@ -1,4 +1,6 @@
-<?php namespace Cms\Modules\Core\Repositories;
+<?php
+
+namespace Cms\Modules\Core\Repositories;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Container\Container as App;
@@ -13,56 +15,56 @@ abstract class BaseEloquentRepository implements BaseRepositoryInterface
     protected $app;
 
     /**
-     * The repository model
+     * The repository model.
      *
      * @var \Illuminate\Database\Eloquent\Model
      */
     protected $model;
 
     /**
-     * The query builder
+     * The query builder.
      *
      * @var \Illuminate\Database\Eloquent\Builder
      */
     protected $query;
 
     /**
-     * Alias for the query limit
+     * Alias for the query limit.
      *
      * @var int
      */
     protected $take;
 
     /**
-     * Array of related models to eager load
+     * Array of related models to eager load.
      *
      * @var array
      */
     protected $with = array();
 
     /**
-     * Array of one or more where clause parameters
+     * Array of one or more where clause parameters.
      *
      * @var array
      */
     protected $wheres = array();
 
     /**
-     * Array of one or more where in clause parameters
+     * Array of one or more where in clause parameters.
      *
      * @var array
      */
     protected $whereIns = array();
 
     /**
-     * Array of one or more ORDER BY column/value pairs
+     * Array of one or more ORDER BY column/value pairs.
      *
      * @var array
      */
     protected $orderBys = array();
 
     /**
-     * Array of scope methods to call on the model
+     * Array of scope methods to call on the model.
      *
      * @var array
      */
@@ -70,6 +72,7 @@ abstract class BaseEloquentRepository implements BaseRepositoryInterface
 
     /**
      * @param App $app
+     *
      * @throws \Bosnadev\Repositories\Exceptions\RepositoryException
      */
     public function __construct(App $app)
@@ -80,6 +83,7 @@ abstract class BaseEloquentRepository implements BaseRepositoryInterface
 
     /**
      * @return Model
+     *
      * @throws RepositoryException
      */
     public function makeModel()
@@ -90,7 +94,7 @@ abstract class BaseEloquentRepository implements BaseRepositoryInterface
     }
 
     /**
-     * Get all the model records in the database
+     * Get all the model records in the database.
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
@@ -106,7 +110,7 @@ abstract class BaseEloquentRepository implements BaseRepositoryInterface
     }
 
     /**
-     * Count the number of specified model records in the database
+     * Count the number of specified model records in the database.
      *
      * @return int
      */
@@ -116,7 +120,7 @@ abstract class BaseEloquentRepository implements BaseRepositoryInterface
     }
 
     /**
-     * Create a new model record in the database
+     * Create a new model record in the database.
      *
      * @param array $data
      *
@@ -126,7 +130,7 @@ abstract class BaseEloquentRepository implements BaseRepositoryInterface
     {
         $this->unsetClauses();
 
-        $model = with(new $this->model);
+        $model = with(new $this->model());
         $model->fill($data);
 
         if ($model->save() === true) {
@@ -137,7 +141,7 @@ abstract class BaseEloquentRepository implements BaseRepositoryInterface
     }
 
     /**
-     * Create one or more new model records in the database
+     * Create one or more new model records in the database.
      *
      * @param array $data
      *
@@ -155,7 +159,7 @@ abstract class BaseEloquentRepository implements BaseRepositoryInterface
     }
 
     /**
-     * Delete one or more model records from the database
+     * Delete one or more model records from the database.
      *
      * @return mixed
      */
@@ -171,11 +175,12 @@ abstract class BaseEloquentRepository implements BaseRepositoryInterface
     }
 
     /**
-     * Delete the specified model record from the database
+     * Delete the specified model record from the database.
      *
      * @param $id
      *
      * @return bool|null
+     *
      * @throws \Exception
      */
     public function deleteById($id)
@@ -186,7 +191,7 @@ abstract class BaseEloquentRepository implements BaseRepositoryInterface
     }
 
     /**
-     * Delete multiple records
+     * Delete multiple records.
      *
      * @param array $ids
      *
@@ -198,7 +203,7 @@ abstract class BaseEloquentRepository implements BaseRepositoryInterface
     }
 
     /**
-     * Get the first specified model record from the database
+     * Get the first specified model record from the database.
      *
      * @return \Illuminate\Database\Eloquent\Model
      */
@@ -227,7 +232,7 @@ abstract class BaseEloquentRepository implements BaseRepositoryInterface
     }
 
     /**
-     * Get all the specified model records in the database
+     * Get all the specified model records in the database.
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
@@ -243,7 +248,7 @@ abstract class BaseEloquentRepository implements BaseRepositoryInterface
     }
 
     /**
-     * Get the specified model record from the database
+     * Get the specified model record from the database.
      *
      * @param $id
      *
@@ -259,7 +264,7 @@ abstract class BaseEloquentRepository implements BaseRepositoryInterface
     }
 
     /**
-     * Set the query limit
+     * Set the query limit.
      *
      * @param int $limit
      *
@@ -273,10 +278,11 @@ abstract class BaseEloquentRepository implements BaseRepositoryInterface
     }
 
     /**
-     * Set an ORDER BY clause
+     * Set an ORDER BY clause.
      *
      * @param string $column
      * @param string $direction
+     *
      * @return $this
      */
     public function orderBy($column, $direction = 'asc')
@@ -287,7 +293,7 @@ abstract class BaseEloquentRepository implements BaseRepositoryInterface
     }
 
     /**
-     * Update the specified model record in the database
+     * Update the specified model record in the database.
      *
      * @param       $id
      * @param array $data
@@ -306,7 +312,7 @@ abstract class BaseEloquentRepository implements BaseRepositoryInterface
     }
 
     /**
-     * Add a simple where clause to the query
+     * Add a simple where clause to the query.
      *
      * @param string $column
      * @param string $value
@@ -322,7 +328,7 @@ abstract class BaseEloquentRepository implements BaseRepositoryInterface
     }
 
     /**
-     * Add a simple where in clause to the query
+     * Add a simple where in clause to the query.
      *
      * @param string $column
      * @param mixed  $values
@@ -339,7 +345,7 @@ abstract class BaseEloquentRepository implements BaseRepositoryInterface
     }
 
     /**
-     * Set Eloquent relationships to eager load
+     * Set Eloquent relationships to eager load.
      *
      * @param $relations
      *
@@ -357,10 +363,10 @@ abstract class BaseEloquentRepository implements BaseRepositoryInterface
     }
 
     /**
-     * Paginate the query
+     * Paginate the query.
      *
-     * @param  integer $perPage
-     * @param  array   $columns
+     * @param int   $perPage
+     * @param array $columns
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
@@ -378,9 +384,10 @@ abstract class BaseEloquentRepository implements BaseRepositoryInterface
     }
 
     /**
-     * Transforms a collection of models
+     * Transforms a collection of models.
      *
-     * @param  mixed $data
+     * @param mixed $data
+     *
      * @return array
      */
     public function transformModels($data)
@@ -407,7 +414,7 @@ abstract class BaseEloquentRepository implements BaseRepositoryInterface
     }
 
     /**
-     * Create a new instance of the model's query builder
+     * Create a new instance of the model's query builder.
      *
      * @return $this
      */
@@ -418,9 +425,8 @@ abstract class BaseEloquentRepository implements BaseRepositoryInterface
         return $this;
     }
 
-
     /**
-     * Add relationships to the query builder to eager load
+     * Add relationships to the query builder to eager load.
      *
      * @return $this
      */
@@ -434,7 +440,7 @@ abstract class BaseEloquentRepository implements BaseRepositoryInterface
     }
 
     /**
-     * Set clauses on the query builder
+     * Set clauses on the query builder.
      *
      * @return $this
      */
@@ -452,7 +458,7 @@ abstract class BaseEloquentRepository implements BaseRepositoryInterface
             $this->query->orderBy($orders['column'], $orders['direction']);
         }
 
-        if (isset($this->take) and ! is_null($this->take)) {
+        if (isset($this->take) and !is_null($this->take)) {
             $this->query->take($this->take);
         }
 
@@ -460,7 +466,7 @@ abstract class BaseEloquentRepository implements BaseRepositoryInterface
     }
 
     /**
-     * Set query scopes
+     * Set query scopes.
      *
      * @return $this
      */
@@ -474,16 +480,16 @@ abstract class BaseEloquentRepository implements BaseRepositoryInterface
     }
 
     /**
-     * Reset the query clause parameter arrays
+     * Reset the query clause parameter arrays.
      *
      * @return $this
      */
     protected function unsetClauses()
     {
-        $this->wheres   = array();
+        $this->wheres = array();
         $this->whereIns = array();
-        $this->scopes   = array();
-        $this->take     = null;
+        $this->scopes = array();
+        $this->take = null;
 
         return $this;
     }

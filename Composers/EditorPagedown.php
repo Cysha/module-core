@@ -1,4 +1,6 @@
-<?php namespace Cms\Modules\Core\Composers;
+<?php
+
+namespace Cms\Modules\Core\Composers;
 
 use Teepluss\Theme\Contracts\Theme;
 

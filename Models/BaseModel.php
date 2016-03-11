@@ -1,4 +1,6 @@
-<?php namespace Cms\Modules\Core\Models;
+<?php
+
+namespace Cms\Modules\Core\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Cms\Modules\Core\Traits\LinkableTrait;
@@ -19,7 +21,7 @@ class BaseModel extends Model
     ];
 
     /**
-     * Fire up the linkableTrait so it can do its thing
+     * Fire up the linkableTrait so it can do its thing.
      */
     public function __construct()
     {
@@ -29,7 +31,7 @@ class BaseModel extends Model
     }
 
     /**
-     * Gives the model a identifiable name for links and such
+     * Gives the model a identifiable name for links and such.
      *
      * @return string
      */
@@ -39,7 +41,7 @@ class BaseModel extends Model
     }
 
     /**
-     * Fill attributes in $this from Input
+     * Fill attributes in $this from Input.
      *
      * @return Model
      */
@@ -61,11 +63,11 @@ class BaseModel extends Model
     }
 
     /**
-     * Beatswitch\Lock Methods
+     * Beatswitch\Lock Methods.
      */
     public function getCallerType()
     {
-        list(,, $module,, $model) = explode('\\', __CLASS__);
+        list(, , $module, , $model) = explode('\\', __CLASS__);
 
         return sprintf('%s_%s', $module, $model);
     }
@@ -84,5 +86,4 @@ class BaseModel extends Model
     {
         return $this->toArray();
     }
-
 }

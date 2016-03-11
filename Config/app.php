@@ -29,7 +29,7 @@ return [
     'paths' => [
         'api' => 'api/',
         'frontend' => '/',
-        'backend'  => 'admin/',
+        'backend' => 'admin/',
     ],
 
     'csrf-except' => [],

@@ -15,7 +15,6 @@
         return Former::$type($key)->value(config($key, $default));
     });
 
-
     HTML::macro('nav_link', function ($route, $text, array $args = []) {
         $class = '';
         $action = Route::current();
@@ -25,5 +24,5 @@
             $class = $action['as'] === $route ? ' class="active"' : '';
         }
 
-        return '<li' . $class . '>' . HTML::linkRoute($route, $text, $args) . '</li>';
+        return '<li'.$class.'>'.HTML::linkRoute($route, $text, $args).'</li>';
     });

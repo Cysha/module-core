@@ -1,6 +1,6 @@
-<?php namespace Cms\Modules\Core\Console\Commands;
+<?php
 
-use Symfony\Component\Console\Input\InputOption;
+namespace Cms\Modules\Core\Console\Commands;
 
 class CmsUpdateCommand extends CmsInstallCommand
 {

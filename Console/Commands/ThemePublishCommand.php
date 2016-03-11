@@ -1,4 +1,6 @@
-<?php namespace Cms\Modules\Core\Console\Commands;
+<?php
+
+namespace Cms\Modules\Core\Console\Commands;
 
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -14,8 +16,6 @@ class ThemePublishCommand extends Command
 
     /**
      * Create a new command instance.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -65,20 +65,19 @@ class ThemePublishCommand extends Command
         }
 
         $this->file->copyDirectory(implode($themeAssetDir, DIRECTORY_SEPARATOR), implode($publicAssetDir, DIRECTORY_SEPARATOR));
-
     }
 
     protected function getArguments()
     {
         return [
-            ['theme', InputArgument::OPTIONAL, 'Name of the theme you wish to publish']
+            ['theme', InputArgument::OPTIONAL, 'Name of the theme you wish to publish'],
         ];
     }
 
     protected function getOptions()
     {
         return [
-            ['force', null, InputOption::VALUE_NONE, 'Do we want to force the publish?']
+            ['force', null, InputOption::VALUE_NONE, 'Do we want to force the publish?'],
         ];
     }
 }

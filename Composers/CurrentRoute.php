@@ -1,17 +1,19 @@
-<?php namespace Cms\Modules\Core\Composers;
+<?php
+
+namespace Cms\Modules\Core\Composers;
 
 use Route;
 
 class CurrentRoute
 {
     /**
-     * Adds $currentRoute var to the views, this describes the current controller/method being used
+     * Adds $currentRoute var to the views, this describes the current controller/method being used.
      */
     public function compose($view)
     {
         $currentRoute = function () {
             if (Route::currentRouteAction() === null) {
-                return null;
+                return;
             }
 
             $route = explode('@', Route::currentRouteAction());
@@ -21,6 +23,7 @@ class CurrentRoute
             }
 
             $return = [($route[0] ?: ''), ($route[1] ?: '')];
+
             return strtolower(implode(' ', $return));
         };
         $view->with('currentRoute', $currentRoute());

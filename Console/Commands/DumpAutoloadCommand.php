@@ -1,4 +1,6 @@
-<?php namespace Cms\Modules\Core\Console\Commands;
+<?php
+
+namespace Cms\Modules\Core\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Foundation\Composer;
@@ -16,8 +18,6 @@ class DumpAutoloadCommand extends Command
 
     /**
      * Create a new queue job table command instance.
-     *
-     * @return void
      */
     public function __construct()
     {

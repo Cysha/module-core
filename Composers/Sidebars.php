@@ -1,6 +1,6 @@
-<?php namespace Cms\Modules\Core\Composers;
+<?php
 
-use Route;
+namespace Cms\Modules\Core\Composers;
 
 class Sidebars
 {
@@ -38,7 +38,7 @@ class Sidebars
     private function sortMenu(&$menu)
     {
         usort($menu, function ($a, $b) {
-            return array_get($a, 'order', 1)>array_get($b, 'order', 1);
+            return array_get($a, 'order', 1) > array_get($b, 'order', 1);
         });
     }
 }

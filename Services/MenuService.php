@@ -1,13 +1,14 @@
-<?php namespace Cms\Modules\Core\Services;
+<?php
+
+namespace Cms\Modules\Core\Services;
 
 use Illuminate\Contracts\Config\Repository as Config;
 use Pingpong\Modules\Repository as Module;
 use Menu;
-use Lock;
 
 class MenuService
 {
-   /**
+    /**
      * @var Illuminate\Contracts\Config\Repository
      */
     protected $config;
@@ -24,7 +25,7 @@ class MenuService
     }
 
     /**
-     * Registers the menus
+     * Registers the menus.
      */
     public function boot()
     {
@@ -37,7 +38,6 @@ class MenuService
         foreach ($menus as $key => $menu) {
             $menus[$key] = $this->sortMenu($menus[$key]);
         }
-
 
         // and then process em
         foreach (array_keys($menus) as $key) {
@@ -64,7 +64,7 @@ class MenuService
     }
 
     /**
-     * Get the menu data from the configs
+     * Get the menu data from the configs.
      */
     public function getMenuData()
     {
@@ -87,7 +87,9 @@ class MenuService
                 }
 
                 foreach ($moduleMenu as $section => $menu) {
-                    $menus[$section] = !empty($menus[$section]) ? array_merge_recursive($menus[$section], $menu) : $menu;
+                    $menus[$section] = !empty($menus[$section])
+                        ? array_merge_recursive($menus[$section], $menu)
+                        : $menu;
                 }
             }
 
@@ -96,10 +98,11 @@ class MenuService
     }
 
     /**
-     * Processes the arrays into a menu set
+     * Processes the arrays into a menu set.
      *
-     * @param  array  $menus
-     * @param  string $handler
+     * @param array  $menus
+     * @param string $handler
+     *
      * @return bool
      */
     public function processMenu(array $menus, $handler = 'acp')
@@ -159,10 +162,10 @@ class MenuService
     }
 
     /**
-     * Checks the permissions on the routes
+     * Checks the permissions on the routes.
      *
      * @param object $menu
-     * @param array $link
+     * @param array  $link
      *
      * @return bool
      */
@@ -170,17 +173,20 @@ class MenuService
     {
         if (($type = array_get($link, 'type', null)) === 'divider') {
             $menu->add('#', $this->getText($link))->addClass('divider');
+
             return true;
         }
 
         if (($type = array_get($link, 'type', null)) === 'header') {
             $menu->add('#', $this->getText($link));
+
             return true;
         }
 
         // check for permissions on this link
         if (($perm = array_get($link, 'permission', null)) !== null && hasPermission($perm) === false) {
             \Debug::console(['Permission Denied', $perm]);
+
             return false;
         }
 
@@ -197,7 +203,6 @@ class MenuService
                 // else just call it normally
                 $url = route($route);
             }
-
         } elseif (($direct = array_get($link, 'url', null)) !== null) {
             $url = $direct;
         }
@@ -228,18 +233,19 @@ class MenuService
 
             $menu->activePattern($activePattern);
         }
+
         return true;
     }
 
     /**
-     * Decide which text attribute to use off the link array
+     * Decide which text attribute to use off the link array.
      *
      * @param array $link
      *
      * @return string
      */
-    private function getText($link) {
-
+    private function getText($link)
+    {
         if (($trans = array_get($link, 'trans', null)) !== null) {
             return trans($trans);
         }

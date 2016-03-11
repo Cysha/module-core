@@ -1,7 +1,8 @@
-<?php namespace Cms\Modules\Core\Providers;
+<?php
+
+namespace Cms\Modules\Core\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
-use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use Dingo\Api\Routing\Router as ApiRouter;
 use Illuminate\Routing\Router;
 
@@ -17,8 +18,7 @@ abstract class CmsRoutingProvider extends ServiceProvider
     /**
      * Define your route model bindings, pattern filters, etc.
      *
-     * @param  \Illuminate\Routing\Router $router
-     * @return void
+     * @param \Illuminate\Routing\Router $router
      */
     public function boot(Router $router)
     {
@@ -43,8 +43,7 @@ abstract class CmsRoutingProvider extends ServiceProvider
     /**
      * Define the routes for the application.
      *
-     * @param  \Illuminate\Routing\Router $router
-     * @return void
+     * @param \Illuminate\Routing\Router $router
      */
     public function map(Router $router)
     {
@@ -62,8 +61,8 @@ abstract class CmsRoutingProvider extends ServiceProvider
 
         if ($routes && file_exists($routes)) {
             $router->group([
-                'namespace'  => $this->namespace.'\Frontend',
-                'prefix'     => config('cms.core.app.paths.frontend', '/'),
+                'namespace' => $this->namespace.'\Frontend',
+                'prefix' => config('cms.core.app.paths.frontend', '/'),
             ], function (Router $router) use ($routes) {
                 require $routes;
             });
@@ -79,9 +78,9 @@ abstract class CmsRoutingProvider extends ServiceProvider
 
         if ($routes && file_exists($routes)) {
             $router->group([
-                'namespace'  => $this->namespace.'\Backend',
-                'prefix'     => config('cms.core.app.paths.backend', 'admin/'),
-                'middleware' => ['auth.admin']
+                'namespace' => $this->namespace.'\Backend',
+                'prefix' => config('cms.core.app.paths.backend', 'admin/'),
+                'middleware' => ['auth.admin'],
             ], function (Router $router) use ($routes) {
                 require $routes;
             });
@@ -97,9 +96,9 @@ abstract class CmsRoutingProvider extends ServiceProvider
 
         if ($routes && file_exists($routes)) {
             $router->group([
-                'version'   => 'v1',
+                'version' => 'v1',
                 'namespace' => $this->namespace.'\Api',
-                'prefix'    => config('cms.core.app.paths.api', 'api/'),
+                'prefix' => config('cms.core.app.paths.api', 'api/'),
             ], function (ApiRouter $router) use ($routes) {
                 require $routes;
             });
