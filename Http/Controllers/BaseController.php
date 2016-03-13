@@ -74,7 +74,9 @@ class BaseController extends Controller
         }
 
         // start a debug timer going
-        class_exists('Debugbar') && app()->environment() !== 'testing' ? \Debugbar::startMeasure('module_timer', 'Module Run') : null;
+        class_exists('Debugbar') && app()->environment() !== 'testing'
+            ? \Debugbar::startMeasure('module_timer', 'Module Run')
+            : null;
     }
 
     public function __destruct()
@@ -84,7 +86,7 @@ class BaseController extends Controller
             : null;
     }
 
-    private function setDependencies(Theme $theme, Filesystem $file)
+    public function setDependencies(Theme $theme, Filesystem $file)
     {
         $this->file = $file;
 
@@ -175,7 +177,12 @@ class BaseController extends Controller
             return false;
         }
 
-        $layoutFile = sprintf('%s/%s/layouts/%s.blade.php', public_path(config('theme.themeDir')), $this->themeName, $layout);
+        $layoutFile = sprintf(
+            '%s/%s/layouts/%s.blade.php',
+            public_path(config('theme.themeDir')),
+            $this->themeName,
+            $layout
+        );
 
         if ($this->file->exists($layoutFile)) {
             $this->layout = $layout;
