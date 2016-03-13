@@ -62,7 +62,7 @@ class BladeExtender
      * Add @debug($var, 'title') support
      * https://regex101.com/r/qX1eH3/7.
      */
-    public function addDebug($value)
+    public function addDebug($value, Application $app, $blade)
     {
         // figure out the project root
         $docRoot = (isset($_SERVER['DOCUMENT_ROOT']) ? $_SERVER['DOCUMENT_ROOT'] : null);
