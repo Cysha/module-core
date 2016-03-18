@@ -5,12 +5,18 @@ use Illuminate\Database\Migrations\Migration;
 
 class CoreCreateConfigTable extends Migration
 {
+    public function __construct()
+    {
+        // Get the prefix
+        $this->prefix = config('cms.core.config.table-prefix', 'core_');
+    }
+
     /**
      * Run the migrations.
      */
     public function up()
     {
-        Schema::create('config', function (Blueprint $table) {
+        Schema::create($this->prefix.'config', function (Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->string('environment');
             $table->string('namespace')->nullable();
@@ -18,7 +24,6 @@ class CoreCreateConfigTable extends Migration
             $table->string('item')->nullable();
             $table->text('value')->nullable();
 
-            $table->engine = 'InnoDB';
             $table->unique(['environment', 'group', 'namespace', 'item']);
         });
     }
@@ -28,6 +33,6 @@ class CoreCreateConfigTable extends Migration
      */
     public function down()
     {
-        Schema::drop('config');
+        Schema::drop($this->prefix.'config');
     }
 }

@@ -4,7 +4,7 @@ namespace Cms\Modules\Core\Models;
 
 class DBConfig extends BaseModel
 {
-    public $table = 'config';
+    public $table = 'core_config';
     public $timestamps = false;
 
     protected $fillable = ['environment', 'group', 'namespace', 'item', 'value'];
