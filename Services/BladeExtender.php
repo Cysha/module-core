@@ -36,6 +36,17 @@ class BladeExtender
     }
 
     /**
+     * Add @continue(expr) & @break(expr) support.
+     */
+    public function addContinueBreakExpr($value)
+    {
+        $matcher = '/@(break|continue)\s(?:\((.*)\))\s/';
+        $replace = '<?php if ($2) { $1; } ?>';
+
+        return preg_replace($matcher, $replace, $value);
+    }
+
+    /**
      * Add @continue & @break support.
      */
     public function addContinueBreak($value)
