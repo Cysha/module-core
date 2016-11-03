@@ -7,7 +7,7 @@ class DBConfig extends BaseModel
     public $table = 'core_config';
     public $timestamps = false;
 
-    protected $fillable = ['environment', 'group', 'namespace', 'item', 'value'];
+    protected $fillable = ['environment', 'group', 'item', 'value'];
     public $appends = ['key'];
 
     /**
@@ -30,10 +30,6 @@ class DBConfig extends BaseModel
     public function explodeSetting($setting, $value = null)
     {
         $item = $setting;
-        $namespace = null;
-        if (strpos($setting, '::') !== false) {
-            list($namespace, $item) = explode('::', $setting);
-        }
 
         $items = explode('.', $item);
 
@@ -45,9 +41,9 @@ class DBConfig extends BaseModel
 
         $environment = app()->environment();
 
-        \Debug::console(['saving', compact('environment', 'group', 'namespace', 'item', 'value')]);
+        \Debug::console(['saving', compact('environment', 'group', 'item', 'value')]);
 
-        return array_filter(compact('environment', 'group', 'namespace', 'item', 'value'));
+        return array_filter(compact('environment', 'group', 'item', 'value'));
     }
 
     /**
@@ -57,9 +53,6 @@ class DBConfig extends BaseModel
     {
         // see if we can gather the settings info
         $key = implode('.', [$this->group, $this->item]);
-        if (!empty($this->namespace)) {
-            $key = sprintf('%s::%s', $this->namespace, $key);
-        }
 
         // fix an issue with no group on the setting
         return str_replace('::.', '::', $key);

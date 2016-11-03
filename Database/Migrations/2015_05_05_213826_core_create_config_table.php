@@ -19,12 +19,11 @@ class CoreCreateConfigTable extends Migration
         Schema::create($this->prefix.'config', function (Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->string('environment');
-            $table->string('namespace')->nullable();
             $table->string('group')->nullable();
             $table->string('item')->nullable();
             $table->text('value')->nullable();
 
-            $table->unique(['environment', 'group', 'namespace', 'item']);
+            $table->unique(['environment', 'group', 'item']);
         });
     }
 
