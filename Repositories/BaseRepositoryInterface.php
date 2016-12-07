@@ -40,6 +40,8 @@ interface BaseRepositoryInterface
 
     public function with($relations);
 
+    public function has($relation);
+
     public function paginate($perPage = 0, $columns = ['*']);
 
     public function transformModels($data);

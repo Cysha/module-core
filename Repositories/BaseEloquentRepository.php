@@ -363,6 +363,20 @@ abstract class BaseEloquentRepository implements BaseRepositoryInterface
     }
 
     /**
+     * Check for relation on model.
+     *
+     * @param $relation
+     *
+     * @return $this
+     */
+    public function has($relation)
+    {
+        $this->model = $this->model->has($relation);
+
+        return $this;
+    }
+
+    /**
      * Paginate the query.
      *
      * @param int   $perPage
