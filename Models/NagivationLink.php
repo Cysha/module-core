@@ -6,7 +6,7 @@ class NavigationLink extends BaseModel
 {
     public $table = 'core_navigation_links';
 
-    protected $fillable = ['name', 'class'];
+    protected $fillable = ['navigation_id', 'title', 'url', 'route', 'class', 'blank', 'order'];
 
     public function navigation()
     {

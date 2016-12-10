@@ -26,6 +26,11 @@ class NavigationService
             ->with('links')
             ->get();
 
+        // make sure we have a navigation first
+        if (!$navigation->count()) {
+            return;
+        }
+
         $callback = function ($children, $item) {
             $url = $item->url;
             if ($item->route !== null) {
@@ -67,7 +72,7 @@ class NavigationService
     {
         // grab the inline navs
         $menuKeys = [];
-        foreach (get_array_column(config('cms'), 'menus') as $module => $menus) {
+        foreach (get_array_column(config('cms'), 'menus') as $menus) {
             $menuKeys = array_merge($menuKeys, array_keys($menus));
         }
         $menuKeys = array_unique($menuKeys);

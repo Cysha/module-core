@@ -15,5 +15,6 @@ class CoreTableSeeder extends Seeder
         Model::unguard();
 
         $this->call(__NAMESPACE__.'\ConfigTableSeeder');
+        $this->call(__NAMESPACE__.'\NavTableSeeder');
     }
 }
