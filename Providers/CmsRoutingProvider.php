@@ -63,6 +63,7 @@ abstract class CmsRoutingProvider extends ServiceProvider
             $router->group([
                 'namespace' => $this->namespace.'\Frontend',
                 'prefix' => config('cms.core.app.paths.frontend', '/'),
+                'middleware' => config('cms.core.app.middleware.frontend', []),
             ], function (Router $router) use ($routes) {
                 require $routes;
             });
@@ -80,7 +81,7 @@ abstract class CmsRoutingProvider extends ServiceProvider
             $router->group([
                 'namespace' => $this->namespace.'\Backend',
                 'prefix' => config('cms.core.app.paths.backend', 'admin/'),
-                'middleware' => ['auth.admin'],
+                'middleware' => config('cms.core.app.middleware.backend', []),
             ], function (Router $router) use ($routes) {
                 require $routes;
             });
@@ -99,6 +100,7 @@ abstract class CmsRoutingProvider extends ServiceProvider
                 'version' => 'v1',
                 'namespace' => $this->namespace.'\Api',
                 'prefix' => config('cms.core.app.paths.api', 'api/'),
+                'middleware' => config('cms.core.app.middleware.api', []),
             ], function (ApiRouter $router) use ($routes) {
                 require $routes;
             });

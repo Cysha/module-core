@@ -2,7 +2,6 @@
 
 return [
     // base site
-    'site-name' => 'PhoenixCMS',
     'timezone' => 'UTC',
 
     // debug
@@ -30,6 +29,13 @@ return [
         'api' => 'api/',
         'frontend' => '/',
         'backend' => 'admin/',
+    ],
+
+    // site middleware
+    'middleware' => [
+        'api' => ['api'],
+        'frontend' => ['web'],
+        'backend' => ['web', 'auth.admin'],
     ],
 
     'csrf-except' => [],
