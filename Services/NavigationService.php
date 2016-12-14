@@ -24,6 +24,7 @@ class NavigationService
     {
         $navigation = (new Navigation())
             ->with('links')
+            ->has('links')
             ->get();
 
         // make sure we have a navigation first

@@ -31,17 +31,17 @@ class BaseCommand extends Command
         return $this->readableName;
     }
 
-    public function info($message)
+    public function info($string, $verbosity = null)
     {
         parent::comment('');
         parent::comment('-------------------------------------');
-        parent::info(' '.$this->getModuleName().' - '.$message);
+        parent::info(' '.$this->getModuleName().' - '.$string);
         parent::comment('');
     }
 
-    public function comment($message)
+    public function comment($string, $verbosity = null)
     {
-        parent::comment("\n".$message);
+        parent::comment("\n".$string);
     }
 
     public function header()

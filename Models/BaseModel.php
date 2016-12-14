@@ -21,6 +21,13 @@ class BaseModel extends Model
     ];
 
     /**
+     * Indicates if the IDs are auto-incrementing.
+     *
+     * @var bool
+     */
+    public $incrementing = true;
+
+    /**
      * Fire up the linkableTrait so it can do its thing.
      */
     public function __construct()
