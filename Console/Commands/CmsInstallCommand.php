@@ -246,7 +246,7 @@ class CmsInstallCommand extends BaseCommand
         $data['role'] = 1;
 
         // grab the auth model
-        $userModel = config('auth.model');
+        $userModel = config('cms.auth.config.user_model');
 
         // spawn a new copy and fill with the data details
         $user = with(new $userModel());
