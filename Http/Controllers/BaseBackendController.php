@@ -31,14 +31,13 @@ class BaseBackendController extends BaseController
 
     public function boot()
     {
-        // spawn the menu service
-        app('Cms\Modules\Core\Services\MenuService')->boot();
-
         // reset the themeName to whatever is in the config
         $this->setTheme(config('cms.core.app.themes.backend', 'default_admin'));
 
         // then add the control panel stuff
         $this->addPageAssets();
+
+        parent::boot();
     }
 
     public function setActions(array $actions)

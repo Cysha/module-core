@@ -237,8 +237,8 @@ if (!function_exists('escape')) {
     }
 }
 
-if (!function_exists('cache')) {
-    function cache($tag, $key, $length, $callback)
+if (!function_exists('cache_remember')) {
+    function cache_remember($tag, $key, $length, $callback)
     {
         if (Cache::getFacadeRoot() instanceof TaggableStore) {
             return Cache::tags($tag)->remember($key, $length, $callback);
@@ -339,8 +339,9 @@ if (!function_exists('validate')) {
     /**
      * Validate some data.
      *
-     * @param  string|array $fields
-     * @param  string|array $rules
+     * @param string|array $fields
+     * @param string|array $rules
+     *
      * @return bool
      */
     function validate($fields, $rules)

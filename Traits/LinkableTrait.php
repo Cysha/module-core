@@ -19,6 +19,10 @@ trait LinkableTrait
 
     public function makeLink($urlOnly = false)
     {
+        if (empty($this->attributes)) {
+            return;
+        }
+
         $link = (object) $this->link;
         if (!isset($link->route)) {
             throw new \InvalidArgumentException('Could not find a route. '.get_class($this));

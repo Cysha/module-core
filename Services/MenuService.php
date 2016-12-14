@@ -76,7 +76,7 @@ class MenuService
             cache_flush('menu', 'cms.menu.processing');
         }
 
-        return cache('menu', 'cms.menu.processing', 10, function () {
+        return cache_remember('menu', 'cms.menu.processing', 10, function () {
             $menus = [];
             // loop through each of the menus, merge them into the menus arr
             foreach (get_array_column(config('cms'), 'menus') as $moduleName => $moduleMenu) {
@@ -87,6 +87,7 @@ class MenuService
                 }
 
                 foreach ($moduleMenu as $section => $menu) {
+                    $section = strtolower($section);
                     $menus[$section] = !empty($menus[$section])
                         ? array_merge_recursive($menus[$section], $menu)
                         : $menu;

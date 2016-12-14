@@ -2,7 +2,7 @@
 
     Form::macro('DBSelect', function ($id, $collection, $options = ['id' => 'name']) {
         $key = key($options);
-        $rows = $collection->lists($options[$key], $key);
+        $rows = $collection->pluck($options[$key], $key);
 
         return Former::select($id)->options($rows);
     });

@@ -85,7 +85,7 @@ class CoreModuleServiceProvider extends BaseModuleProvider
     protected function registerViewNamespace(Module $module)
     {
         $this->app['view']->addNamespace(
-            $module->getName(),
+            $module->getLowerName(),
             $module->getPath().'/Resources/views'
         );
     }
@@ -98,7 +98,7 @@ class CoreModuleServiceProvider extends BaseModuleProvider
     protected function registerLanguageNamespace(Module $module)
     {
         $this->app['translator']->addNamespace(
-            $module->getName(),
+            $module->getLowerName(),
             $module->getPath().'/Resources/lang'
         );
     }
@@ -112,7 +112,7 @@ class CoreModuleServiceProvider extends BaseModuleProvider
     {
         $files = $this->app['files']->files($module->getPath().'/Config');
 
-        $package = $module->getName();
+        $package = $module->getLowerName();
 
         foreach ($files as $file) {
             $filename = $this->getConfigFilename($file, $package);

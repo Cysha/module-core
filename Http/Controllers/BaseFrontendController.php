@@ -15,9 +15,6 @@ class BaseFrontendController extends BaseController
 
     public function boot()
     {
-        // spawn the menu service
-        app('Cms\Modules\Core\Services\MenuService')->boot();
-
         // set the sidebar
         if ($this->sidebar === null) {
             $this->setSidebar('default');

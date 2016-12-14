@@ -15,6 +15,13 @@ class BaseModuleProvider extends ServiceProvider
     protected $defer = false;
 
     /**
+     * Define your route model bindings, pattern filters, etc.
+     */
+    public function boot()
+    {
+    }
+
+    /**
      * Register the defined middleware.
      *
      * @var array

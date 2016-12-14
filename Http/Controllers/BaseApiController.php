@@ -9,6 +9,10 @@ class BaseApiController extends BaseController
 {
     use Helpers;
 
+    public function boot()
+    {
+    }
+
     /**
      * Alias method for sending an response back.
      *

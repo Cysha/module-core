@@ -10,7 +10,7 @@
     "require": {
         "composer/installers": "dev-master",
 
-        "laravelcollective/html": "~5.0",
+        "laravelcollective/html": "~5.3",
         "teepluss/theme": "~2.0",
         "anahkiasen/former": "~4.0",
         "mews/purifier": "~2.0",
