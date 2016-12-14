@@ -2,7 +2,7 @@
 
 namespace Cms\Modules\Core\Http\Controllers;
 
-use Pingpong\Modules\Routing\Controller;
+use Nwidart\Modules\Routing\Controller;
 use Illuminate\Foundation\Http\Response;
 use Illuminate\Filesystem\Filesystem;
 use Teepluss\Theme\Contracts\Theme;

@@ -3,7 +3,7 @@
 namespace Cms\Modules\Core\Services;
 
 use Illuminate\Contracts\Config\Repository as Config;
-use Pingpong\Modules\Repository as Module;
+use Nwidart\Modules\Repository as Module;
 use Menu;
 
 class MenuService

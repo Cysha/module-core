@@ -2,7 +2,7 @@
 
 namespace Cms\Modules\Core\Console\Commands;
 
-use Pingpong\Modules\Process\Installer;
+use Nwidart\Modules\Process\Installer;
 use Symfony\Component\Finder\Finder;
 
 class CmsModuleMakeCommand extends BaseCommand

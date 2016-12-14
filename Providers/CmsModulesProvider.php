@@ -16,7 +16,7 @@ class CmsModulesProvider extends ServiceProvider
             AliasLoader::getInstance()->alias('Debugbar', 'Barryvdh\Debugbar\Facade');
         }
 
-        $this->app->register('Pingpong\Modules\ModulesServiceProvider');
+        $this->app->register('Nwidart\Modules\LaravelModulesServiceProvider');
 
         // if social module installed, load the socialite service provider
         $class = 'Cms\Modules\Social\Providers\RegisterSocialitesProvider';

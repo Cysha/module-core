@@ -2,8 +2,8 @@
 
 namespace Cms\Modules\Core\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Cms\Modules\Core\Traits\LinkableTrait;
+use Illuminate\Database\Eloquent\Model;
 
 class BaseModel extends Model
 {

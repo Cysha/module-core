@@ -2,7 +2,7 @@
 
 namespace Cms\Modules\Core\Providers;
 
-use Pingpong\Modules\Module;
+use Nwidart\Modules\Module;
 
 class CoreModuleServiceProvider extends BaseModuleProvider
 {

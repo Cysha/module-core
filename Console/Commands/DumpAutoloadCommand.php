@@ -3,7 +3,7 @@
 namespace Cms\Modules\Core\Console\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Foundation\Composer;
+use Illuminate\Support\Composer;
 
 class DumpAutoloadCommand extends Command
 {
@@ -12,7 +12,7 @@ class DumpAutoloadCommand extends Command
     protected $description = 'Re Adds dump-autoload';
 
     /**
-     * @var \Illuminate\Foundation\Composer
+     * @var \Illuminate\Support\Composer
      */
     protected $composer;
 
@@ -28,7 +28,7 @@ class DumpAutoloadCommand extends Command
 
     public function boot()
     {
-        $this->composer = app('Illuminate\Foundation\Composer');
+        $this->composer = app('Illuminate\Support\Composer');
     }
 
     public function fire()
