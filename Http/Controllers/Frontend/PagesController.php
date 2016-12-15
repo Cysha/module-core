@@ -8,7 +8,6 @@ class PagesController extends BaseCoreController
     {
         $this->setLayout('homepage');
 
-        // dd(\Auth::user()->has2fa);
         return $this->setView('home.index', [], 'theme');
     }
 

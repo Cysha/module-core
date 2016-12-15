@@ -5,7 +5,7 @@ namespace Cms\Modules\Core\Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 
-class CoreTableSeeder extends Seeder
+class CoreDatabaseSeeder extends Seeder
 {
     /**
      * Run the database seeds.
