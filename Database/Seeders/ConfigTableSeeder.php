@@ -18,8 +18,8 @@ class ConfigTableSeeder extends Seeder
         $array = [
             [
                 'environment' => $environment,
-                'group' => 'cms.core.app',
-                'item' => 'site-name',
+                'group' => 'app',
+                'item' => 'name',
                 'value' => 'PhoenixCMS',
             ],
             [
