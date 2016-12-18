@@ -314,6 +314,20 @@ class BaseController extends Controller
     }
 
     /**
+     * Get the api dispatched.
+     *
+     * @return \Dingo\Api\Dispatcher
+     */
+    protected function api()
+    {
+        if (!$this->auth()->guest()) {
+            return app('Dingo\Api\Dispatcher')->be($this->auth()->user());
+        }
+
+        return app('Dingo\Api\Dispatcher');
+    }
+
+    /**
      * Magically handle calls to certain properties.
      *
      * @param string $key
