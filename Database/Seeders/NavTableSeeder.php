@@ -2,9 +2,10 @@
 
 namespace Cms\Modules\Core\Database\Seeders;
 
-use Illuminate\Database\Seeder;
-use Cms\Modules\Core;
 use Carbon\Carbon;
+use Cms\Modules\Core\Models\Navigation;
+use Cms\Modules\Core\Models\NavigationLink;
+use Illuminate\Database\Seeder;
 
 class NavTableSeeder extends Seeder
 {
@@ -13,8 +14,8 @@ class NavTableSeeder extends Seeder
      */
     public function run()
     {
-        with(new Core\Models\NavigationLink())->truncate();
-        with(new Core\Models\Navigation())->truncate();
+        with(new NavigationLink())->truncate();
+        with(new Navigation())->truncate();
 
         $navs = [
             [
@@ -26,7 +27,7 @@ class NavTableSeeder extends Seeder
         ];
 
         foreach ($navs as $r) {
-            with(new Core\Models\Navigation())->fill($r)->save();
+            with(new Navigation())->fill($r)->save();
         }
 
         $navLinks = [
@@ -45,7 +46,7 @@ class NavTableSeeder extends Seeder
         ];
 
         foreach ($navLinks as $r) {
-            with(new Core\Models\NavigationLink())->fill($r)->save();
+            with(new NavigationLink())->fill($r)->save();
         }
     }
 }
