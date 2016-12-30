@@ -44,7 +44,7 @@ class NavigationService
         $navigation->each(function ($nav) use ($callback) {
             Menu::handler($nav->name)
                 ->class($nav->class)
-                ->hydrate($nav->links, $callback, 'id', 'parent_id');
+                ->hydrate($nav->links->sortBy('order'), $callback, 'id', 'parent_id');
         });
     }
 
