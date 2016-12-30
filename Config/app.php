@@ -33,7 +33,7 @@ return [
 
     // site middleware
     'middleware' => [
-        'api' => ['api.auth'],
+        'api' => [],
         'frontend' => ['web'],
         'backend' => ['web', 'auth.admin'],
     ],
