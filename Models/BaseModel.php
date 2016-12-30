@@ -4,6 +4,7 @@ namespace Cms\Modules\Core\Models;
 
 use Cms\Modules\Core\Traits\LinkableTrait;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Request;
 
 class BaseModel extends Model
 {
@@ -55,11 +56,11 @@ class BaseModel extends Model
     public function hydrateFromInput(array $input = [])
     {
         if (!isset($this->fillable)) {
-            return $this->fill(\Input::all());
+            return $this->fill(Request::all());
         }
 
         if (empty($input)) {
-            $input = \Input::only($this->fillable);
+            $input = Request::only($this->fillable);
         } else {
             $input = array_only($input, $this->fillable);
         }

@@ -95,8 +95,9 @@ class Theme implements Arrayable, Jsonable, JsonSerializable
 
             return str_replace('.blade.php', '', end($fn));
         }, $files);
+        $files = array_diff($files, ['default']);
 
-        return array_combine($files, $files) ?: [];
+        return $files;
     }
 
     /**
