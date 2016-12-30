@@ -6,6 +6,14 @@ trait LinkableTrait
 {
     public function linkableConstructor()
     {
+        if (!$this->link) {
+            return;
+        }
+
+        if ($this->getOriginal('slug')) {
+            return;
+        }
+
         $appends = ['slug'];
         $this->appends = is_array($this->appends)
             ? array_merge($this->appends, $appends)
@@ -14,6 +22,10 @@ trait LinkableTrait
 
     public function getSlugAttribute()
     {
+        if ($this->getOriginal('slug')) {
+            return $this->getOriginal('slug');
+        }
+
         return str_slug($this->{$this->identifiableName}, '-');
     }
 
