@@ -9,7 +9,6 @@ use File;
 class CmsInstallCommand extends BaseCommand
 {
     protected $name = 'cms:install';
-    protected $signature = 'cms:install {--f|force}';
     protected $readableName = 'Phoenix CMS Installer';
     protected $description = 'Installs the CMS';
 
@@ -26,12 +25,10 @@ class CmsInstallCommand extends BaseCommand
             return;
         }
 
-        if ($this->option('force') === null) {
-            if ($this->confirm(' This command will (re)build your database! Continue? ', true) === false) {
-                $this->done();
+        if ($this->confirm(' This command will (re)build your database! Continue? ', true) === false) {
+            $this->done();
 
-                return;
-            }
+            return;
         }
 
         $this->do_clearCompiled();
