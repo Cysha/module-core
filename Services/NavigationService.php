@@ -34,7 +34,7 @@ class NavigationService
 
         $callback = function ($children, $item) {
             $url = $item->url;
-            if ($item->route !== null) {
+            if ($item->route !== null && !empty($item->route)) {
                 $url = route($item->route);
             }
 
