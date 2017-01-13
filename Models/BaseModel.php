@@ -31,9 +31,9 @@ class BaseModel extends Model
     /**
      * Fire up the linkableTrait so it can do its thing.
      */
-    public function __construct()
+    public function __construct(array $attributes = [])
     {
-        parent::__construct();
+        parent::__construct($attributes);
 
         self::linkableConstructor();
     }
