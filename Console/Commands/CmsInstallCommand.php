@@ -222,7 +222,7 @@ class CmsInstallCommand extends BaseCommand
     protected function do_installAdmin()
     {
         // dont run this part if we have no interaction flag set
-        if ($this->option('no-interaction') !== null) {
+        if ($this->option('no-interaction') !== false) {
             return;
         }
 
